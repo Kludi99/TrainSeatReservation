@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrainSeatReservation.EntityFramework\TrainSeatReservation.EntityFramework.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Facades\TrainSeatReservation.Facades.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj" />
+  </ItemGroup>
+
+</Project>
