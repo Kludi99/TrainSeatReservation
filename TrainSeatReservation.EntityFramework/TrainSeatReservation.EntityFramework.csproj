@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="StaticData\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
