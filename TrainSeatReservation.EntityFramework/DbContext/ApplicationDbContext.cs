@@ -8,11 +8,18 @@ using TrainSeatReservation.EntityFramework.Models;
 
 namespace TrainSeatReservation.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Train> Trains { get; set; }
         public DbSet<Carriage> Carriages { get; set; }
         public DbSet<TrainCarriage> TrainCarriages { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<RouteStation> RouteStations { get; set; }
+        public DbSet<Station> Stations { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TrainStation> TrainStations { get; set; }
+        public DbSet<TicketDiscount> TicketDiscounts { get; set; }
 
       /*  public ApplicationDbContext() : base()
         {
@@ -44,6 +51,23 @@ namespace TrainSeatReservation.Data
                 .WithMany(x => x.TrainCarriages)
                 .HasForeignKey(k => k.TrainId);
 
+            builder.Entity<Discount>().ToTable("Discount");
+
+            builder.Entity<Route>().ToTable("Route");
+
+            builder.Entity<RouteStation>().ToTable("RouteStation");
+            builder.Entity<RouteStation>().HasIndex(i => new { i.RouteId, i.StationId }).IsUnique();
+
+            builder.Entity<Station>().ToTable("Station");
+
+            builder.Entity<Ticket>().ToTable("Ticket");
+            builder.Entity<Ticket>();
+
+            builder.Entity<TrainStation>().ToTable("TrainStation");
+
+            builder.Entity<TicketDiscount>().ToTable("TicketDiscount")
+                .HasOne(x => x.Ticket)
+                .WithMany(x => x.TicketDiscounts);
 
             base.OnModelCreating(builder);
         }
