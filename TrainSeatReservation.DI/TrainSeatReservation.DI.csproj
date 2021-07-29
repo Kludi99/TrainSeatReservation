@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrainSeatReservation.EntityFramework\TrainSeatReservation.EntityFramework.csproj" />
     <ProjectReference Include="..\TrainSeatReservation.Facades\TrainSeatReservation.Facades.csproj" />
     <ProjectReference Include="..\TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj" />

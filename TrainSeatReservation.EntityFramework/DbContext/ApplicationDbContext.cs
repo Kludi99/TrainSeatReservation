@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TrainSeatReservation.Commons;
 using TrainSeatReservation.EntityFramework.Models;
 
 namespace TrainSeatReservation.Data

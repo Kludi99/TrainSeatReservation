@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using TrainSeatReservation.Commons;
 using TrainSeatReservation.Data;
+using TrainSeatReservation.EntityFramework.AutoMapper;
 using TrainSeatReservation.EntityFramework.Models;
 
 namespace TrainSeatReservation.DI
@@ -18,6 +21,15 @@ namespace TrainSeatReservation.DI
                 );
             serviceCollection.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            serviceCollection.AddSingleton(mapper);
         }
 
 
