@@ -67,6 +67,10 @@ namespace TrainSeatReservation
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "AreaAdministration",
+                    areaName:"Administration",
+                    pattern: "Administration/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

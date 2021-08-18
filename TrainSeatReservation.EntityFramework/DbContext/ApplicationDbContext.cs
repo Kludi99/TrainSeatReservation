@@ -56,8 +56,12 @@ namespace TrainSeatReservation.Data
 
             builder.Entity<Route>().ToTable("Route");
 
-            builder.Entity<RouteStation>().ToTable("RouteStation");
-            builder.Entity<RouteStation>().HasIndex(i => new { i.RouteId, i.StationId }).IsUnique();
+            builder.Entity<RouteStation>().ToTable("RouteStation")
+                .HasOne(x => x.Route)
+                .WithMany(x => x.RouteStations)
+                .HasForeignKey(x => x.RouteId);
+
+            builder.Entity<RouteStation>().HasIndex(i => new { i.RouteId, i.StartStationId, i.EndStationId }).IsUnique();
 
             builder.Entity<Station>().ToTable("Station");
 

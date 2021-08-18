@@ -8,6 +8,10 @@ using TrainSeatReservation.Commons;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.AutoMapper;
 using TrainSeatReservation.EntityFramework.Models;
+using TrainSeatReservation.EntityFramework.Services;
+using TrainSeatReservation.Facades;
+using TrainSeatReservation.Interfaces.Facades;
+using TrainSeatReservation.Interfaces.Infrastructure.Services;
 
 namespace TrainSeatReservation.DI
 {
@@ -22,6 +26,13 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            
+
+            serviceCollection.AddScoped<ITrainFcd, TrainFcd>();
+            serviceCollection.AddScoped<ITrainService, TrainService>();
+
+            serviceCollection.AddScoped<ICarriageFcd, CarriageFcd>();
+            serviceCollection.AddScoped<ICarriageService, CarriageService>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

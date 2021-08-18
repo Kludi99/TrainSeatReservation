@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TrainSeatReservation</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
 </head>
 <body>
     <header>
@@ -31,9 +32,16 @@
         </nav>
     </header>
     <div class="container">
+        
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="row">
+                <partial name="_NavbarPartial" />
+                <div class="col-10">
+                    @RenderBody()
+                </div>
+            </div>
         </main>
+        
     </div>
 
     <footer class="border-top footer text-muted">
