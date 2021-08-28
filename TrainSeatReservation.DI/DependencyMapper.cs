@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using TrainSeatReservation.Commons;
+using TrainSeatReservation.Commons.Configuration;
+using TrainSeatReservation.Commons.EmailService;
+using TrainSeatReservation.Commons.Templates;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.AutoMapper;
 using TrainSeatReservation.EntityFramework.Models;
@@ -33,6 +36,19 @@ namespace TrainSeatReservation.DI
 
             serviceCollection.AddScoped<ICarriageFcd, CarriageFcd>();
             serviceCollection.AddScoped<ICarriageService, CarriageService>();
+
+            serviceCollection.AddScoped<IRouteFcd, RouteFcd>();
+            serviceCollection.AddScoped<IRouteService, RouteService>();
+
+            serviceCollection.AddScoped<IStationFcd, StationFcd>();
+            serviceCollection.AddScoped<IStationService, StationService>();
+
+            serviceCollection.AddScoped<ITrainStationFcd, TrainStationFcd>();
+            serviceCollection.AddScoped<ITrainStationService, TrainStationService>();
+
+            serviceCollection.AddSingleton<IEmailConfiguration>(configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            serviceCollection.AddTransient<IEmailService, EmailService>();
+            serviceCollection.AddSingleton<TemplateManager>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

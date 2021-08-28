@@ -49,12 +49,17 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
             return View();
         }
 
+        public IActionResult CreateTrainWithCarriages()
+        {
+            return View();
+        }
+
         // POST: Administration/Train/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Number,Name,Type")] TrainDto train)
+        public async Task<IActionResult> Create(TrainDto train)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +90,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Name,Type")] TrainDto train)
+        public async Task<IActionResult> Edit(int id, TrainDto train)
         {
             if (id != train.Id)
             {
@@ -144,6 +149,12 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         private bool TrainExists(int id)
         {
             return _trainFcd.IsTrainExists(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void CreateTrainWithCarriages(TrainDto train, int compartmentless, int compartmental)
+        {
+            var i = 1;
         }
     }
 }

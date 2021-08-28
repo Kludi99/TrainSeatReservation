@@ -13,22 +13,22 @@ using TrainSeatReservation.Interfaces.Facades;
 namespace TrainSeatReservation.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    public class CarriageController : Controller
+    public class RouteController : Controller
     {
-        private readonly ICarriageFcd _carriageFcd;
+        private readonly IRouteFcd _routeFcd;
 
-        public CarriageController(ICarriageFcd carriageFcd)
+        public RouteController(IRouteFcd routeFcd)
         {
-            _carriageFcd = carriageFcd;
+            _routeFcd = routeFcd;
         }
 
-        // GET: Administration/Carriage
+        // GET: Administration/Route
         public async Task<IActionResult> Index()
         {
-            return View(_carriageFcd.GetCarriages());
+            return View(_routeFcd.GetRoutes());
         }
 
-        // GET: Administration/Carriage/Details/5
+        // GET: Administration/Route/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,37 +36,37 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var Carriage = _carriageFcd.GetCarriage(id.Value);
-            if (Carriage == null)
+            var Route = _routeFcd.GetRoute(id.Value);
+            if (Route == null)
             {
                 return NotFound();
             }
 
-            return View(Carriage);
+            return View(Route);
         }
 
-        // GET: Administration/Carriage/Create
+        // GET: Administration/Route/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Administration/Carriage/Create
+        // POST: Administration/Route/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CarriageDto carriage)
+        public async Task<IActionResult> Create([Bind("Id,Number,Name,Type")] RouteDto route)
         {
             if (ModelState.IsValid)
             {
-                _carriageFcd.AddCarriage(carriage);
+                _routeFcd.AddRoute(route);
                 return RedirectToAction(nameof(Index));
             }
-            return View(carriage);
+            return View(route);
         }
 
-        // GET: Administration/Carriage/Edit/5
+        // GET: Administration/Route/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var carriage = _carriageFcd.GetCarriage(id.Value);
-            if (carriage == null)
+            var Route = _routeFcd.GetRoute(id.Value);
+            if (Route == null)
             {
                 return NotFound();
             }
-            return View(carriage);
+            return View(Route);
         }
 
-        // POST: Administration/Carriage/Edit/5
+        // POST: Administration/Route/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CarriageDto carriage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Name,Type")] RouteDto route)
         {
-            if (id != carriage.Id)
+            if (id != route.Id)
             {
                 return NotFound();
             }
@@ -98,11 +98,11 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
             {
                 try
                 {
-                    _carriageFcd.UpdateCarriage(carriage);
+                    _routeFcd.UpdateRoute(route);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarriageExists(carriage.Id))
+                    if (!RouteExists(route.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carriage);
+            return View(route);
         }
 
-        // GET: Administration/Carriage/Delete/5
+        // GET: Administration/Route/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,28 +124,28 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var Carriage = _carriageFcd.GetCarriage(id.Value);
-            if (Carriage == null)
+            var route = _routeFcd.GetRoute(id.Value);
+            if (route == null)
             {
                 return NotFound();
             }
 
-            return View(Carriage);
+            return View(route);
         }
 
-        // POST: Administration/Carriage/Delete/5
+        // POST: Administration/Route/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var Carriage = _CarriageFcd.GetCarriage(id);
-            _carriageFcd.DeleteCarriage(id);
+            //var Route = _RouteFcd.GetRoute(id);
+            _routeFcd.DeleteRoute(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarriageExists(int id)
+        private bool RouteExists(int id)
         {
-            return _carriageFcd.IsCarriageExists(id);
+            return _routeFcd.IsRouteExists(id);
         }
     }
 }

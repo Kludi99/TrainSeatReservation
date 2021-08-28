@@ -12,6 +12,7 @@ namespace TrainSeatReservation.Interfaces.Infrastructure.Services
         List<TrainDto> GetTrains();
         TrainDto GetTrain(int id);
         void AddTrain(TrainDto train);
+        void AddTrainWithCarriages(TrainDto train, int compartmentless, int compartmental);
         void UpdateTrain(TrainDto train);
         void DeleteTrain(int id);
         bool IsTrainExists(int id);

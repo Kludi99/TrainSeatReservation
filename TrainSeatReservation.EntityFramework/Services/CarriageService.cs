@@ -74,10 +74,10 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private CarriageDto GetCarriageDto(int id)
         {
-            var user = _context.Carriages.AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var carriage = _context.Carriages.AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
-                return _mapper.Map<CarriageDto>(user);
+                return _mapper.Map<CarriageDto>(carriage);
             }
             catch
             {
@@ -99,10 +99,10 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<CarriageDto> GetCarriagesQuery()
         {
-            var users = _context.Carriages;
+            var carriages = _context.Carriages;
             try
             {
-                return _mapper.Map<CarriageDto[]>(users);
+                return _mapper.Map<CarriageDto[]>(carriages);
             }
             catch
             {
