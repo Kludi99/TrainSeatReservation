@@ -45,6 +45,54 @@ namespace TrainSeatReservation.EntityFramework.Services
             _context.Add(entity);
             _context.SaveChanges();
         }
+        private Train AddTrainEntity(TrainDto train)
+        {
+            _logger.LogInformation("Executing AddTrain service method");
+
+            var entity = GetTrainEntity(train);
+            var result = _context.Add(entity);
+            _context.SaveChanges();
+            return result.Entity;
+        }
+        public void AddTrainWithCarriages(TrainDto train, int compartmentless, int compartmental)
+        {
+            _logger.LogInformation("Executing AddTrainWithCarriages service method");
+            var trainEntity = AddTrainEntity(train);
+            var carriages = _context.Carriages; // all carriages add flag isUsed
+            var compartmentlessCarriages = carriages.Where(x => x.Type == "Bezprzedziałowy").OrderByDescending(x => x.Capacity);
+            var compartmentalCarriages = carriages.Where(x => x.Type == "Przedziałowy").OrderByDescending(x => x.Capacity);
+
+            if(compartmentalCarriages.Count() >= compartmental && compartmentlessCarriages.Count() >= compartmentless)
+            {
+                
+                var compartmentlessCarriagesList = compartmentlessCarriages.ToList();
+                var compartmentalCarriagesList = compartmentalCarriages.ToList();
+
+                for (int i = 0; i < compartmentless; i++)
+                {
+
+                    var trainCarriage = new TrainCarriage
+                    {
+                        TrainId = trainEntity.Id,
+                        CarriageId = compartmentlessCarriagesList[i].Id
+                    };
+                    
+                    _context.Add(trainCarriage);
+                }
+                for (int i = 0; i < compartmental; i++)
+                {
+
+                    var trainCarriage = new TrainCarriage
+                    {
+                        TrainId = trainEntity.Id,
+                        CarriageId = compartmentalCarriagesList[i].Id
+                    };
+
+                    _context.Add(trainCarriage);
+                }
+                _context.SaveChanges();
+            }
+        }
         public void UpdateTrain(TrainDto train)
         {
             _logger.LogInformation("Executing UpdateTrain service method");
@@ -74,10 +122,10 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private TrainDto GetTrainDto(int id)
         {
-            var user = _context.Trains.AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var train = _context.Trains.AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
-                return _mapper.Map<TrainDto>(user);
+                return _mapper.Map<TrainDto>(train);
             }
             catch
             {
@@ -99,10 +147,10 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<TrainDto> GetTrainsQuery()
         {
-            var users = _context.Trains;
+            var trains = _context.Trains;
             try
             {
-                return _mapper.Map<TrainDto[]>(users);
+                return _mapper.Map<TrainDto[]>(trains);
             }
             catch
             {

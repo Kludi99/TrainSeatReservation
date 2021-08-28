@@ -30,6 +30,10 @@ namespace TrainSeatReservation.Facades
         {
             _service.AddTrain(train);
         }
+        public void AddTrainWithCarriages(TrainDto train, int compartmentless, int compartmental)
+        {
+            _service.AddTrainWithCarriages(train, compartmentless, compartmental);
+        }
         public void UpdateTrain(TrainDto train)
         {
             _service.UpdateTrain(train);

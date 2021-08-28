@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainSeatReservation.Commons.Dto;
 
-namespace TrainSeatReservation.Interfaces.Infrastructure.Services
+namespace TrainSeatReservation.Interfaces.Facades
 {
-    public interface IRouteService
+    public interface IRouteFcd
     {
         List<RouteDto> GetRoutes();
         RouteDto GetRoute(int id);
