@@ -9,10 +9,15 @@ namespace TrainSeatReservation.EntityFramework.Models
     public class Carriage
     {
         public int Id { get; set; }
-        public string Number { get; set; }
-        public string Type { get; set; }
-        public int Capacity { get; set; }
-        public int FreeSeats { get; set; }
+        public int Number { get; set; }
+        public DictionaryItem Type { get; set; }
+        public int TypeId { get; set; }
+        public DictionaryItem CarriageClass { get; set; }
+        public int CarriageClassId { get; set; }
+       // public int Capacity { get; set; }
+       // public int FreeSeats { get; set; }
+        public bool IsActive { get; set; }
         public ICollection<TrainCarriage> TrainCarriages { get; set; }
+        public ICollection<Seat> Seats { get; set; }
     }
 }

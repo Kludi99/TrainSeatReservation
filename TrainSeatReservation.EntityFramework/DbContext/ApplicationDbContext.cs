@@ -21,6 +21,10 @@ namespace TrainSeatReservation.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TrainStation> TrainStations { get; set; }
         public DbSet<TicketDiscount> TicketDiscounts { get; set; }
+        public DbSet<Dictionary> Dictionaries { get; set; }
+        public DbSet<DictionaryItem> DictionaryItems { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+        public DbSet<TrainTimeTable> TrainTimeTables { get; set; }
 
       /*  public ApplicationDbContext() : base()
         {
@@ -31,18 +35,30 @@ namespace TrainSeatReservation.Data
         {
         }
         
-
+        //TODO: Create Indexes!!!!!
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            //base.OnModelCreating(builder);
 
-            builder.Entity<Train>().ToTable("Train").
-                HasIndex(x => x.Number)
-                .IsUnique();
+            //  builder.Entity<Dictionary>().ToTable("Dictionary");
+            // builder.Entity<DictionaryItem>().ToTable("DictionaryItem");
 
-            builder.Entity<Carriage>().ToTable("Carriage");
 
-            builder.Entity<TrainCarriage>().ToTable("TrainCarriage");
+            //builder.Entity<Carriage>().ToTable("Carriage");
+            // builder.Entity<Carriage>().HasOne(x => x.CarriageClass).WithMany(x => x.Carriages);
+            // builder.Entity<Carriage>().HasOne(x => x.Type).WithMany(x => x.Carriages);
+
+            // builder.Entity<Seat>().ToTable("Seat");
+            builder.Entity<TrainStation>()
+                 .HasOne(x => x.TrainTimeTable)
+                 .WithMany(x => x.TrainStations)
+                 .HasForeignKey(x => x.TrainTimeTableId);
+
+            builder.Entity<Seat>()
+                .HasOne(x => x.Carriage)
+                .WithMany(x => x.Seats)
+                .HasForeignKey(x => x.CarriageId);
+
             builder.Entity<TrainCarriage>()
                 .HasOne(x => x.Carriage)
                 .WithMany(x => x.TrainCarriages)
@@ -52,27 +68,40 @@ namespace TrainSeatReservation.Data
                 .WithMany(x => x.TrainCarriages)
                 .HasForeignKey(k => k.TrainId);
 
-            builder.Entity<Discount>().ToTable("Discount");
+           // builder.Entity<Discount>().ToTable("Discount");
 
-            builder.Entity<Route>().ToTable("Route");
+            //builder.Entity<Route>().ToTable("Route");
 
-            builder.Entity<RouteStation>().ToTable("RouteStation")
+            builder.Entity<RouteStation>()
                 .HasOne(x => x.Route)
                 .WithMany(x => x.RouteStations)
                 .HasForeignKey(x => x.RouteId);
 
-            builder.Entity<RouteStation>().HasIndex(i => new { i.RouteId, i.StartStationId, i.EndStationId }).IsUnique();
-
-            builder.Entity<Station>().ToTable("Station");
-
-            builder.Entity<Ticket>().ToTable("Ticket");
-            builder.Entity<Ticket>();
-
-            builder.Entity<TrainStation>().ToTable("TrainStation");
-
-            builder.Entity<TicketDiscount>().ToTable("TicketDiscount")
+            builder.Entity<TicketDiscount>()
                 .HasOne(x => x.Ticket)
                 .WithMany(x => x.TicketDiscounts);
+
+            //Indexes
+
+            builder.Entity<Train>()
+                .HasIndex(x => x.Number)
+                .IsUnique();
+            builder.Entity<RouteStation>()
+                .HasIndex(i => new { i.RouteId, i.StartStationId, i.EndStationId })
+                .IsUnique();
+            builder.Entity<TrainTimeTable>()
+                .HasIndex(i => new { i.ArrivalTime, i.DepartureTime, i.StartingDateOfTimeTable })
+            .IsUnique();
+            builder.Entity<TrainStation>()
+                .HasIndex(i => new { i.TrainId, i.StationId, i.TrainTimeTableId })
+                .IsUnique();
+            builder.Entity<Station>()
+                .HasIndex(i => i.Name)
+                .IsUnique();
+
+
+            Seed seed = new Seed(builder);
+            seed.Add();
 
             base.OnModelCreating(builder);
         }

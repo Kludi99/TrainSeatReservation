@@ -13,7 +13,9 @@ namespace TrainSeatReservation.EntityFramework.Models
         public Train Train { get; set; }
         public int StationId { get; set; }
         public Station Station { get; set; }
-        public DateTime ArrivalDate { get; set; }
-        public DateTime DepartureDate { get; set; }
+       /* public DateTime ArrivalDate { get; set; }
+        public DateTime DepartureDate { get; set; }*/
+        public TrainTimeTable TrainTimeTable { get; set; }
+        public int TrainTimeTableId { get; set; }
     }
 }

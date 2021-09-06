@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TrainSeatReservation.Commons.Dto
 {
-    public class TrainDto
+    public class DictionaryItemDto
     {
         public int Id { get; set; }
-        public string Number { get; set; }
         public string Name { get; set; }
-        public DictionaryItemDto Type { get; set; }
-        public int TypeId { get; set; }
-        public bool IsActive { get; set; }
+        public int DictionaryId { get; set; }
+        public DictionaryDto Dictionary { get; set; }
     }
 }

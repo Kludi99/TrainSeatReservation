@@ -25,6 +25,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // GET: Administration/Carriage
         public async Task<IActionResult> Index()
         {
+            var carriages = _carriageFcd.GetCarriages();
             return View(_carriageFcd.GetCarriages());
         }
 
