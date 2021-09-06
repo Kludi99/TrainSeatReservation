@@ -3,13 +3,13 @@ using TrainSeatReservation.Interfaces.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrainSeatReservation.EntityFramework.Services
 {
@@ -74,7 +74,11 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private CarriageDto GetCarriageDto(int id)
         {
-            var carriage = _context.Carriages.AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var carriage = _context.Carriages
+                .Include(x => x.Seats)
+                .Include(x => x.Type)
+                .Include(x => x.CarriageClass)
+                .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
                 return _mapper.Map<CarriageDto>(carriage);
@@ -99,7 +103,11 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<CarriageDto> GetCarriagesQuery()
         {
-            var carriages = _context.Carriages;
+            var carriages = _context.Carriages
+                .Include(x => x.Seats)
+                .Include(x => x.Type)
+                .Include(x => x.CarriageClass)
+                .ToList();
             try
             {
                 return _mapper.Map<CarriageDto[]>(carriages);

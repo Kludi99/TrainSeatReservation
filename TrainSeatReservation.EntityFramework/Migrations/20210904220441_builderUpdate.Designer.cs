@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210904220441_builderUpdate")]
+    partial class builderUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d365021b-8ff2-49ab-83e6-976debfca6a8",
-                            ConcurrencyStamp = "45cc1693-0ea6-473a-8a4e-2f6c2b91f53f",
+                            Id = "965df2eb-7f7c-4597-94ef-007a9bce2184",
+                            ConcurrencyStamp = "a9ff61ba-2d3b-4504-8a69-eb6c6b8d574d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "023e8964-0220-4bc2-9e1e-ab6e6c5f1c81",
-                            ConcurrencyStamp = "0ba7d32b-c727-4c91-889e-3704669fdf47",
+                            Id = "f9cdb8cf-b087-41a7-b5f8-9e9cc19fae11",
+                            ConcurrencyStamp = "dc09e788-deb5-4806-83c6-9e428c70ed22",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -266,7 +268,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Carriages");
+                    b.ToTable("Carriage");
 
                     b.HasData(
                         new
@@ -419,7 +421,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dictionaries");
+                    b.ToTable("Dictionary");
 
                     b.HasData(
                         new
@@ -461,7 +463,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("DictionaryId");
 
-                    b.ToTable("DictionaryItems");
+                    b.ToTable("DictionaryItem");
 
                     b.HasData(
                         new
@@ -556,7 +558,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Discounts");
+                    b.ToTable("Discount");
 
                     b.HasData(
                         new
@@ -706,7 +708,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Route");
 
                     b.HasData(
                         new
@@ -755,7 +757,7 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasIndex("RouteId", "StartStationId", "EndStationId")
                         .IsUnique();
 
-                    b.ToTable("RouteStations");
+                    b.ToTable("RouteStation");
 
                     b.HasData(
                         new
@@ -6001,15 +6003,11 @@ namespace TrainSeatReservation.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
-
-                    b.ToTable("Stations");
+                    b.ToTable("Station");
 
                     b.HasData(
                         new
@@ -6287,7 +6285,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Ticket");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.TicketDiscount", b =>
@@ -6312,7 +6310,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketDiscounts");
+                    b.ToTable("TicketDiscount");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Train", b =>
@@ -6342,7 +6340,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Trains");
+                    b.ToTable("Train");
 
                     b.HasData(
                         new
@@ -6390,7 +6388,7 @@ namespace TrainSeatReservation.Data.Migrations
 
                     b.HasIndex("TrainId");
 
-                    b.ToTable("TrainCarriages");
+                    b.ToTable("TrainCarriage");
 
                     b.HasData(
                         new
@@ -6504,752 +6502,426 @@ namespace TrainSeatReservation.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("ArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("StationId")
                         .HasColumnType("int");
 
                     b.Property<int>("TrainId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrainTimeTableId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StationId");
 
-                    b.HasIndex("TrainTimeTableId");
+                    b.HasIndex("TrainId");
 
-                    b.HasIndex("TrainId", "StationId", "TrainTimeTableId")
-                        .IsUnique();
-
-                    b.ToTable("TrainStations");
+                    b.ToTable("TrainStation");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            ArrivalDate = new DateTime(2020, 10, 10, 13, 30, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 13, 41, 0, 0, DateTimeKind.Unspecified),
                             StationId = 1,
-                            TrainId = 1,
-                            TrainTimeTableId = 1
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 2,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 1, 0, 0, DateTimeKind.Unspecified),
                             StationId = 2,
-                            TrainId = 1,
-                            TrainTimeTableId = 2
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 3,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 4, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 5, 0, 0, DateTimeKind.Unspecified),
                             StationId = 3,
-                            TrainId = 1,
-                            TrainTimeTableId = 3
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 4,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 8, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 9, 0, 0, DateTimeKind.Unspecified),
                             StationId = 4,
-                            TrainId = 1,
-                            TrainTimeTableId = 4
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 5,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 13, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 13, 0, 0, DateTimeKind.Unspecified),
                             StationId = 5,
-                            TrainId = 1,
-                            TrainTimeTableId = 5
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 6,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 17, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 18, 0, 0, DateTimeKind.Unspecified),
                             StationId = 6,
-                            TrainId = 1,
-                            TrainTimeTableId = 6
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 7,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 21, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 21, 0, 0, DateTimeKind.Unspecified),
                             StationId = 7,
-                            TrainId = 1,
-                            TrainTimeTableId = 7
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 8,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 26, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 27, 0, 0, DateTimeKind.Unspecified),
                             StationId = 8,
-                            TrainId = 1,
-                            TrainTimeTableId = 8
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 9,
+                            ArrivalDate = new DateTime(2020, 10, 10, 14, 42, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 14, 43, 0, 0, DateTimeKind.Unspecified),
                             StationId = 9,
-                            TrainId = 1,
-                            TrainTimeTableId = 9
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 10,
+                            ArrivalDate = new DateTime(2020, 10, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 15, 1, 0, 0, DateTimeKind.Unspecified),
                             StationId = 10,
-                            TrainId = 1,
-                            TrainTimeTableId = 10
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 11,
+                            ArrivalDate = new DateTime(2020, 10, 10, 15, 17, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 15, 18, 0, 0, DateTimeKind.Unspecified),
                             StationId = 11,
-                            TrainId = 1,
-                            TrainTimeTableId = 11
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 12,
+                            ArrivalDate = new DateTime(2020, 10, 10, 15, 29, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 15, 30, 0, 0, DateTimeKind.Unspecified),
                             StationId = 12,
-                            TrainId = 1,
-                            TrainTimeTableId = 12
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 13,
+                            ArrivalDate = new DateTime(2020, 10, 10, 15, 39, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 15, 40, 0, 0, DateTimeKind.Unspecified),
                             StationId = 13,
-                            TrainId = 1,
-                            TrainTimeTableId = 13
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 14,
+                            ArrivalDate = new DateTime(2020, 10, 10, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 16, 7, 0, 0, DateTimeKind.Unspecified),
                             StationId = 14,
-                            TrainId = 1,
-                            TrainTimeTableId = 14
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 15,
+                            ArrivalDate = new DateTime(2020, 10, 10, 16, 13, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 16, 29, 0, 0, DateTimeKind.Unspecified),
                             StationId = 15,
-                            TrainId = 1,
-                            TrainTimeTableId = 15
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 16,
+                            ArrivalDate = new DateTime(2020, 10, 10, 16, 34, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 16, 36, 0, 0, DateTimeKind.Unspecified),
                             StationId = 16,
-                            TrainId = 1,
-                            TrainTimeTableId = 16
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 17,
+                            ArrivalDate = new DateTime(2020, 10, 10, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 17, 31, 0, 0, DateTimeKind.Unspecified),
                             StationId = 17,
-                            TrainId = 1,
-                            TrainTimeTableId = 17
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 18,
+                            ArrivalDate = new DateTime(2020, 10, 10, 17, 54, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 17, 55, 0, 0, DateTimeKind.Unspecified),
                             StationId = 18,
-                            TrainId = 1,
-                            TrainTimeTableId = 18
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 19,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 21, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 22, 0, 0, DateTimeKind.Unspecified),
                             StationId = 19,
-                            TrainId = 1,
-                            TrainTimeTableId = 19
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 21,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 46, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 50, 0, 0, DateTimeKind.Unspecified),
                             StationId = 20,
-                            TrainId = 1,
-                            TrainTimeTableId = 20
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 21,
+                            Id = 22,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 54, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 57, 0, 0, DateTimeKind.Unspecified),
                             StationId = 21,
-                            TrainId = 1,
-                            TrainTimeTableId = 21
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 22,
+                            Id = 23,
+                            ArrivalDate = new DateTime(2020, 10, 10, 19, 23, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 19, 35, 0, 0, DateTimeKind.Unspecified),
                             StationId = 22,
-                            TrainId = 1,
-                            TrainTimeTableId = 22
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 24,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 6, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 9, 0, 0, DateTimeKind.Unspecified),
                             StationId = 23,
-                            TrainId = 1,
-                            TrainTimeTableId = 23
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 25,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 29, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 30, 0, 0, DateTimeKind.Unspecified),
                             StationId = 24,
-                            TrainId = 1,
-                            TrainTimeTableId = 24
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 26,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 38, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 39, 0, 0, DateTimeKind.Unspecified),
                             StationId = 25,
-                            TrainId = 1,
-                            TrainTimeTableId = 25
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 27,
+                            ArrivalDate = new DateTime(2020, 10, 10, 21, 3, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 21, 26, 0, 0, DateTimeKind.Unspecified),
                             StationId = 26,
-                            TrainId = 1,
-                            TrainTimeTableId = 26
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 28,
+                            ArrivalDate = new DateTime(2020, 10, 10, 21, 35, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 21, 36, 0, 0, DateTimeKind.Unspecified),
                             StationId = 27,
-                            TrainId = 1,
-                            TrainTimeTableId = 27
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 28,
+                            Id = 29,
+                            ArrivalDate = new DateTime(2020, 10, 10, 21, 57, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 59, 0, 0, DateTimeKind.Unspecified),
                             StationId = 28,
-                            TrainId = 1,
-                            TrainTimeTableId = 28
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 29,
+                            Id = 30,
+                            ArrivalDate = new DateTime(2020, 10, 10, 22, 23, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 24, 0, 0, DateTimeKind.Unspecified),
                             StationId = 29,
-                            TrainId = 1,
-                            TrainTimeTableId = 29
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 30,
+                            Id = 31,
+                            ArrivalDate = new DateTime(2020, 10, 10, 22, 36, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 37, 0, 0, DateTimeKind.Unspecified),
                             StationId = 30,
-                            TrainId = 1,
-                            TrainTimeTableId = 30
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 32,
+                            ArrivalDate = new DateTime(2020, 10, 10, 22, 44, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 45, 0, 0, DateTimeKind.Unspecified),
                             StationId = 31,
-                            TrainId = 1,
-                            TrainTimeTableId = 31
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 32,
+                            Id = 33,
+                            ArrivalDate = new DateTime(2020, 10, 10, 22, 53, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 54, 0, 0, DateTimeKind.Unspecified),
                             StationId = 32,
-                            TrainId = 1,
-                            TrainTimeTableId = 32
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 33,
+                            Id = 34,
+                            ArrivalDate = new DateTime(2020, 10, 10, 23, 1, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 23, 2, 0, 0, DateTimeKind.Unspecified),
                             StationId = 33,
-                            TrainId = 1,
-                            TrainTimeTableId = 33
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 34,
+                            Id = 35,
+                            ArrivalDate = new DateTime(2020, 10, 10, 23, 33, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 23, 34, 0, 0, DateTimeKind.Unspecified),
                             StationId = 34,
-                            TrainId = 1,
-                            TrainTimeTableId = 34
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 35,
+                            Id = 36,
+                            ArrivalDate = new DateTime(2020, 10, 10, 23, 56, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 23, 59, 0, 0, DateTimeKind.Unspecified),
                             StationId = 35,
-                            TrainId = 1,
-                            TrainTimeTableId = 35
+                            TrainId = 1
                         },
                         new
                         {
-                            Id = 36,
+                            Id = 37,
+                            ArrivalDate = new DateTime(2020, 10, 10, 17, 32, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 17, 58, 0, 0, DateTimeKind.Unspecified),
                             StationId = 1,
-                            TrainId = 2,
-                            TrainTimeTableId = 36
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 37,
+                            Id = 38,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 18, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 19, 0, 0, DateTimeKind.Unspecified),
                             StationId = 2,
-                            TrainId = 2,
-                            TrainTimeTableId = 37
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 38,
+                            Id = 39,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 38, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 39, 0, 0, DateTimeKind.Unspecified),
                             StationId = 8,
-                            TrainId = 2,
-                            TrainTimeTableId = 38
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 39,
+                            Id = 40,
+                            ArrivalDate = new DateTime(2020, 10, 10, 18, 55, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 18, 56, 0, 0, DateTimeKind.Unspecified),
                             StationId = 9,
-                            TrainId = 2,
-                            TrainTimeTableId = 39
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 40,
+                            Id = 41,
+                            ArrivalDate = new DateTime(2020, 10, 10, 19, 13, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 19, 14, 0, 0, DateTimeKind.Unspecified),
                             StationId = 10,
-                            TrainId = 2,
-                            TrainTimeTableId = 40
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 41,
+                            Id = 42,
+                            ArrivalDate = new DateTime(2020, 10, 10, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 19, 31, 0, 0, DateTimeKind.Unspecified),
                             StationId = 11,
-                            TrainId = 2,
-                            TrainTimeTableId = 41
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 42,
+                            Id = 43,
+                            ArrivalDate = new DateTime(2020, 10, 10, 19, 43, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 19, 44, 0, 0, DateTimeKind.Unspecified),
                             StationId = 12,
-                            TrainId = 2,
-                            TrainTimeTableId = 42
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 43,
+                            Id = 44,
+                            ArrivalDate = new DateTime(2020, 10, 10, 19, 54, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 19, 55, 0, 0, DateTimeKind.Unspecified),
                             StationId = 13,
-                            TrainId = 2,
-                            TrainTimeTableId = 43
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 44,
+                            Id = 45,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 17, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 19, 0, 0, DateTimeKind.Unspecified),
                             StationId = 14,
-                            TrainId = 2,
-                            TrainTimeTableId = 44
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 45,
+                            Id = 46,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 25, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 44, 0, 0, DateTimeKind.Unspecified),
                             StationId = 15,
-                            TrainId = 2,
-                            TrainTimeTableId = 45
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 46,
+                            Id = 47,
+                            ArrivalDate = new DateTime(2020, 10, 10, 20, 48, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 20, 49, 0, 0, DateTimeKind.Unspecified),
                             StationId = 16,
-                            TrainId = 2,
-                            TrainTimeTableId = 46
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 47,
+                            Id = 48,
+                            ArrivalDate = new DateTime(2020, 10, 10, 21, 58, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 21, 59, 0, 0, DateTimeKind.Unspecified),
                             StationId = 36,
-                            TrainId = 2,
-                            TrainTimeTableId = 47
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 48,
+                            Id = 49,
+                            ArrivalDate = new DateTime(2020, 10, 10, 22, 31, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 22, 32, 0, 0, DateTimeKind.Unspecified),
                             StationId = 37,
-                            TrainId = 2,
-                            TrainTimeTableId = 48
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 49,
+                            Id = 50,
+                            ArrivalDate = new DateTime(2020, 10, 10, 23, 10, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 23, 11, 0, 0, DateTimeKind.Unspecified),
                             StationId = 38,
-                            TrainId = 2,
-                            TrainTimeTableId = 49
+                            TrainId = 2
                         },
                         new
                         {
-                            Id = 50,
+                            Id = 51,
+                            ArrivalDate = new DateTime(2020, 10, 10, 23, 48, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDate = new DateTime(2020, 10, 10, 23, 57, 0, 0, DateTimeKind.Unspecified),
                             StationId = 39,
-                            TrainId = 2,
-                            TrainTimeTableId = 50
-                        });
-                });
-
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.TrainTimeTable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan?>("ArrivalTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan?>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("StartingDateOfTimeTable")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArrivalTime", "DepartureTime", "StartingDateOfTimeTable")
-                        .IsUnique()
-                        .HasFilter("[ArrivalTime] IS NOT NULL AND [DepartureTime] IS NOT NULL");
-
-                    b.ToTable("TrainTimeTables");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DepartureTime = new TimeSpan(0, 13, 41, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ArrivalTime = new TimeSpan(0, 14, 0, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 1, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ArrivalTime = new TimeSpan(0, 14, 4, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 5, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ArrivalTime = new TimeSpan(0, 14, 8, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 9, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ArrivalTime = new TimeSpan(0, 14, 13, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 13, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ArrivalTime = new TimeSpan(0, 14, 17, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 18, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ArrivalTime = new TimeSpan(0, 14, 21, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 21, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ArrivalTime = new TimeSpan(0, 14, 26, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 27, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ArrivalTime = new TimeSpan(0, 14, 42, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 43, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ArrivalTime = new TimeSpan(0, 15, 0, 0, 0),
-                            DepartureTime = new TimeSpan(0, 15, 1, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ArrivalTime = new TimeSpan(0, 15, 17, 0, 0),
-                            DepartureTime = new TimeSpan(0, 15, 18, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ArrivalTime = new TimeSpan(0, 15, 29, 0, 0),
-                            DepartureTime = new TimeSpan(0, 15, 30, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ArrivalTime = new TimeSpan(0, 15, 39, 0, 0),
-                            DepartureTime = new TimeSpan(0, 15, 40, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 14,
-                            ArrivalTime = new TimeSpan(0, 16, 0, 0, 0),
-                            DepartureTime = new TimeSpan(0, 16, 7, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 15,
-                            ArrivalTime = new TimeSpan(0, 16, 13, 0, 0),
-                            DepartureTime = new TimeSpan(0, 16, 29, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 16,
-                            ArrivalTime = new TimeSpan(0, 16, 34, 0, 0),
-                            DepartureTime = new TimeSpan(0, 16, 36, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 17,
-                            ArrivalTime = new TimeSpan(0, 17, 30, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 31, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 18,
-                            ArrivalTime = new TimeSpan(0, 17, 54, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 55, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 19,
-                            ArrivalTime = new TimeSpan(0, 18, 21, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 22, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 20,
-                            ArrivalTime = new TimeSpan(0, 18, 46, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 50, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 21,
-                            ArrivalTime = new TimeSpan(0, 18, 54, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 57, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 22,
-                            ArrivalTime = new TimeSpan(0, 19, 23, 0, 0),
-                            DepartureTime = new TimeSpan(0, 19, 35, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 23,
-                            ArrivalTime = new TimeSpan(0, 20, 6, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 9, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 24,
-                            ArrivalTime = new TimeSpan(0, 20, 29, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 30, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 25,
-                            ArrivalTime = new TimeSpan(0, 20, 38, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 39, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 26,
-                            ArrivalTime = new TimeSpan(0, 21, 3, 0, 0),
-                            DepartureTime = new TimeSpan(0, 21, 26, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 27,
-                            ArrivalTime = new TimeSpan(0, 21, 35, 0, 0),
-                            DepartureTime = new TimeSpan(0, 21, 36, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 28,
-                            ArrivalTime = new TimeSpan(0, 21, 57, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 59, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 29,
-                            ArrivalTime = new TimeSpan(0, 22, 23, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 24, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 30,
-                            ArrivalTime = new TimeSpan(0, 22, 36, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 37, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 31,
-                            ArrivalTime = new TimeSpan(0, 22, 44, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 45, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 32,
-                            ArrivalTime = new TimeSpan(0, 22, 53, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 54, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 33,
-                            ArrivalTime = new TimeSpan(0, 23, 1, 0, 0),
-                            DepartureTime = new TimeSpan(0, 23, 2, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 34,
-                            ArrivalTime = new TimeSpan(0, 23, 33, 0, 0),
-                            DepartureTime = new TimeSpan(0, 23, 34, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 35,
-                            ArrivalTime = new TimeSpan(0, 23, 56, 0, 0),
-                            DepartureTime = new TimeSpan(0, 23, 59, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 36,
-                            ArrivalTime = new TimeSpan(0, 17, 32, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 58, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 37,
-                            ArrivalTime = new TimeSpan(0, 18, 18, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 19, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 38,
-                            ArrivalTime = new TimeSpan(0, 18, 38, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 39, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 39,
-                            ArrivalTime = new TimeSpan(0, 18, 55, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 56, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 40,
-                            ArrivalTime = new TimeSpan(0, 19, 13, 0, 0),
-                            DepartureTime = new TimeSpan(0, 19, 14, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 41,
-                            ArrivalTime = new TimeSpan(0, 19, 30, 0, 0),
-                            DepartureTime = new TimeSpan(0, 19, 31, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 42,
-                            ArrivalTime = new TimeSpan(0, 19, 43, 0, 0),
-                            DepartureTime = new TimeSpan(0, 19, 44, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 43,
-                            ArrivalTime = new TimeSpan(0, 19, 54, 0, 0),
-                            DepartureTime = new TimeSpan(0, 19, 55, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 44,
-                            ArrivalTime = new TimeSpan(0, 20, 17, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 19, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 45,
-                            ArrivalTime = new TimeSpan(0, 20, 25, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 44, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 46,
-                            ArrivalTime = new TimeSpan(0, 20, 48, 0, 0),
-                            DepartureTime = new TimeSpan(0, 20, 49, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 47,
-                            ArrivalTime = new TimeSpan(0, 21, 58, 0, 0),
-                            DepartureTime = new TimeSpan(0, 21, 59, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 48,
-                            ArrivalTime = new TimeSpan(0, 22, 31, 0, 0),
-                            DepartureTime = new TimeSpan(0, 22, 32, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 49,
-                            ArrivalTime = new TimeSpan(0, 23, 10, 0, 0),
-                            DepartureTime = new TimeSpan(0, 23, 11, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 50,
-                            ArrivalTime = new TimeSpan(0, 23, 48, 0, 0),
-                            DepartureTime = new TimeSpan(0, 23, 57, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            TrainId = 2
                         });
                 });
 
@@ -7326,7 +6998,7 @@ namespace TrainSeatReservation.Data.Migrations
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.DictionaryItem", b =>
                 {
                     b.HasOne("TrainSeatReservation.EntityFramework.Models.Dictionary", "Dictionary")
-                        .WithMany("DictionaryItems")
+                        .WithMany()
                         .HasForeignKey("DictionaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -7425,7 +7097,7 @@ namespace TrainSeatReservation.Data.Migrations
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Train", b =>
                 {
                     b.HasOne("TrainSeatReservation.EntityFramework.Models.DictionaryItem", "Type")
-                        .WithMany("Trains")
+                        .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -7466,17 +7138,9 @@ namespace TrainSeatReservation.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.TrainTimeTable", "TrainTimeTable")
-                        .WithMany("TrainStations")
-                        .HasForeignKey("TrainTimeTableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Station");
 
                     b.Navigation("Train");
-
-                    b.Navigation("TrainTimeTable");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Carriage", b =>
@@ -7484,16 +7148,6 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Navigation("Seats");
 
                     b.Navigation("TrainCarriages");
-                });
-
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Dictionary", b =>
-                {
-                    b.Navigation("DictionaryItems");
-                });
-
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.DictionaryItem", b =>
-                {
-                    b.Navigation("Trains");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Route", b =>
@@ -7509,11 +7163,6 @@ namespace TrainSeatReservation.Data.Migrations
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Train", b =>
                 {
                     b.Navigation("TrainCarriages");
-                });
-
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.TrainTimeTable", b =>
-                {
-                    b.Navigation("TrainStations");
                 });
 #pragma warning restore 612, 618
         }

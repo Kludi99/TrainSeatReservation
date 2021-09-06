@@ -14,6 +14,12 @@ namespace TrainSeatReservation.EntityFramework.AutoMapper
     {
         public MapperProfile()
         {
+            CreateMap<Dictionary, DictionaryDto>();
+            CreateMap<DictionaryDto, Dictionary>();
+
+            CreateMap<DictionaryItem, DictionaryItemDto>();
+            CreateMap<DictionaryItemDto, DictionaryItem>();
+
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
 
@@ -43,6 +49,9 @@ namespace TrainSeatReservation.EntityFramework.AutoMapper
 
             CreateMap<TrainStation, TrainStationDto>();
             CreateMap<TrainStationDto, TrainStation>();
+
+            CreateMap<Seat, SeatDto>();
+            CreateMap<SeatDto, Seat>();
 
         }
     }
