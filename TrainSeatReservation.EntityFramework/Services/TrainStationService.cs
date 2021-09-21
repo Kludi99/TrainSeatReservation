@@ -60,6 +60,7 @@ namespace TrainSeatReservation.EntityFramework.Services
             var entity = _context.TrainStations
                 .Include(t => t.Station)
                 .Include(t => t.Train)
+                .Include(t => t.TrainTimeTable)
                 .SingleOrDefault(x => x.Id == id);
 
             _context.Remove(entity);
@@ -80,6 +81,7 @@ namespace TrainSeatReservation.EntityFramework.Services
             var trainStation = _context.TrainStations
                 .Include(t => t.Station)
                 .Include(t => t.Train)
+                .Include(t => t.TrainTimeTable)
                 .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
@@ -107,7 +109,8 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var trainStations = _context.TrainStations
                 .Include(t => t.Station)
-                .Include(t => t.Train);
+                .Include(t => t.Train)
+                .Include(t => t.TrainTimeTable);
             try
             {
                 return _mapper.Map<TrainStationDto[]>(trainStations);

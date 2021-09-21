@@ -11,5 +11,7 @@ namespace TrainSeatReservation.Commons.Dto
         public int Id { get; set; }
         public int CarriageId { get; set; }
         public int TrainId { get; set; }
+        public CarriageDto Carriage { get; set; }
+        public TrainDto Train { get; set; }
     }
 }

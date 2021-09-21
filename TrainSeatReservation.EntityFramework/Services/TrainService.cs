@@ -122,7 +122,19 @@ namespace TrainSeatReservation.EntityFramework.Services
         }
         private TrainDto GetTrainDto(int id)
         {
-            var train = _context.Trains.Include(x => x.Type).AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var train = _context.Trains
+                .Include(x => x.Type)
+                .Include(x => x.Route)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.CarriageClass)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.Type)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.Seats)
+                .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
                 return _mapper.Map<TrainDto>(train);
@@ -147,7 +159,18 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<TrainDto> GetTrainsQuery()
         {
-            var trains = _context.Trains.Include(x => x.Type);
+            var trains = _context.Trains
+                .Include(x => x.Type)
+                .Include(x => x.Route)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.CarriageClass)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.Type)
+                .Include(x => x.TrainCarriages)
+                    .ThenInclude(x => x.Carriage)
+                        .ThenInclude(x => x.Seats);
             try
             {
                 return _mapper.Map<TrainDto[]>(trains);

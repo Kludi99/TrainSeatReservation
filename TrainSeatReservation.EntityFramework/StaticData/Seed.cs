@@ -1021,8 +1021,8 @@ namespace TrainSeatReservation.Data
         private void Routes()
         {
             modelBuilder.Entity<Route>().HasData(
-                new Route { Id = 1, Name = "Białystok-Zgorzelec"},
-                new Route { Id = 2, Name = "Białystok-Kraków Główny"}
+                new Route { Id = 1, Name = "Białystok-Zgorzelec", TrainId = 1},
+                new Route { Id = 2, Name = "Białystok-Kraków Główny", TrainId = 2}
                 );
         }
 

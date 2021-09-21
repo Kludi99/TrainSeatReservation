@@ -63,6 +63,12 @@ namespace TrainSeatReservation.EntityFramework.Services
             _context.SaveChanges();
 
         }
+        public List<StationDto> FindStation(string prefix)
+        {
+            var entities = _context.Stations.Where(x => x.Name.Contains(prefix));
+            var stations = _mapper.Map<StationDto[]>(entities);
+            return stations.ToList();
+        }
         public bool IsStationExists(int id)
         {
             if (_context.Stations.Any(x => x.Id == id))

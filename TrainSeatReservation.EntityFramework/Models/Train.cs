@@ -14,6 +14,7 @@ namespace TrainSeatReservation.EntityFramework.Models
         public DictionaryItem Type { get; set; }
         public int TypeId { get; set; }
         public bool IsActive { get; set; }
+        public Route Route { get; set; }
         public ICollection<TrainCarriage> TrainCarriages { get; set; }
     }
 }

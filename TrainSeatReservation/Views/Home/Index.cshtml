@@ -1,8 +1,77 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @using (Html.BeginForm("Index", "Route", FormMethod.Post))
+    {
+        <p>Szukaj połączenia</p>
+        <label for="firstStation">Z:</label><input type="text" id="firstStation" name="firstStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+        @Html.Hidden("firstStationId");
+        <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+        @Html.Hidden("lastStationId");
+        <p>Data podróży: <input type="text" id="datepicker"></p>
+        @Html.Hidden("date");
+        @Html.Hidden("datePickerValue");
+        <button type="submit" id="submitButton">Szukaj</button>
+    }
+
+
+    @*  <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#datepicker").change(function () {
+
+            $("#date").val($("#datepicker").val().toString());
+
+        });
+        $("#datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+        $(".station").autocomplete({
+            source: function (request, resp) {
+                $.ajax({
+                    url: "@Url.Action("StationsList")",
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: request.term },
+                    success: function (data) {
+                        console.log(data);
+                        resp($.map(data.data, function (item) {
+                            console.log(item);
+
+                            return { label: item.name, value: item.name, id: item.id };
+                        }))
+
+                    },
+                   
+                });
+            },
+            select: function (event, ui) {
+               // var firstStation = $("#firstStation").val();
+               // var lastStation = $("#lastStation").val();
+                //alert(JSON.stringify(ui));
+                //alert(JSON.stringify(event));
+                //alert(firstStation);
+                //alert(ui);
+                if ($("#firstStation").is(":focus")) {
+                    //if (firstStation == ui.item.value)
+                    $('#firstStationId').val(ui.item.id);
+                }
+                if ($("#lastStation").is(":focus")) {
+                    $('#lastStationId').val(ui.item.id);
+                }
+                // $('#firstStation').val(ui.item.name);
+            },
+            messages: {
+                noResults: "",
+                results: function (count) {
+                    return count + (count > 1 ? ' results' : ' result ') + ' found';
+                }
+            }
+        });
+    });
+
+</script>

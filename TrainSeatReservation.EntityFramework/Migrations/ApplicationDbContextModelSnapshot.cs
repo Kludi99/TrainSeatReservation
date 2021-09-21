@@ -48,15 +48,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d365021b-8ff2-49ab-83e6-976debfca6a8",
-                            ConcurrencyStamp = "45cc1693-0ea6-473a-8a4e-2f6c2b91f53f",
+                            Id = "89e8b357-a3ac-46e1-aad1-4cbc1062afbc",
+                            ConcurrencyStamp = "c20d4e8d-a1b0-4375-b0b4-1155d996b2b1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "023e8964-0220-4bc2-9e1e-ab6e6c5f1c81",
-                            ConcurrencyStamp = "0ba7d32b-c727-4c91-889e-3704669fdf47",
+                            Id = "db4eab58-98d5-488f-847e-735472c66737",
+                            ConcurrencyStamp = "62b7bca8-7c3d-4761-9583-24c1ce97e6ed",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -704,7 +704,13 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TrainId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainId")
+                        .IsUnique();
 
                     b.ToTable("Routes");
 
@@ -712,12 +718,14 @@ namespace TrainSeatReservation.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Białystok-Zgorzelec"
+                            Name = "Białystok-Zgorzelec",
+                            TrainId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Białystok-Kraków Główny"
+                            Name = "Białystok-Kraków Główny",
+                            TrainId = 2
                         });
                 });
 
@@ -7334,6 +7342,17 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Navigation("Dictionary");
                 });
 
+            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Route", b =>
+                {
+                    b.HasOne("TrainSeatReservation.EntityFramework.Models.Train", "Train")
+                        .WithOne("Route")
+                        .HasForeignKey("TrainSeatReservation.EntityFramework.Models.Route", "TrainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Train");
+                });
+
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.RouteStation", b =>
                 {
                     b.HasOne("TrainSeatReservation.EntityFramework.Models.Station", "EndStation")
@@ -7508,6 +7527,8 @@ namespace TrainSeatReservation.Data.Migrations
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Train", b =>
                 {
+                    b.Navigation("Route");
+
                     b.Navigation("TrainCarriages");
                 });
 
