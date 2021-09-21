@@ -23,8 +23,9 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int DepartureTrainStationId { get; set; }
         [ForeignKey("DepartureTrainStationId")]
         public TrainStation DepartureTrainStation { get; set; }
-
        public ICollection<TicketDiscount> TicketDiscounts { get; set; }
         public double Price { get; set; }
+        public Seat Seat { get; set; }
+        public int SeatId { get; set; }
     }
 }

@@ -63,6 +63,10 @@ namespace TrainSeatReservation.EntityFramework.Services
             _context.SaveChanges();
 
         }
+       /* public List<RouteDto> GetRoutesWithStations(int firstStation, int lastStation)
+        {
+            var routes = _context.Routes.Include(x => x.RouteStations).Where(x => x.RouteStations.)
+        } */
         public bool IsRouteExists(int id)
         {
             if (_context.Routes.Any(x => x.Id == id))
@@ -74,7 +78,16 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private RouteDto GetRouteDto(int id)
         {
-            var route = _context.Routes.AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var route = _context.Routes
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.Route)
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.StartStation)
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.EndStation)
+                .Include(x => x.Train)
+                .AsNoTracking()
+                .SingleOrDefault(x => x.Id == id);
             try
             {
                 return _mapper.Map<RouteDto>(route);
@@ -99,7 +112,14 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<RouteDto> GetRoutesQuery()
         {
-            var routes = _context.Routes;
+            var routes = _context.Routes
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.Route)
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.StartStation)
+                .Include(x => x.RouteStations)
+                    .ThenInclude(x => x.EndStation)
+                    .Include(x => x.Train);
             try
             {
                 return _mapper.Map<RouteDto[]>(routes);

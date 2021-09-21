@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Searching Result";
+}
+<div class="row">
+    @ViewBag.Date
+    @foreach (var item in ViewBag.Routes)
+    {
+        <div class="col-4">
+            @item.Name
+            <div>
+                @item.Train.Name @item.Train.Number
+            </div>
+            <div>
+                @foreach (var details in ViewBag.RouteDetails)
+                {
+                    @if (item.Id == details.RouteId)
+                    {
+                        <b>@details.StartStation.Name</b>
+                        <b>@details.EndStation.Name</b>
+                        <div>
+                            Długość trasy: @details.Distance
+                        </div>
+                        <div>
+                            Cena za przejazd bez zniżek: @details.Price
+                        </div>
+                        @foreach (var trainStation in ViewBag.TrainStationDetails)
+                        {
+                            @if (item.TrainId == trainStation.TrainId && trainStation.StationId == details.StartStation.Id)
+                            {
+
+                                <b>@trainStation.TrainTimeTable.DepartureTime   - </b>
+
+                            }
+                            @if (item.TrainId == trainStation.TrainId && trainStation.StationId == details.EndStation.Id)
+                            {
+
+                                <b>@trainStation.TrainTimeTable.ArrivalTime</b>
+
+                            }
+
+                        }
+            <div>
+                 <a asp-action="ReserveSeat" asp-route-id="@item.TrainId" asp-route-firstStationId="@details.StartStation.Id" asp-route-endStationId="@details.EndStation.Id" asp-route-date="@ViewBag.Date.ToString()">Zarezerwuj </a> 
+            </div>
+                        break;
+
+                    }
+
+                }
+
+
+            </div>
+        </div>
+    }
+</div>

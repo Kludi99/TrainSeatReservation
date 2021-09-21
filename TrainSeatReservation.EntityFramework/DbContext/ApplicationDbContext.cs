@@ -68,7 +68,13 @@ namespace TrainSeatReservation.Data
                 .WithMany(x => x.TrainCarriages)
                 .HasForeignKey(k => k.TrainId);
 
-           // builder.Entity<Discount>().ToTable("Discount");
+            builder.Entity<Train>()
+                   .HasOne(a => a.Route)
+                   .WithOne(b => b.Train)
+                   .HasForeignKey<Route>(b => b.TrainId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            // builder.Entity<Discount>().ToTable("Discount");
 
             //builder.Entity<Route>().ToTable("Route");
 

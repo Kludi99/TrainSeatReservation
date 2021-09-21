@@ -42,5 +42,9 @@ namespace TrainSeatReservation.Facades
         {
             return _service.IsStationExists(id);
         }
+        public List<StationDto> FindStation(string prefix)
+        {
+            return _service.FindStation(prefix);
+        }
     }
 }

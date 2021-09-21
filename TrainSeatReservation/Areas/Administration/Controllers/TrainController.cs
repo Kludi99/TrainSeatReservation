@@ -135,6 +135,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
 
             return View(train);
         }
+    
 
         // POST: Administration/Train/Delete/5
         [HttpPost, ActionName("Delete")]

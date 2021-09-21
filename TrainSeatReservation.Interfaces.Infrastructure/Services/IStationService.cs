@@ -15,5 +15,6 @@ namespace TrainSeatReservation.Interfaces.Infrastructure.Services
         void UpdateStation(StationDto station);
         void DeleteStation(int id);
         bool IsStationExists(int id);
+        List<StationDto> FindStation(string prefix);
     }
 }
