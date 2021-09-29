@@ -50,6 +50,26 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddScoped<IRouteStationFcd, RouteStationFcd>();
             serviceCollection.AddScoped<IRouteStationService, RouteStationService>();
 
+            serviceCollection.AddScoped<ITicketFcd, TicketFcd>();
+            serviceCollection.AddScoped<ITicketService, TicketService>();
+
+            serviceCollection.AddScoped<IDictionaryFcd, DictionaryFcd>();
+            serviceCollection.AddScoped<IDictionaryService, DictionaryService>();
+
+            serviceCollection.AddScoped<IDiscountFcd, DiscountFcd>();
+            serviceCollection.AddScoped<IDiscountService, DiscountService>();
+
+            serviceCollection.AddScoped<ITicketDiscountFcd, TicketDiscountFcd>();
+            serviceCollection.AddScoped<ITicketDiscountService, TicketDiscountService>();
+
+            serviceCollection.AddScoped<ITrainCarriageFcd, TrainCarriageFcd>();
+            serviceCollection.AddScoped<ITrainCarriageService, TrainCarriageService>();
+
+            serviceCollection.AddScoped<ISeatFcd, SeatFcd>();
+            serviceCollection.AddScoped<ISeatService, SeatService>();
+
+            serviceCollection.AddScoped<ITrainTimeTableFcd, TrainTimeTableFcd>();
+            serviceCollection.AddScoped<ITrainTimeTableService, TrainTimeTableService>();
 
             serviceCollection.AddSingleton<IEmailConfiguration>(configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             serviceCollection.AddTransient<IEmailService, EmailService>();

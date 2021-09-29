@@ -40,7 +40,7 @@
 
                         }
             <div>
-                 <a asp-action="ReserveSeat" asp-route-id="@item.TrainId" asp-route-firstStationId="@details.StartStation.Id" asp-route-endStationId="@details.EndStation.Id" asp-route-date="@ViewBag.Date.ToString()">Zarezerwuj </a> 
+                 <a asp-action="AddPassengers" asp-route-id="@item.TrainId" asp-route-firstStationId="@details.StartStation.Id" asp-route-endStationId="@details.EndStation.Id" asp-route-date="@ViewBag.Date.ToString()" asp-route-routeId="@item.Id">Zarezerwuj </a> 
             </div>
                         break;
 
