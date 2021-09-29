@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210922152351_UpdateTicketEntity")]
+    partial class UpdateTicketEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c1908a05-673c-41c1-a210-5e5a2e5ab4f8",
-                            ConcurrencyStamp = "ed8494d0-79e9-4ead-835d-fb8e79700a7b",
+                            Id = "25709c2c-e2da-4051-bf85-a4b4bd84905a",
+                            ConcurrencyStamp = "84b03216-597c-46ad-9cc5-1327e530cc70",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d26f87a6-3580-434e-ac4e-0ffbc7babc70",
-                            ConcurrencyStamp = "5b119b17-f9e4-4a51-9abd-3cc6e8f65679",
+                            Id = "05f48e72-0ee0-429c-a2dc-b046d050bf57",
+                            ConcurrencyStamp = "18033f36-115e-49e4-b6db-c759e11ffeff",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -726,12 +728,6 @@ namespace TrainSeatReservation.Data.Migrations
                             Id = 2,
                             Name = "Białystok-Kraków Główny",
                             TrainId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Gdynia Główna - Bohumin",
-                            TrainId = 3
                         });
                 });
 
@@ -1251,196 +1247,6 @@ namespace TrainSeatReservation.Data.Migrations
                             Price = 5.0,
                             RouteId = 2,
                             StartStationId = 38
-                        },
-                        new
-                        {
-                            Id = 49,
-                            Distance = 23,
-                            EndStationId = 41,
-                            Order = 1,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 40
-                        },
-                        new
-                        {
-                            Id = 50,
-                            Distance = 21,
-                            EndStationId = 42,
-                            Order = 2,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 41
-                        },
-                        new
-                        {
-                            Id = 51,
-                            Distance = 30,
-                            EndStationId = 43,
-                            Order = 3,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 42
-                        },
-                        new
-                        {
-                            Id = 52,
-                            Distance = 20,
-                            EndStationId = 44,
-                            Order = 4,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 43
-                        },
-                        new
-                        {
-                            Id = 53,
-                            Distance = 36,
-                            EndStationId = 45,
-                            Order = 5,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 44
-                        },
-                        new
-                        {
-                            Id = 54,
-                            Distance = 20,
-                            EndStationId = 46,
-                            Order = 6,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 45
-                        },
-                        new
-                        {
-                            Id = 55,
-                            Distance = 17,
-                            EndStationId = 47,
-                            Order = 7,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 46
-                        },
-                        new
-                        {
-                            Id = 56,
-                            Distance = 45,
-                            EndStationId = 37,
-                            Order = 8,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 47
-                        },
-                        new
-                        {
-                            Id = 57,
-                            Distance = 32,
-                            EndStationId = 14,
-                            Order = 9,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 48
-                        },
-                        new
-                        {
-                            Id = 58,
-                            Distance = 23,
-                            EndStationId = 15,
-                            Order = 10,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 14
-                        },
-                        new
-                        {
-                            Id = 59,
-                            Distance = 23,
-                            EndStationId = 16,
-                            Order = 11,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 15
-                        },
-                        new
-                        {
-                            Id = 60,
-                            Distance = 23,
-                            EndStationId = 49,
-                            Order = 12,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 16
-                        },
-                        new
-                        {
-                            Id = 61,
-                            Distance = 30,
-                            EndStationId = 50,
-                            Order = 13,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 49
-                        },
-                        new
-                        {
-                            Id = 62,
-                            Distance = 20,
-                            EndStationId = 51,
-                            Order = 14,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 50
-                        },
-                        new
-                        {
-                            Id = 63,
-                            Distance = 36,
-                            EndStationId = 52,
-                            Order = 15,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 51
-                        },
-                        new
-                        {
-                            Id = 64,
-                            Distance = 20,
-                            EndStationId = 53,
-                            Order = 16,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 52
-                        },
-                        new
-                        {
-                            Id = 65,
-                            Distance = 17,
-                            EndStationId = 54,
-                            Order = 17,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 53
-                        },
-                        new
-                        {
-                            Id = 66,
-                            Distance = 45,
-                            EndStationId = 55,
-                            Order = 18,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 54
-                        },
-                        new
-                        {
-                            Id = 67,
-                            Distance = 32,
-                            EndStationId = 56,
-                            Order = 19,
-                            Price = 5.0,
-                            RouteId = 3,
-                            StartStationId = 55
                         });
                 });
 
@@ -6454,108 +6260,6 @@ namespace TrainSeatReservation.Data.Migrations
                             Id = 39,
                             City = "Kraków",
                             Name = "Kraków Główny"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            City = "Gdynia",
-                            Name = "Gdynia Główna"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            City = "Sopot",
-                            Name = "Sopot"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            City = "Gdańsk",
-                            Name = "Gdańsk Oliwa"
-                        },
-                        new
-                        {
-                            Id = 43,
-                            City = "Gdańsk",
-                            Name = "Gdańsk Wrzeszcz"
-                        },
-                        new
-                        {
-                            Id = 44,
-                            City = "Gdańsk",
-                            Name = "Gdańsk Główny"
-                        },
-                        new
-                        {
-                            Id = 45,
-                            City = "Tczew",
-                            Name = "Tczew"
-                        },
-                        new
-                        {
-                            Id = 46,
-                            City = "Malbork",
-                            Name = "Malbork"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            City = "Iława",
-                            Name = "Iława Główna"
-                        },
-                        new
-                        {
-                            Id = 48,
-                            City = "Działdowo",
-                            Name = "Działdowo"
-                        },
-                        new
-                        {
-                            Id = 49,
-                            City = "Zawiercie",
-                            Name = "Zawiercie"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            City = "Sosnowiec",
-                            Name = "Sosnowiec Główny"
-                        },
-                        new
-                        {
-                            Id = 51,
-                            City = "Katowice",
-                            Name = "Katowice"
-                        },
-                        new
-                        {
-                            Id = 52,
-                            City = "Tychy",
-                            Name = "Tychy"
-                        },
-                        new
-                        {
-                            Id = 53,
-                            City = "Rybnik",
-                            Name = "Rybnik"
-                        },
-                        new
-                        {
-                            Id = 54,
-                            City = "Wodzisław Śląski",
-                            Name = "Wodzisław Śląski"
-                        },
-                        new
-                        {
-                            Id = 55,
-                            City = "Chałupki",
-                            Name = "Chałupki"
-                        },
-                        new
-                        {
-                            Id = 56,
-                            City = "Bohumin",
-                            Name = "Bohumin"
                         });
                 });
 
@@ -7185,146 +6889,6 @@ namespace TrainSeatReservation.Data.Migrations
                             StationId = 39,
                             TrainId = 2,
                             TrainTimeTableId = 50
-                        },
-                        new
-                        {
-                            Id = 51,
-                            StationId = 40,
-                            TrainId = 3,
-                            TrainTimeTableId = 51
-                        },
-                        new
-                        {
-                            Id = 52,
-                            StationId = 41,
-                            TrainId = 3,
-                            TrainTimeTableId = 52
-                        },
-                        new
-                        {
-                            Id = 53,
-                            StationId = 42,
-                            TrainId = 3,
-                            TrainTimeTableId = 53
-                        },
-                        new
-                        {
-                            Id = 54,
-                            StationId = 43,
-                            TrainId = 3,
-                            TrainTimeTableId = 54
-                        },
-                        new
-                        {
-                            Id = 55,
-                            StationId = 44,
-                            TrainId = 3,
-                            TrainTimeTableId = 55
-                        },
-                        new
-                        {
-                            Id = 56,
-                            StationId = 45,
-                            TrainId = 3,
-                            TrainTimeTableId = 56
-                        },
-                        new
-                        {
-                            Id = 57,
-                            StationId = 46,
-                            TrainId = 3,
-                            TrainTimeTableId = 57
-                        },
-                        new
-                        {
-                            Id = 58,
-                            StationId = 47,
-                            TrainId = 3,
-                            TrainTimeTableId = 58
-                        },
-                        new
-                        {
-                            Id = 59,
-                            StationId = 48,
-                            TrainId = 3,
-                            TrainTimeTableId = 59
-                        },
-                        new
-                        {
-                            Id = 60,
-                            StationId = 14,
-                            TrainId = 3,
-                            TrainTimeTableId = 60
-                        },
-                        new
-                        {
-                            Id = 61,
-                            StationId = 15,
-                            TrainId = 3,
-                            TrainTimeTableId = 61
-                        },
-                        new
-                        {
-                            Id = 62,
-                            StationId = 16,
-                            TrainId = 3,
-                            TrainTimeTableId = 62
-                        },
-                        new
-                        {
-                            Id = 63,
-                            StationId = 49,
-                            TrainId = 3,
-                            TrainTimeTableId = 63
-                        },
-                        new
-                        {
-                            Id = 64,
-                            StationId = 50,
-                            TrainId = 3,
-                            TrainTimeTableId = 64
-                        },
-                        new
-                        {
-                            Id = 65,
-                            StationId = 51,
-                            TrainId = 3,
-                            TrainTimeTableId = 65
-                        },
-                        new
-                        {
-                            Id = 66,
-                            StationId = 52,
-                            TrainId = 3,
-                            TrainTimeTableId = 66
-                        },
-                        new
-                        {
-                            Id = 67,
-                            StationId = 53,
-                            TrainId = 3,
-                            TrainTimeTableId = 67
-                        },
-                        new
-                        {
-                            Id = 68,
-                            StationId = 54,
-                            TrainId = 3,
-                            TrainTimeTableId = 68
-                        },
-                        new
-                        {
-                            Id = 69,
-                            StationId = 55,
-                            TrainId = 3,
-                            TrainTimeTableId = 69
-                        },
-                        new
-                        {
-                            Id = 70,
-                            StationId = 56,
-                            TrainId = 3,
-                            TrainTimeTableId = 70
                         });
                 });
 
@@ -7700,144 +7264,6 @@ namespace TrainSeatReservation.Data.Migrations
                             Id = 50,
                             ArrivalTime = new TimeSpan(0, 23, 48, 0, 0),
                             DepartureTime = new TimeSpan(0, 23, 57, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 51,
-                            DepartureTime = new TimeSpan(0, 10, 51, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 52,
-                            ArrivalTime = new TimeSpan(0, 10, 58, 0, 0),
-                            DepartureTime = new TimeSpan(0, 10, 59, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 53,
-                            ArrivalTime = new TimeSpan(0, 11, 3, 0, 0),
-                            DepartureTime = new TimeSpan(0, 11, 4, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 54,
-                            ArrivalTime = new TimeSpan(0, 11, 7, 0, 0),
-                            DepartureTime = new TimeSpan(0, 11, 8, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 55,
-                            ArrivalTime = new TimeSpan(0, 11, 13, 0, 0),
-                            DepartureTime = new TimeSpan(0, 11, 16, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 56,
-                            ArrivalTime = new TimeSpan(0, 11, 32, 0, 0),
-                            DepartureTime = new TimeSpan(0, 11, 33, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 57,
-                            ArrivalTime = new TimeSpan(0, 11, 44, 0, 0),
-                            DepartureTime = new TimeSpan(0, 11, 45, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 58,
-                            ArrivalTime = new TimeSpan(0, 12, 20, 0, 0),
-                            DepartureTime = new TimeSpan(0, 12, 21, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 59,
-                            ArrivalTime = new TimeSpan(0, 12, 52, 0, 0),
-                            DepartureTime = new TimeSpan(0, 12, 53, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 60,
-                            ArrivalTime = new TimeSpan(0, 14, 1, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 4, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 61,
-                            ArrivalTime = new TimeSpan(0, 14, 10, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 17, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 62,
-                            ArrivalTime = new TimeSpan(0, 14, 21, 0, 0),
-                            DepartureTime = new TimeSpan(0, 14, 22, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 63,
-                            ArrivalTime = new TimeSpan(0, 16, 15, 0, 0),
-                            DepartureTime = new TimeSpan(0, 16, 16, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 64,
-                            ArrivalTime = new TimeSpan(0, 16, 42, 0, 0),
-                            DepartureTime = new TimeSpan(0, 16, 43, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 65,
-                            ArrivalTime = new TimeSpan(0, 16, 52, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 5, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 66,
-                            ArrivalTime = new TimeSpan(0, 17, 21, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 24, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 67,
-                            ArrivalTime = new TimeSpan(0, 17, 53, 0, 0),
-                            DepartureTime = new TimeSpan(0, 17, 54, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 68,
-                            ArrivalTime = new TimeSpan(0, 18, 8, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 9, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 69,
-                            ArrivalTime = new TimeSpan(0, 18, 26, 0, 0),
-                            DepartureTime = new TimeSpan(0, 18, 27, 0, 0),
-                            StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 70,
-                            ArrivalTime = new TimeSpan(0, 18, 33, 0, 0),
                             StartingDateOfTimeTable = new DateTime(2021, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

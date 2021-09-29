@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainSeatReservation.Commons\TrainSeatReservation.Commons.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj" />
     <ProjectReference Include="..\TrainSeatReservation.Interfaces.Infrastructure\TrainSeatReservation.Interfaces.Infrastructure.csproj" />
   </ItemGroup>
 

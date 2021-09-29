@@ -902,7 +902,25 @@ namespace TrainSeatReservation.Data
                 new Station { Id = 36, Name = "Opoczno Południe", City = "Opoczno" },
                 new Station { Id = 37, Name = "Włoszczowa Północ", City = "Włoszczowa" },
                 new Station { Id = 38, Name = "Miechów", City = "Miechów" },
-                new Station { Id = 39, Name = "Kraków Główny", City = "Kraków" }
+                new Station { Id = 39, Name = "Kraków Główny", City = "Kraków" },
+
+                new Station { Id = 40, Name = "Gdynia Główna", City = "Gdynia" },
+                new Station { Id = 41, Name = "Sopot", City = "Sopot" },
+                new Station { Id = 42, Name = "Gdańsk Oliwa", City = "Gdańsk" },
+                new Station { Id = 43, Name = "Gdańsk Wrzeszcz", City = "Gdańsk" },
+                new Station { Id = 44, Name = "Gdańsk Główny", City = "Gdańsk" },
+                new Station { Id = 45, Name = "Tczew", City = "Tczew" },
+                new Station { Id = 46, Name = "Malbork", City = "Malbork" },
+                new Station { Id = 47, Name = "Iława Główna", City = "Iława" },
+                new Station { Id = 48, Name = "Działdowo", City = "Działdowo" },
+                new Station { Id = 49, Name = "Zawiercie", City = "Zawiercie" },
+                new Station { Id = 50, Name = "Sosnowiec Główny", City = "Sosnowiec" },
+                new Station { Id = 51, Name = "Katowice", City = "Katowice" },
+                new Station { Id = 52, Name = "Tychy", City = "Tychy" },
+                new Station { Id = 53, Name = "Rybnik", City = "Rybnik" },
+                new Station { Id = 54, Name = "Wodzisław Śląski", City = "Wodzisław Śląski" },
+                new Station { Id = 55, Name = "Chałupki", City = "Chałupki" },
+                new Station { Id = 56, Name = "Bohumin", City = "Bohumin" }
                 );
         }
         private void TrainTimeTables()
@@ -958,8 +976,28 @@ namespace TrainSeatReservation.Data
                 new TrainTimeTable { Id = 47, ArrivalTime = new TimeSpan(21, 58, 0), DepartureTime = new TimeSpan(21, 59, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
                 new TrainTimeTable { Id = 48, ArrivalTime = new TimeSpan(22, 31, 0), DepartureTime = new TimeSpan(22, 32, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
                 new TrainTimeTable { Id = 49, ArrivalTime = new TimeSpan(23, 10, 0), DepartureTime = new TimeSpan(23, 11, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
-                new TrainTimeTable { Id = 50, ArrivalTime = new TimeSpan(23, 48, 0), DepartureTime = new TimeSpan(23, 57, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) }
+                new TrainTimeTable { Id = 50, ArrivalTime = new TimeSpan(23, 48, 0), DepartureTime = new TimeSpan(23, 57, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
 
+                new TrainTimeTable { Id = 51, DepartureTime = new TimeSpan(10, 51, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 52, ArrivalTime = new TimeSpan(10, 58, 0), DepartureTime = new TimeSpan(10, 59, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 53, ArrivalTime = new TimeSpan(11, 03, 0), DepartureTime = new TimeSpan(11, 04, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 54, ArrivalTime = new TimeSpan(11, 07, 0), DepartureTime = new TimeSpan(11, 08, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 55, ArrivalTime = new TimeSpan(11, 13, 0), DepartureTime = new TimeSpan(11, 16, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 56, ArrivalTime = new TimeSpan(11, 32, 0), DepartureTime = new TimeSpan(11, 33, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 57, ArrivalTime = new TimeSpan(11, 44, 0), DepartureTime = new TimeSpan(11, 45, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 58, ArrivalTime = new TimeSpan(12, 20, 0), DepartureTime = new TimeSpan(12, 21, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 59, ArrivalTime = new TimeSpan(12, 52, 0), DepartureTime = new TimeSpan(12, 53, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 60, ArrivalTime = new TimeSpan(14, 01, 0), DepartureTime = new TimeSpan(14, 04, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 61, ArrivalTime = new TimeSpan(14, 10, 0), DepartureTime = new TimeSpan(14, 17, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 62, ArrivalTime = new TimeSpan(14, 21, 0), DepartureTime = new TimeSpan(14, 22, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 63, ArrivalTime = new TimeSpan(16, 15, 0), DepartureTime = new TimeSpan(16, 16, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 64, ArrivalTime = new TimeSpan(16, 42, 0), DepartureTime = new TimeSpan(16, 43, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 65, ArrivalTime = new TimeSpan(16, 52, 0), DepartureTime = new TimeSpan(17, 05, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 66, ArrivalTime = new TimeSpan(17, 21, 0), DepartureTime = new TimeSpan(17, 24, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 67, ArrivalTime = new TimeSpan(17, 53, 0), DepartureTime = new TimeSpan(17, 54, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 68, ArrivalTime = new TimeSpan(18, 08, 0), DepartureTime = new TimeSpan(18, 09, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 69, ArrivalTime = new TimeSpan(18, 26, 0), DepartureTime = new TimeSpan(18, 27, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) },
+                new TrainTimeTable { Id = 70, ArrivalTime = new TimeSpan(18, 33, 0), StartingDateOfTimeTable = new DateTime(2021, 12, 12) }
                 );
         }
         private void TrainStations()
@@ -1015,14 +1053,36 @@ namespace TrainSeatReservation.Data
                 new TrainStation { Id = 47, StationId = 36, TrainId = 2, TrainTimeTableId = 47 },
                 new TrainStation { Id = 48, StationId = 37, TrainId = 2, TrainTimeTableId = 48 },
                 new TrainStation { Id = 49, StationId = 38, TrainId = 2, TrainTimeTableId = 49 },
-                new TrainStation { Id = 50, StationId = 39, TrainId = 2, TrainTimeTableId = 50 }
+                new TrainStation { Id = 50, StationId = 39, TrainId = 2, TrainTimeTableId = 50 },
+
+                new TrainStation { Id = 51, StationId = 40, TrainId = 3, TrainTimeTableId = 51 },
+                new TrainStation { Id = 52, StationId = 41, TrainId = 3, TrainTimeTableId = 52 },
+                new TrainStation { Id = 53, StationId = 42, TrainId = 3, TrainTimeTableId = 53 },
+                new TrainStation { Id = 54, StationId = 43, TrainId = 3, TrainTimeTableId = 54 },
+                new TrainStation { Id = 55, StationId = 44, TrainId = 3, TrainTimeTableId = 55 },
+                new TrainStation { Id = 56, StationId = 45, TrainId = 3, TrainTimeTableId = 56 },
+                new TrainStation { Id = 57, StationId = 46, TrainId = 3, TrainTimeTableId = 57 },
+                new TrainStation { Id = 58, StationId = 47, TrainId = 3, TrainTimeTableId = 58 },
+                new TrainStation { Id = 59, StationId = 48, TrainId = 3, TrainTimeTableId = 59 },
+                new TrainStation { Id = 60, StationId = 14, TrainId = 3, TrainTimeTableId = 60 },
+                new TrainStation { Id = 61, StationId = 15, TrainId = 3, TrainTimeTableId = 61 },
+                new TrainStation { Id = 62, StationId = 16, TrainId = 3, TrainTimeTableId = 62 },
+                new TrainStation { Id = 63, StationId = 49, TrainId = 3, TrainTimeTableId = 63 },
+                new TrainStation { Id = 64, StationId = 50, TrainId = 3, TrainTimeTableId = 64 },
+                new TrainStation { Id = 65, StationId = 51, TrainId = 3, TrainTimeTableId = 65 },
+                new TrainStation { Id = 66, StationId = 52, TrainId = 3, TrainTimeTableId = 66 },
+                new TrainStation { Id = 67, StationId = 53, TrainId = 3, TrainTimeTableId = 67 },
+                new TrainStation { Id = 68, StationId = 54, TrainId = 3, TrainTimeTableId = 68 },
+                new TrainStation { Id = 69, StationId = 55, TrainId = 3, TrainTimeTableId = 69 },
+                new TrainStation { Id = 70, StationId = 56, TrainId = 3, TrainTimeTableId = 70 }
                 );
         }
         private void Routes()
         {
             modelBuilder.Entity<Route>().HasData(
                 new Route { Id = 1, Name = "Białystok-Zgorzelec", TrainId = 1},
-                new Route { Id = 2, Name = "Białystok-Kraków Główny", TrainId = 2}
+                new Route { Id = 2, Name = "Białystok-Kraków Główny", TrainId = 2},
+                new Route { Id = 3, Name = "Gdynia Główna - Bohumin", TrainId = 3}
                 );
         }
 
@@ -1077,9 +1137,28 @@ namespace TrainSeatReservation.Data
                 new RouteStation { Id = 45, StartStationId = 16, EndStationId = 36, RouteId = 2, Order = 11, Distance = 17, Price = 5 },
                 new RouteStation { Id = 46, StartStationId = 36, EndStationId = 37, RouteId = 2, Order = 12, Distance = 45, Price = 5 },
                 new RouteStation { Id = 47, StartStationId = 37, EndStationId = 38, RouteId = 2, Order = 13, Distance = 32, Price = 5 },
-                new RouteStation { Id = 48, StartStationId = 38, EndStationId = 39, RouteId = 2, Order = 14, Distance = 23, Price = 5 }
+                new RouteStation { Id = 48, StartStationId = 38, EndStationId = 39, RouteId = 2, Order = 14, Distance = 23, Price = 5 },
 
-
+                new RouteStation { Id = 49, StartStationId = 40, EndStationId = 41, RouteId = 3, Order = 1, Distance = 23, Price = 5 },
+                new RouteStation { Id = 50, StartStationId = 41, EndStationId = 42, RouteId = 3, Order = 2, Distance = 21, Price = 5 },
+                new RouteStation { Id = 51, StartStationId = 42, EndStationId = 43, RouteId = 3, Order = 3, Distance = 30, Price = 5 },
+                new RouteStation { Id = 52, StartStationId = 43, EndStationId = 44, RouteId = 3, Order = 4, Distance = 20, Price = 5 },
+                new RouteStation { Id = 53, StartStationId = 44, EndStationId = 45, RouteId = 3, Order = 5, Distance = 36, Price = 5 },
+                new RouteStation { Id = 54, StartStationId = 45, EndStationId = 46, RouteId = 3, Order = 6, Distance = 20, Price = 5 },
+                new RouteStation { Id = 55, StartStationId = 46, EndStationId = 47, RouteId = 3, Order = 7, Distance = 17, Price = 5 },
+                new RouteStation { Id = 56, StartStationId = 47, EndStationId = 37, RouteId = 3, Order = 8, Distance = 45, Price = 5 },
+                new RouteStation { Id = 57, StartStationId = 48, EndStationId = 14, RouteId = 3, Order = 9, Distance = 32, Price = 5 },
+                new RouteStation { Id = 58, StartStationId = 14, EndStationId = 15, RouteId = 3, Order = 10, Distance = 23, Price = 5 },
+                new RouteStation { Id = 59, StartStationId = 15, EndStationId = 16, RouteId = 3, Order = 11, Distance = 23, Price = 5 },
+                new RouteStation { Id = 60, StartStationId = 16, EndStationId = 49, RouteId = 3, Order = 12, Distance = 23, Price = 5 },
+                new RouteStation { Id = 61, StartStationId = 49, EndStationId = 50, RouteId = 3, Order = 13, Distance = 30, Price = 5 },
+                new RouteStation { Id = 62, StartStationId = 50, EndStationId = 51, RouteId = 3, Order = 14, Distance = 20, Price = 5 },
+                new RouteStation { Id = 63, StartStationId = 51, EndStationId = 52, RouteId = 3, Order = 15, Distance = 36, Price = 5 },
+                new RouteStation { Id = 64, StartStationId = 52, EndStationId = 53, RouteId = 3, Order = 16, Distance = 20, Price = 5 },
+                new RouteStation { Id = 65, StartStationId = 53, EndStationId = 54, RouteId = 3, Order = 17, Distance = 17, Price = 5 },
+                new RouteStation { Id = 66, StartStationId = 54, EndStationId = 55, RouteId = 3, Order = 18, Distance = 45, Price = 5 },
+                new RouteStation { Id = 67, StartStationId = 55, EndStationId = 56, RouteId = 3, Order = 19, Distance = 32, Price = 5 }
+             
                 );
         }
     }

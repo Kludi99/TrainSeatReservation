@@ -22,13 +22,15 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        var dateToday = new Date();
         $("#datepicker").change(function () {
 
             $("#date").val($("#datepicker").val().toString());
 
         });
         $("#datepicker").datepicker({
-            dateFormat: 'dd/mm/yy'
+            dateFormat: 'dd/mm/yy',
+            minDate: dateToday
         });
         $(".station").autocomplete({
             source: function (request, resp) {
