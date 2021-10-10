@@ -9,8 +9,9 @@
         @Html.Hidden("firstStationId");
         <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
         @Html.Hidden("lastStationId");
-        <p>Data podróży: <input type="text" id="datepicker"></p>
+        <p>Data podróży: <input type="date" id="datepicker"> <input type="time" id="time"  /> </p>
         @Html.Hidden("date");
+        @Html.Hidden("timeValue");
         @Html.Hidden("datePickerValue");
         <button type="submit" id="submitButton">Szukaj</button>
     }
@@ -21,17 +22,36 @@
 </div>
 <script type="text/javascript">
 
+
     $(document).ready(function () {
+        datepicker.min = new Date().toISOString().split("T")[0];
+
         var dateToday = new Date();
+      //  alert(dateToday.toLocaleString());
+        var datepickerValue = new Date();
         $("#datepicker").change(function () {
-
             $("#date").val($("#datepicker").val().toString());
+           // alert("Handler for .change() called.");
+            datepickerValue = new Date($("#datepicker").val());
+            //alert(dateToday.getDate());
+            if (dateToday.getDate() === datepickerValue.getDate() && dateToday.getMonth() === datepickerValue.getMonth() && dateToday.getFullYear() === datepickerValue.getFullYear()) {
+             //   alert("THE SAME DAY");
+                var timeNow = dateToday.toLocaleTimeString();
+                var hour = timeNow.split(":")[0];
+                var minutes = timeNow.split(":")[1];
+                var stringTime = hour + ":" + minutes;
+              //  alert(timeNow);
+                $("#time").attr('min', stringTime);// = dateToday.now();
+            }
 
         });
-        $("#datepicker").datepicker({
-            dateFormat: 'dd/mm/yy',
-            minDate: dateToday
+        $("#time").change(function () {
+            $("#timeValue").val($("#time").val().toString());
+            // alert("Handler for .change() called.");
+
+
         });
+
         $(".station").autocomplete({
             source: function (request, resp) {
                 $.ajax({
@@ -43,12 +63,10 @@
                         console.log(data);
                         resp($.map(data.data, function (item) {
                             console.log(item);
-
                             return { label: item.name, value: item.name, id: item.id };
                         }))
-
                     },
-                   
+
                 });
             },
             select: function (event, ui) {
@@ -74,6 +92,8 @@
                 }
             }
         });
+
+
     });
 
 </script>

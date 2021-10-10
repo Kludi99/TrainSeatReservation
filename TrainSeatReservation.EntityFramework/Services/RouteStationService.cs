@@ -32,6 +32,19 @@ namespace TrainSeatReservation.EntityFramework.Services
             _logger.LogInformation("Executing GetRouteStations service method");
             return GetRouteStationsQuery().ToList();
         }
+        public List<RouteStationDto> GetRoutesFromStation(int stationId)
+        {
+            _logger.LogInformation("Executing GetRouteStations service method");
+            var routesStation = _context.RouteStations
+               .Include(t => t.EndStation)
+               .Include(t => t.StartStation)
+               .Include(t => t.Route)
+               .Include(t => t.Train)
+               .Include(t => t.StartTrainTimeTable)
+               .Include(t => t.EndTrainTimeTable)
+               .AsNoTracking().Where(x => x.StartStationId == stationId);
+            return _mapper.Map<RouteStationDto[]>(routesStation).ToList();
+        }
         public RouteStationDto GetRouteStation(int id)
         {
             _logger.LogInformation("Executing GetRouteStation service method");
@@ -78,7 +91,14 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private RouteStationDto GetRouteStationDto(int id)
         {
-            var routeStation = _context.RouteStations.Include(x => x.EndStation).AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var routeStation = _context.RouteStations
+                .Include(x => x.EndStation)
+                .Include(x => x.StartStation)
+                .Include(x => x.Route)
+                .Include(t => t.Train)
+                .Include(t => t.StartTrainTimeTable)
+                .Include(t => t.EndTrainTimeTable)
+                .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
                 return _mapper.Map<RouteStationDto>(routeStation);
@@ -103,7 +123,15 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<RouteStationDto> GetRouteStationsQuery()
         {
-            var routeStations = _context.RouteStations.Include(x => x.EndStation).Include(x => x.StartStation).Include(x => x.Route).AsQueryable();
+            var routeStations = _context.RouteStations.Include(x => x.EndStation)
+                .ThenInclude(x => x.TrainStations)
+
+                .Include(x => x.StartStation)
+                .ThenInclude(x => x.TrainStations)
+                .Include(t => t.Train)
+                .Include(t => t.StartTrainTimeTable)
+                .Include(t => t.EndTrainTimeTable)
+                .Include(x => x.Route).AsQueryable();
             try
             {
                 return _mapper.Map<RouteStationDto[]>(routeStations);

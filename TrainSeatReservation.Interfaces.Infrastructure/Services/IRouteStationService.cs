@@ -10,6 +10,7 @@ namespace TrainSeatReservation.Interfaces.Infrastructure.Services
     public interface IRouteStationService
     {
         List<RouteStationDto> GetRouteStations();
+        List<RouteStationDto> GetRoutesFromStation(int stationId);
         RouteStationDto GetRouteStation(int id);
         void AddRouteStation(RouteStationDto routeStation);
         void UpdateRouteStation(RouteStationDto routeStation);

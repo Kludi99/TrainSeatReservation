@@ -11,5 +11,7 @@ namespace TrainSeatReservation.Commons.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
+       // public ICollection<TrainStationDto> TrainStations { get; set; }
+       // public ICollection<RouteStationDto> RouteStations { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211007085956_UpdateDistance")]
+    partial class UpdateDistance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fda56c0a-e636-4deb-9de5-31a7a167563d",
-                            ConcurrencyStamp = "635a7283-91e7-445d-ae59-5e7dfcf512fd",
+                            Id = "73da2838-2a08-446f-b247-dd8100cca7f9",
+                            ConcurrencyStamp = "1aba5b35-2b10-4e83-b35e-2423d2086b2b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "97c3b491-5556-4c8b-a388-31aac1a8b2cb",
-                            ConcurrencyStamp = "0476baf6-b8ed-4b0c-b693-cb4e0a341df1",
+                            Id = "529dceac-6723-49fb-abc2-39e07a5c9e11",
+                            ConcurrencyStamp = "62caf9fc-1e19-47d5-96a8-ce96691e4acd",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -747,9 +749,6 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Property<int>("EndStationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EndTrainTimeTableId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
@@ -762,23 +761,11 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Property<int>("StartStationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StartTrainTimeTableId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EndStationId");
 
-                    b.HasIndex("EndTrainTimeTableId");
-
                     b.HasIndex("StartStationId");
-
-                    b.HasIndex("StartTrainTimeTableId");
-
-                    b.HasIndex("TrainId");
 
                     b.HasIndex("RouteId", "StartStationId", "EndStationId")
                         .IsUnique();
@@ -791,871 +778,670 @@ namespace TrainSeatReservation.Data.Migrations
                             Id = 1,
                             Distance = 30,
                             EndStationId = 2,
-                            EndTrainTimeTableId = 2,
                             Order = 1,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 1,
-                            StartTrainTimeTableId = 1,
-                            TrainId = 1
+                            StartStationId = 1
                         },
                         new
                         {
                             Id = 2,
                             Distance = 20,
                             EndStationId = 3,
-                            EndTrainTimeTableId = 3,
                             Order = 2,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 2,
-                            StartTrainTimeTableId = 2,
-                            TrainId = 1
+                            StartStationId = 2
                         },
                         new
                         {
                             Id = 3,
                             Distance = 36,
                             EndStationId = 4,
-                            EndTrainTimeTableId = 4,
                             Order = 3,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 3,
-                            StartTrainTimeTableId = 3,
-                            TrainId = 1
+                            StartStationId = 3
                         },
                         new
                         {
                             Id = 4,
                             Distance = 20,
                             EndStationId = 5,
-                            EndTrainTimeTableId = 5,
                             Order = 4,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 4,
-                            StartTrainTimeTableId = 4,
-                            TrainId = 1
+                            StartStationId = 4
                         },
                         new
                         {
                             Id = 5,
                             Distance = 17,
                             EndStationId = 6,
-                            EndTrainTimeTableId = 6,
                             Order = 5,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 5,
-                            StartTrainTimeTableId = 5,
-                            TrainId = 1
+                            StartStationId = 5
                         },
                         new
                         {
                             Id = 6,
                             Distance = 45,
                             EndStationId = 7,
-                            EndTrainTimeTableId = 7,
                             Order = 6,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 6,
-                            StartTrainTimeTableId = 6,
-                            TrainId = 1
+                            StartStationId = 6
                         },
                         new
                         {
                             Id = 7,
                             Distance = 32,
                             EndStationId = 8,
-                            EndTrainTimeTableId = 8,
                             Order = 7,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 7,
-                            StartTrainTimeTableId = 7,
-                            TrainId = 1
+                            StartStationId = 7
                         },
                         new
                         {
                             Id = 8,
                             Distance = 23,
                             EndStationId = 9,
-                            EndTrainTimeTableId = 9,
                             Order = 8,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 8,
-                            StartTrainTimeTableId = 8,
-                            TrainId = 1
+                            StartStationId = 8
                         },
                         new
                         {
                             Id = 9,
                             Distance = 21,
                             EndStationId = 10,
-                            EndTrainTimeTableId = 10,
                             Order = 9,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 9,
-                            StartTrainTimeTableId = 9,
-                            TrainId = 1
+                            StartStationId = 9
                         },
                         new
                         {
                             Id = 10,
                             Distance = 21,
                             EndStationId = 11,
-                            EndTrainTimeTableId = 11,
                             Order = 10,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 10,
-                            StartTrainTimeTableId = 10,
-                            TrainId = 1
+                            StartStationId = 10
                         },
                         new
                         {
                             Id = 11,
                             Distance = 30,
                             EndStationId = 12,
-                            EndTrainTimeTableId = 12,
                             Order = 11,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 11,
-                            StartTrainTimeTableId = 11,
-                            TrainId = 1
+                            StartStationId = 11
                         },
                         new
                         {
                             Id = 12,
                             Distance = 20,
                             EndStationId = 13,
-                            EndTrainTimeTableId = 13,
                             Order = 12,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 12,
-                            StartTrainTimeTableId = 12,
-                            TrainId = 1
+                            StartStationId = 12
                         },
                         new
                         {
                             Id = 13,
                             Distance = 36,
                             EndStationId = 14,
-                            EndTrainTimeTableId = 14,
                             Order = 13,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 13,
-                            StartTrainTimeTableId = 13,
-                            TrainId = 1
+                            StartStationId = 13
                         },
                         new
                         {
                             Id = 14,
                             Distance = 20,
                             EndStationId = 15,
-                            EndTrainTimeTableId = 15,
                             Order = 14,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 14,
-                            StartTrainTimeTableId = 14,
-                            TrainId = 1
+                            StartStationId = 14
                         },
                         new
                         {
                             Id = 15,
                             Distance = 17,
                             EndStationId = 16,
-                            EndTrainTimeTableId = 16,
                             Order = 15,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 15,
-                            StartTrainTimeTableId = 15,
-                            TrainId = 1
+                            StartStationId = 15
                         },
                         new
                         {
                             Id = 16,
                             Distance = 45,
                             EndStationId = 17,
-                            EndTrainTimeTableId = 17,
                             Order = 16,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 16,
-                            StartTrainTimeTableId = 16,
-                            TrainId = 1
+                            StartStationId = 16
                         },
                         new
                         {
                             Id = 17,
                             Distance = 32,
                             EndStationId = 18,
-                            EndTrainTimeTableId = 18,
                             Order = 17,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 17,
-                            StartTrainTimeTableId = 17,
-                            TrainId = 1
+                            StartStationId = 17
                         },
                         new
                         {
                             Id = 18,
                             Distance = 23,
                             EndStationId = 19,
-                            EndTrainTimeTableId = 19,
                             Order = 18,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 18,
-                            StartTrainTimeTableId = 18,
-                            TrainId = 1
+                            StartStationId = 18
                         },
                         new
                         {
                             Id = 19,
                             Distance = 21,
                             EndStationId = 20,
-                            EndTrainTimeTableId = 20,
                             Order = 19,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 19,
-                            StartTrainTimeTableId = 19,
-                            TrainId = 1
+                            StartStationId = 19
                         },
                         new
                         {
                             Id = 20,
                             Distance = 21,
                             EndStationId = 21,
-                            EndTrainTimeTableId = 21,
                             Order = 20,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 20,
-                            StartTrainTimeTableId = 20,
-                            TrainId = 1
+                            StartStationId = 20
                         },
                         new
                         {
                             Id = 21,
                             Distance = 30,
                             EndStationId = 22,
-                            EndTrainTimeTableId = 22,
                             Order = 21,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 21,
-                            StartTrainTimeTableId = 21,
-                            TrainId = 1
+                            StartStationId = 21
                         },
                         new
                         {
                             Id = 22,
                             Distance = 20,
                             EndStationId = 23,
-                            EndTrainTimeTableId = 23,
                             Order = 22,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 22,
-                            StartTrainTimeTableId = 22,
-                            TrainId = 1
+                            StartStationId = 22
                         },
                         new
                         {
                             Id = 23,
                             Distance = 36,
                             EndStationId = 24,
-                            EndTrainTimeTableId = 24,
                             Order = 23,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 23,
-                            StartTrainTimeTableId = 23,
-                            TrainId = 1
+                            StartStationId = 23
                         },
                         new
                         {
                             Id = 24,
                             Distance = 20,
                             EndStationId = 25,
-                            EndTrainTimeTableId = 25,
                             Order = 24,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 24,
-                            StartTrainTimeTableId = 24,
-                            TrainId = 1
+                            StartStationId = 24
                         },
                         new
                         {
                             Id = 25,
                             Distance = 17,
                             EndStationId = 26,
-                            EndTrainTimeTableId = 26,
                             Order = 25,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 25,
-                            StartTrainTimeTableId = 25,
-                            TrainId = 1
+                            StartStationId = 25
                         },
                         new
                         {
                             Id = 26,
                             Distance = 45,
                             EndStationId = 27,
-                            EndTrainTimeTableId = 27,
                             Order = 26,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 26,
-                            StartTrainTimeTableId = 26,
-                            TrainId = 1
+                            StartStationId = 26
                         },
                         new
                         {
                             Id = 27,
                             Distance = 32,
                             EndStationId = 28,
-                            EndTrainTimeTableId = 28,
                             Order = 27,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 27,
-                            StartTrainTimeTableId = 27,
-                            TrainId = 1
+                            StartStationId = 27
                         },
                         new
                         {
                             Id = 28,
                             Distance = 23,
                             EndStationId = 29,
-                            EndTrainTimeTableId = 29,
                             Order = 28,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 28,
-                            StartTrainTimeTableId = 28,
-                            TrainId = 1
+                            StartStationId = 28
                         },
                         new
                         {
                             Id = 29,
                             Distance = 21,
                             EndStationId = 30,
-                            EndTrainTimeTableId = 30,
                             Order = 29,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 29,
-                            StartTrainTimeTableId = 29,
-                            TrainId = 1
+                            StartStationId = 29
                         },
                         new
                         {
                             Id = 30,
                             Distance = 21,
                             EndStationId = 31,
-                            EndTrainTimeTableId = 31,
                             Order = 30,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 30,
-                            StartTrainTimeTableId = 30,
-                            TrainId = 1
+                            StartStationId = 30
                         },
                         new
                         {
                             Id = 31,
                             Distance = 30,
                             EndStationId = 32,
-                            EndTrainTimeTableId = 32,
                             Order = 31,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 31,
-                            StartTrainTimeTableId = 31,
-                            TrainId = 1
+                            StartStationId = 31
                         },
                         new
                         {
                             Id = 32,
                             Distance = 20,
                             EndStationId = 33,
-                            EndTrainTimeTableId = 33,
                             Order = 32,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 32,
-                            StartTrainTimeTableId = 32,
-                            TrainId = 1
+                            StartStationId = 32
                         },
                         new
                         {
                             Id = 33,
                             Distance = 36,
                             EndStationId = 34,
-                            EndTrainTimeTableId = 34,
                             Order = 33,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 33,
-                            StartTrainTimeTableId = 33,
-                            TrainId = 1
+                            StartStationId = 33
                         },
                         new
                         {
                             Id = 34,
                             Distance = 20,
                             EndStationId = 35,
-                            EndTrainTimeTableId = 35,
                             Order = 34,
                             Price = 5.0,
                             RouteId = 1,
-                            StartStationId = 34,
-                            StartTrainTimeTableId = 34,
-                            TrainId = 1
+                            StartStationId = 34
                         },
                         new
                         {
                             Id = 35,
                             Distance = 17,
                             EndStationId = 2,
-                            EndTrainTimeTableId = 37,
                             Order = 1,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 1,
-                            StartTrainTimeTableId = 36,
-                            TrainId = 2
+                            StartStationId = 1
                         },
                         new
                         {
                             Id = 36,
                             Distance = 45,
                             EndStationId = 8,
-                            EndTrainTimeTableId = 38,
                             Order = 2,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 2,
-                            StartTrainTimeTableId = 37,
-                            TrainId = 2
+                            StartStationId = 2
                         },
                         new
                         {
                             Id = 37,
                             Distance = 32,
                             EndStationId = 9,
-                            EndTrainTimeTableId = 39,
                             Order = 3,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 8,
-                            StartTrainTimeTableId = 38,
-                            TrainId = 2
+                            StartStationId = 8
                         },
                         new
                         {
                             Id = 38,
                             Distance = 23,
                             EndStationId = 10,
-                            EndTrainTimeTableId = 40,
                             Order = 4,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 9,
-                            StartTrainTimeTableId = 39,
-                            TrainId = 2
+                            StartStationId = 9
                         },
                         new
                         {
                             Id = 39,
                             Distance = 21,
                             EndStationId = 11,
-                            EndTrainTimeTableId = 41,
                             Order = 5,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 10,
-                            StartTrainTimeTableId = 40,
-                            TrainId = 2
+                            StartStationId = 10
                         },
                         new
                         {
                             Id = 40,
                             Distance = 21,
                             EndStationId = 12,
-                            EndTrainTimeTableId = 42,
                             Order = 6,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 11,
-                            StartTrainTimeTableId = 41,
-                            TrainId = 2
+                            StartStationId = 11
                         },
                         new
                         {
                             Id = 41,
                             Distance = 30,
                             EndStationId = 13,
-                            EndTrainTimeTableId = 43,
                             Order = 7,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 12,
-                            StartTrainTimeTableId = 42,
-                            TrainId = 2
+                            StartStationId = 12
                         },
                         new
                         {
                             Id = 42,
                             Distance = 20,
                             EndStationId = 14,
-                            EndTrainTimeTableId = 44,
                             Order = 8,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 13,
-                            StartTrainTimeTableId = 43,
-                            TrainId = 2
+                            StartStationId = 13
                         },
                         new
                         {
                             Id = 43,
                             Distance = 20,
                             EndStationId = 15,
-                            EndTrainTimeTableId = 45,
                             Order = 9,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 14,
-                            StartTrainTimeTableId = 44,
-                            TrainId = 2
+                            StartStationId = 14
                         },
                         new
                         {
                             Id = 44,
                             Distance = 17,
                             EndStationId = 16,
-                            EndTrainTimeTableId = 46,
                             Order = 10,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 15,
-                            StartTrainTimeTableId = 45,
-                            TrainId = 2
+                            StartStationId = 15
                         },
                         new
                         {
                             Id = 45,
                             Distance = 17,
                             EndStationId = 36,
-                            EndTrainTimeTableId = 47,
                             Order = 11,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 16,
-                            StartTrainTimeTableId = 46,
-                            TrainId = 2
+                            StartStationId = 16
                         },
                         new
                         {
                             Id = 46,
                             Distance = 45,
                             EndStationId = 37,
-                            EndTrainTimeTableId = 48,
                             Order = 12,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 36,
-                            StartTrainTimeTableId = 47,
-                            TrainId = 2
+                            StartStationId = 36
                         },
                         new
                         {
                             Id = 47,
                             Distance = 32,
                             EndStationId = 38,
-                            EndTrainTimeTableId = 49,
                             Order = 13,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 37,
-                            StartTrainTimeTableId = 48,
-                            TrainId = 2
+                            StartStationId = 37
                         },
                         new
                         {
                             Id = 48,
                             Distance = 23,
                             EndStationId = 39,
-                            EndTrainTimeTableId = 50,
                             Order = 14,
                             Price = 5.0,
                             RouteId = 2,
-                            StartStationId = 38,
-                            StartTrainTimeTableId = 49,
-                            TrainId = 2
+                            StartStationId = 38
                         },
                         new
                         {
                             Id = 49,
                             Distance = 23,
                             EndStationId = 41,
-                            EndTrainTimeTableId = 52,
                             Order = 1,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 40,
-                            StartTrainTimeTableId = 51,
-                            TrainId = 3
+                            StartStationId = 40
                         },
                         new
                         {
                             Id = 50,
                             Distance = 21,
                             EndStationId = 42,
-                            EndTrainTimeTableId = 53,
                             Order = 2,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 41,
-                            StartTrainTimeTableId = 52,
-                            TrainId = 3
+                            StartStationId = 41
                         },
                         new
                         {
                             Id = 51,
                             Distance = 30,
                             EndStationId = 43,
-                            EndTrainTimeTableId = 54,
                             Order = 3,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 42,
-                            StartTrainTimeTableId = 53,
-                            TrainId = 3
+                            StartStationId = 42
                         },
                         new
                         {
                             Id = 52,
                             Distance = 20,
                             EndStationId = 44,
-                            EndTrainTimeTableId = 55,
                             Order = 4,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 43,
-                            StartTrainTimeTableId = 54,
-                            TrainId = 3
+                            StartStationId = 43
                         },
                         new
                         {
                             Id = 53,
                             Distance = 36,
                             EndStationId = 45,
-                            EndTrainTimeTableId = 56,
                             Order = 5,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 44,
-                            StartTrainTimeTableId = 55,
-                            TrainId = 3
+                            StartStationId = 44
                         },
                         new
                         {
                             Id = 54,
                             Distance = 20,
                             EndStationId = 46,
-                            EndTrainTimeTableId = 57,
                             Order = 6,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 45,
-                            StartTrainTimeTableId = 56,
-                            TrainId = 3
+                            StartStationId = 45
                         },
                         new
                         {
                             Id = 55,
                             Distance = 17,
                             EndStationId = 47,
-                            EndTrainTimeTableId = 58,
                             Order = 7,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 46,
-                            StartTrainTimeTableId = 57,
-                            TrainId = 3
+                            StartStationId = 46
                         },
                         new
                         {
                             Id = 56,
                             Distance = 45,
                             EndStationId = 48,
-                            EndTrainTimeTableId = 59,
                             Order = 8,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 47,
-                            StartTrainTimeTableId = 58,
-                            TrainId = 3
+                            StartStationId = 47
                         },
                         new
                         {
                             Id = 57,
                             Distance = 32,
                             EndStationId = 14,
-                            EndTrainTimeTableId = 60,
                             Order = 9,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 48,
-                            StartTrainTimeTableId = 59,
-                            TrainId = 3
+                            StartStationId = 48
                         },
                         new
                         {
                             Id = 58,
                             Distance = 20,
                             EndStationId = 15,
-                            EndTrainTimeTableId = 61,
                             Order = 10,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 14,
-                            StartTrainTimeTableId = 60,
-                            TrainId = 3
+                            StartStationId = 14
                         },
                         new
                         {
                             Id = 59,
                             Distance = 17,
                             EndStationId = 16,
-                            EndTrainTimeTableId = 62,
                             Order = 11,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 15,
-                            StartTrainTimeTableId = 61,
-                            TrainId = 3
+                            StartStationId = 15
                         },
                         new
                         {
                             Id = 60,
                             Distance = 23,
                             EndStationId = 49,
-                            EndTrainTimeTableId = 63,
                             Order = 12,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 16,
-                            StartTrainTimeTableId = 62,
-                            TrainId = 3
+                            StartStationId = 16
                         },
                         new
                         {
                             Id = 61,
                             Distance = 30,
                             EndStationId = 50,
-                            EndTrainTimeTableId = 64,
                             Order = 13,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 49,
-                            StartTrainTimeTableId = 63,
-                            TrainId = 3
+                            StartStationId = 49
                         },
                         new
                         {
                             Id = 62,
                             Distance = 20,
                             EndStationId = 51,
-                            EndTrainTimeTableId = 65,
                             Order = 14,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 50,
-                            StartTrainTimeTableId = 64,
-                            TrainId = 3
+                            StartStationId = 50
                         },
                         new
                         {
                             Id = 63,
                             Distance = 36,
                             EndStationId = 52,
-                            EndTrainTimeTableId = 66,
                             Order = 15,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 51,
-                            StartTrainTimeTableId = 65,
-                            TrainId = 3
+                            StartStationId = 51
                         },
                         new
                         {
                             Id = 64,
                             Distance = 20,
                             EndStationId = 53,
-                            EndTrainTimeTableId = 67,
                             Order = 16,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 52,
-                            StartTrainTimeTableId = 66,
-                            TrainId = 3
+                            StartStationId = 52
                         },
                         new
                         {
                             Id = 65,
                             Distance = 17,
                             EndStationId = 54,
-                            EndTrainTimeTableId = 68,
                             Order = 17,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 53,
-                            StartTrainTimeTableId = 67,
-                            TrainId = 3
+                            StartStationId = 53
                         },
                         new
                         {
                             Id = 66,
                             Distance = 45,
                             EndStationId = 55,
-                            EndTrainTimeTableId = 69,
                             Order = 18,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 54,
-                            StartTrainTimeTableId = 68,
-                            TrainId = 3
+                            StartStationId = 54
                         },
                         new
                         {
                             Id = 67,
                             Distance = 32,
                             EndStationId = 56,
-                            EndTrainTimeTableId = 70,
                             Order = 19,
                             Price = 5.0,
                             RouteId = 3,
-                            StartStationId = 55,
-                            StartTrainTimeTableId = 69,
-                            TrainId = 3
+                            StartStationId = 55
                         });
                 });
 
@@ -8232,12 +8018,6 @@ namespace TrainSeatReservation.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.TrainTimeTable", "EndTrainTimeTable")
-                        .WithMany()
-                        .HasForeignKey("EndTrainTimeTableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TrainSeatReservation.EntityFramework.Models.Route", "Route")
                         .WithMany("RouteStations")
                         .HasForeignKey("RouteId")
@@ -8250,29 +8030,11 @@ namespace TrainSeatReservation.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.TrainTimeTable", "StartTrainTimeTable")
-                        .WithMany()
-                        .HasForeignKey("StartTrainTimeTableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.Train", "Train")
-                        .WithMany()
-                        .HasForeignKey("TrainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("EndStation");
-
-                    b.Navigation("EndTrainTimeTable");
 
                     b.Navigation("Route");
 
                     b.Navigation("StartStation");
-
-                    b.Navigation("StartTrainTimeTable");
-
-                    b.Navigation("Train");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Seat", b =>

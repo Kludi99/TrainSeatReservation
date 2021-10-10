@@ -80,7 +80,10 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private StationDto GetStationDto(int id)
         {
-            var station = _context.Stations.AsNoTracking().SingleOrDefault(x => x.Id == id);
+            var station = _context.Stations
+                .Include(x => x.RouteStations)
+                .Include(x => x.TrainStations)
+                .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
                 return _mapper.Map<StationDto>(station);
@@ -105,7 +108,9 @@ namespace TrainSeatReservation.EntityFramework.Services
 
         private IEnumerable<StationDto> GetStationsQuery()
         {
-            var stations = _context.Stations;
+            var stations = _context.Stations
+                .Include(x => x.RouteStations)
+                .Include(x => x.TrainStations);
             try
             {
                 return _mapper.Map<StationDto[]>(stations);
