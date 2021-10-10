@@ -68,11 +68,15 @@ namespace TrainSeatReservation.Data
                 .WithMany(x => x.TrainCarriages)
                 .HasForeignKey(k => k.TrainId);
 
-            builder.Entity<Train>()
-                   .HasOne(a => a.Route)
-                   .WithOne(b => b.Train)
-                   .HasForeignKey<Route>(b => b.TrainId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            /*  builder.Entity<Train>()
+                     .HasOne(a => a.Route)
+                     .WithOne(b => b.Train)
+                     .HasForeignKey<Route>(b => b.TrainId)
+                     .OnDelete(DeleteBehavior.Cascade);*/
+            builder.Entity<Route>()
+                  .HasOne(x => x.Train)
+                  .WithMany(x => x.Routes)
+                  .HasForeignKey(k => k.TrainId);
 
             // builder.Entity<Discount>().ToTable("Discount");
 
@@ -82,6 +86,9 @@ namespace TrainSeatReservation.Data
                 .HasOne(x => x.Route)
                 .WithMany(x => x.RouteStations)
                 .HasForeignKey(x => x.RouteId);
+            builder.Entity<RouteStation>()
+                .HasOne(x => x.StartStation)
+                .WithMany(x => x.RouteStations);
 
             builder.Entity<TicketDiscount>()
                 .HasOne(x => x.Ticket)
@@ -99,7 +106,7 @@ namespace TrainSeatReservation.Data
                 .HasIndex(i => new { i.ArrivalTime, i.DepartureTime, i.StartingDateOfTimeTable })
             .IsUnique();
             builder.Entity<TrainStation>()
-                .HasIndex(i => new { i.TrainId, i.StationId, i.TrainTimeTableId })
+                .HasIndex(i => new { i.TrainId, i.StationId, i.TrainTimeTableId, i.RouteId })
                 .IsUnique();
             builder.Entity<Station>()
                 .HasIndex(i => i.Name)

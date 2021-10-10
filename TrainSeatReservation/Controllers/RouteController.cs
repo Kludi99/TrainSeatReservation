@@ -15,13 +15,15 @@ namespace TrainSeatReservation.Controllers
         private readonly IRouteFcd _routeFcd;
         private readonly IRouteStationFcd _routeStationFcd;
         private readonly ITrainStationFcd _trainStationFcd;
+        private readonly IRouteWithChangesFcd _routeWithChangesFcd;
 
-        public RouteController(IStationFcd stationFcd, IRouteFcd routeFcd, IRouteStationFcd routeStationFcd,ITrainStationFcd trainStationFcd)
+        public RouteController(IStationFcd stationFcd, IRouteFcd routeFcd, IRouteStationFcd routeStationFcd,ITrainStationFcd trainStationFcd, IRouteWithChangesFcd routeWithChangesFcd)
         {
             _stationFcd = stationFcd;
             _routeFcd = routeFcd;
             _routeStationFcd = routeStationFcd;
             _trainStationFcd = trainStationFcd;
+            _routeWithChangesFcd = routeWithChangesFcd;
         }
         public IActionResult Index()
         {
@@ -29,8 +31,10 @@ namespace TrainSeatReservation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(int firstStationId, int lastStationId, DateTime datePickerValue, DateTime datepicker, string date) //TODO: Search routes with that stations
+        public IActionResult Index(int firstStationId, int lastStationId, DateTime datePickerValue, DateTime datepicker, string date, string timeValue) //TODO: Search routes with that stations
         {
+            _routeWithChangesFcd.GetRoutes(firstStationId, lastStationId);
+
 
             // trains without intercharges
             var routes = _routeFcd.GetRoutes();
@@ -40,14 +44,15 @@ namespace TrainSeatReservation.Controllers
             TrainStationDto startTrainStation = null; 
             TrainStationDto endTrainStation = null;
             var trainStationList = new List<TrainStationDto>();
+            var time = TimeSpan.Parse(timeValue);
             foreach (var item in routes)
             {
                 if (item.RouteStations.Any(x => x.StartStationId == firstStationId) && item.RouteStations.Any(x => x.EndStationId == lastStationId))
                 {
                     var first = item.RouteStations.FirstOrDefault(x => x.StartStationId == firstStationId);
                     var last = item.RouteStations.FirstOrDefault(x => x.EndStationId == lastStationId);
-
-                    if(first.Order< last.Order)
+                    var firstTime = _trainStationFcd.GetTrainsFromStation(firstStationId).Where(x => x.RouteId == first.RouteId).Select(x => x.TrainTimeTable).FirstOrDefault();
+                    if(first.Order< last.Order && firstTime.DepartureTime > time)
                     {
                         startTrainStation = trainStations.FirstOrDefault(x => x.TrainId == item.TrainId && x.StationId == firstStationId);
                         endTrainStation = trainStations.FirstOrDefault(x => x.TrainId == item.TrainId && x.StationId == lastStationId);

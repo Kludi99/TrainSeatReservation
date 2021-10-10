@@ -37,6 +37,26 @@ namespace TrainSeatReservation.EntityFramework.Services
             _logger.LogInformation("Executing GetTrainStation service method");
             return GetTrainStationDto(id);
         }
+        public List<TrainStationDto> GetTrainsFromStation(int stationId)
+        {
+            _logger.LogInformation("Executing GetTrainStations service method");
+            var trainsStation = _context.TrainStations
+               .Include(t => t.Station)
+               .Include(t => t.Train)
+               .Include(t => t.TrainTimeTable)
+               .AsNoTracking().Where(x => x.StationId == stationId);
+            return _mapper.Map<TrainStationDto[]>(trainsStation).ToList();
+        }
+        public TrainStationDto GetTrainInformationFromStationAndRoute(int stationId, int routeId)
+        {
+            _logger.LogInformation("Executing GetTrainStations service method");
+            var trainStation = _context.TrainStations
+               .Include(t => t.Station)
+               .Include(t => t.Train)
+               .Include(t => t.TrainTimeTable)
+               .AsNoTracking().FirstOrDefault(x => x.StationId == stationId && x.RouteId == routeId);
+            return _mapper.Map<TrainStationDto>(trainStation);
+        }
         public void AddTrainStation(TrainStationDto trainStation)
         {
             _logger.LogInformation("Executing AddTrainStation service method");

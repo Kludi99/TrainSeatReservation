@@ -13,5 +13,6 @@ namespace TrainSeatReservation.EntityFramework.Models
         public Train Train { get; set; }
         public int TrainId { get; set; }
         public ICollection<RouteStation> RouteStations { get; set; }
+        public ICollection<TrainStation> TrainStations { get; set; }
     }
 }

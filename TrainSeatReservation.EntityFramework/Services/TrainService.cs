@@ -124,7 +124,7 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var train = _context.Trains
                 .Include(x => x.Type)
-                .Include(x => x.Route)
+                .Include(x => x.Routes)
                 .Include(x => x.TrainCarriages)
                     .ThenInclude(x => x.Carriage)
                         .ThenInclude(x => x.CarriageClass)
@@ -161,7 +161,7 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var trains = _context.Trains
                 .Include(x => x.Type)
-                .Include(x => x.Route)
+                .Include(x => x.Routes)
                 .Include(x => x.TrainCarriages)
                     .ThenInclude(x => x.Carriage)
                         .ThenInclude(x => x.CarriageClass)
