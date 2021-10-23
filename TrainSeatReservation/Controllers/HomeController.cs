@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,18 @@ namespace TrainSeatReservation.Controllers
     {
         private readonly IStationFcd _stationFcd;
         private readonly ILogger<HomeController> _logger;
+        private readonly IDiscountFcd _discountFcd;
 
-        public HomeController(ILogger<HomeController> logger, IStationFcd stationFcd)
+        public HomeController(ILogger<HomeController> logger, IStationFcd stationFcd, IDiscountFcd discountFcd)
         {
             _logger = logger;
             _stationFcd = stationFcd;
+            _discountFcd = discountFcd;
         }
 
         public IActionResult Index()
         {
+            ViewBag.Discount = GetSelectDiscountList();
             return View();
         }
         [HttpPost]
@@ -50,6 +54,21 @@ namespace TrainSeatReservation.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        private List<SelectListItem> GetSelectDiscountList()
+        {
+            var discountList = _discountFcd.GetDiscounts();
+            var selectList = new List<SelectListItem>();
+            foreach (var item in discountList)
+            {
+                var listItem = new SelectListItem()
+                {
+                    Value = item.Id.ToString(),
+                    Text = item.Name
+                };
+                selectList.Add(listItem);
+            }
+            return selectList;
         }
     }
 }

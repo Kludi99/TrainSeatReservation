@@ -80,7 +80,7 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var route = _context.Routes
                 .Include(x => x.RouteStations)
-                    .ThenInclude(x => x.Route)
+                   // .ThenInclude(x => x.Route)
                 .Include(x => x.RouteStations)
                     .ThenInclude(x => x.StartStation)
                 .Include(x => x.RouteStations)

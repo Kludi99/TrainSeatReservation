@@ -4,51 +4,114 @@
 <div class="text-center">
     @using (Html.BeginForm("Index", "Route", FormMethod.Post))
     {
-        <p>Szukaj połączenia</p>
-        <label for="firstStation">Z:</label><input type="text" id="firstStation" name="firstStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
-        @Html.Hidden("firstStationId");
-        <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
-        @Html.Hidden("lastStationId");
-        <p>Data podróży: <input type="date" id="datepicker"> <input type="time" id="time"  /> </p>
-        @Html.Hidden("date");
-        @Html.Hidden("timeValue");
-        @Html.Hidden("datePickerValue");
-        <button type="submit" id="submitButton">Szukaj</button>
+        <div class="train-searching-form">
+            <h2>Szukaj połączenia</h2>
+            <div class="station-input">
+                <label for="firstStation">Z:</label><input type="text" id="firstStation" name="firstStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+                @Html.Hidden("firstStationId")
+            </div>
+            <div class="station-input">
+                <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+                @Html.Hidden("lastStationId")
+            </div>
+
+            <p>Data podróży: <input type="date" id="datepicker"> <input type="time" id="time" /> </p>
+            <p>Liczba pasażerów</p>
+            <div class="choose-seat">
+                <label class="control-label">Ilość biletów normalnych</label>
+                <input type="number" min="0" id="normalPriceTickets" value="0" name="normalPriceTickets" />
+                <div id="disountsDiv" style="display:none">
+                    <span></span>
+                </div>
+                <div class="discount-add">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPassengerModal"> + </button>
+                </div>
+            </div>
+
+            @Html.Hidden("date")
+            @Html.Hidden("timeValue")
+            @Html.Hidden("datePickerValue")
+            @Html.Hidden("firstDiscountId")
+            @Html.Hidden("firstDiscountCounter")
+            <button type="submit" id="submitButton">Szukaj</button>
+        </div>
     }
+    <form id="modal-form" onsubmit="return false">
+        <div id="addPassengerModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Dodaj pasażerów</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="choose-seat" id="firstDiscountPrice" style="display:none">
+                            <label class="control-label">Ilość biletów ulgowych</label>
+                            <input type="number" min="0" value="0" id="firstDiscountTickets" name="firstDiscountTickets" />
+                            <div class="discount-type">
+                                @Html.DropDownList("firstDiscountType", (List<SelectListItem>)ViewBag.Discount,
+                          "Rodzaj zniżki", new { @class = "form-control", @id = "firstDiscountType" })
+                            </div>
+                            <div class="choose-seat" id="secondDiscountPrice" style="display:none">
+                                <label class="control-label">Ilość biletów ulgowych</label>
+                                <input type="number" min="0" value="0" id="secondDiscountTickets" name="secondDiscountTickets" />
+                                <div class="discount-type">
+                                    @Html.DropDownList("secondDiscountType", (List<SelectListItem>)ViewBag.Discount,
+                              "Rodzaj zniżki", new { @class = "form-control", @id = "secondDiscountType" })
+                                </div>
+                            </div>
+                            <div class="choose-seat" id="thirdDiscountPrice" style="display:none">
+                                <label class="control-label">Ilość biletów ulgowych</label>
+                                <input type="number" min="0" value="0" id="thirdDiscountTickets" name="thirdDiscountTickets" />
+                                <div class="discount-type">
+                                    @Html.DropDownList("thirdDiscountType", (List<SelectListItem>)ViewBag.Discount,
+                              "Rodzaj zniżki", new { @class = "form-control", @id = "thirdDiscountType" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="choose-seat">
+                            <input type="button" id="addDiscount" class="modal-button" value="Dodaj bilety ze zniżką" />
+                        </div>
+                        <button type="submit" class="modal-button" id="submitModalButton">Dodaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 
     @*  <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
-<script type="text/javascript">
+                <script type="text/javascript">
 
 
     $(document).ready(function () {
         datepicker.min = new Date().toISOString().split("T")[0];
 
         var dateToday = new Date();
-      //  alert(dateToday.toLocaleString());
         var datepickerValue = new Date();
         $("#datepicker").change(function () {
             $("#date").val($("#datepicker").val().toString());
-           // alert("Handler for .change() called.");
+
             datepickerValue = new Date($("#datepicker").val());
-            //alert(dateToday.getDate());
+ 
             if (dateToday.getDate() === datepickerValue.getDate() && dateToday.getMonth() === datepickerValue.getMonth() && dateToday.getFullYear() === datepickerValue.getFullYear()) {
-             //   alert("THE SAME DAY");
+
                 var timeNow = dateToday.toLocaleTimeString();
                 var hour = timeNow.split(":")[0];
                 var minutes = timeNow.split(":")[1];
                 var stringTime = hour + ":" + minutes;
-              //  alert(timeNow);
-                $("#time").attr('min', stringTime);// = dateToday.now();
+
+                $("#time").attr('min', stringTime);
             }
 
         });
         $("#time").change(function () {
             $("#timeValue").val($("#time").val().toString());
-            // alert("Handler for .change() called.");
-
 
         });
 
@@ -70,12 +133,7 @@
                 });
             },
             select: function (event, ui) {
-               // var firstStation = $("#firstStation").val();
-               // var lastStation = $("#lastStation").val();
-                //alert(JSON.stringify(ui));
-                //alert(JSON.stringify(event));
-                //alert(firstStation);
-                //alert(ui);
+
                 if ($("#firstStation").is(":focus")) {
                     //if (firstStation == ui.item.value)
                     $('#firstStationId').val(ui.item.id);
@@ -92,8 +150,52 @@
                 }
             }
         });
+        $("#addDiscount").click(function () {
+           // alert("button");
 
+            var firstDiscount = document.getElementById("firstDiscountPrice");
+            var secondDiscount = document.getElementById("secondDiscountPrice");
+            var thirdDiscount = document.getElementById("thirdDiscountPrice");
+
+            if (firstDiscount.style.display === "none" && secondDiscount.style.display === "none" && thirdDiscount.style.display === "none") {
+                firstDiscount.style.display = "block";
+            }
+            else if (firstDiscount.style.display === "block" && secondDiscount.style.display === "none" && thirdDiscount.style.display === "none") {
+                secondDiscount.style.display = "block";
+            }
+            else if (firstDiscount.style.display === "block" && secondDiscount.style.display === "block" && thirdDiscount.style.display === "none") {
+                thirdDiscount.style.display = "block";
+                $("#addDiscount").css("display", "none");
+            }
+        });
+        $("#submitModalButton").click(function () {
+           // alert("The Form has been Submitted.");
+            var div = document.getElementById("disountsDiv");
+           // alert("Div");
+            var discountType1 = $("#firstDiscountType option:selected").text();
+            var discountCount1 = $("#firstDiscountTickets").val();
+            var disc = $("#firstDiscountType option:selected").val();
+            console.log(JSON.stringify(disc));
+           // alert(discountType1);
+           // alert(discountCount1);
+            if (div.style.display === "none") {
+                div.style.display = "block";
+            }
+                
+               // $("#disountsDiv span").append(discountType1);
+              //  $("#disountsDiv span").append(discountCount1);
+               
+                
+            $("#disountsDiv").html('<input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name"firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />');
+               // $("#disountsDiv").append('<input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly />');
+            $('#firstDiscountId').val(disc);
+            $('#firstDiscountCounter').val(discountCount1);
+              
+                $('#addPassengerModal').modal('hide');
+            
+            
+        });
 
     });
 
-</script>
+                </script>
