@@ -134,6 +134,7 @@ namespace TrainSeatReservation.EntityFramework.Services
                 .Include(x => x.TrainCarriages)
                     .ThenInclude(x => x.Carriage)
                         .ThenInclude(x => x.Seats)
+                            .ThenInclude(x => x.SeatType)   
                 .AsNoTracking().SingleOrDefault(x => x.Id == id);
             try
             {
@@ -170,7 +171,8 @@ namespace TrainSeatReservation.EntityFramework.Services
                         .ThenInclude(x => x.Type)
                 .Include(x => x.TrainCarriages)
                     .ThenInclude(x => x.Carriage)
-                        .ThenInclude(x => x.Seats);
+                        .ThenInclude(x => x.Seats)
+                            .ThenInclude(x => x.SeatType);
             try
             {
                 return _mapper.Map<TrainDto[]>(trains);

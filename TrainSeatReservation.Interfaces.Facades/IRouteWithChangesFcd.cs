@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainSeatReservation.Commons.DisplayItems;
 
 namespace TrainSeatReservation.Interfaces.Facades
 {
     public interface IRouteWithChangesFcd
     {
-        void GetRoutes(int firstStationId, int lastStationId);
+        RouteView GetRoutes(int firstStationId, int lastStationId, TimeSpan time, DateTime date);
     }
 }

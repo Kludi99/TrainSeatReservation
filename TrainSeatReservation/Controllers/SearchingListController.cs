@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrainSeatReservation.Commons.DisplayItems;
 using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Interfaces.Facades;
 
@@ -21,8 +22,9 @@ namespace TrainSeatReservation.Controllers
         private readonly IDictionaryFcd _dictionaryFcd;
         private readonly IDiscountFcd _discountFcd;
         private readonly ITicketDiscountFcd _ticketDiscountFcd;
+        private readonly IRouteWithChangesFcd _routeWithChangesFcd;
 
-        public SearchingListController(IStationFcd stationFcd, IRouteFcd routeFcd, IRouteStationFcd routeStationFcd, ITrainStationFcd trainStationFcd, ITrainFcd trainFcd, ITicketFcd ticketFcd, IDictionaryFcd dictionaryFcd, IDiscountFcd discountFcd, ITicketDiscountFcd ticketDiscountFcd)
+        public SearchingListController(IStationFcd stationFcd, IRouteFcd routeFcd, IRouteStationFcd routeStationFcd, ITrainStationFcd trainStationFcd, ITrainFcd trainFcd, ITicketFcd ticketFcd, IDictionaryFcd dictionaryFcd, IDiscountFcd discountFcd, ITicketDiscountFcd ticketDiscountFcd, IRouteWithChangesFcd routeWithChangesFcd)
         {
             _stationFcd = stationFcd;
             _routeFcd = routeFcd;
@@ -33,16 +35,19 @@ namespace TrainSeatReservation.Controllers
             _dictionaryFcd = dictionaryFcd;
             _discountFcd = discountFcd;
             _ticketDiscountFcd = ticketDiscountFcd;
+            _routeWithChangesFcd = routeWithChangesFcd;
         }
-        public IActionResult Index(DateTime date)
+        public IActionResult Index(int firstStationId, int lastStationId, TimeSpan time, DateTime date, int? discountType, int? discountCounter, int? normalTickets)
         {
-            ViewBag.Routes = JsonConvert.DeserializeObject<List<RouteDto>>((string)TempData["routeList"]);
-            ViewBag.RouteDetails = JsonConvert.DeserializeObject<List<RouteStationDto>>((string)TempData["routeStationsList"]);
-            ViewBag.TrainStationDetails = JsonConvert.DeserializeObject<List<TrainStationDto>>((string)TempData["trainStationsList"]);
-            ViewBag.Date = date.Date;
-            return View();
+            var routeView = new RouteView();
+            routeView = _routeWithChangesFcd.GetRoutes(firstStationId, lastStationId, time, date);
+            routeView.Date = date;
+            routeView.NormalTicketsCount = normalTickets.Value;
+            routeView.DiscountCount = discountCounter;
+            routeView.DiscountTypeId = discountType;
+            return View(routeView);
         }
-        public IActionResult AddPassengers(int id, int firstStationId, int endStationId, string date, int routeId)
+        public IActionResult AddOptionalItems(int id, int firstStationId, int endStationId, string date, int routeId, int normalTickets, int? discountTypeId, int? discountCounter, List<RouteTransitView> transits)
         {
             var train = _trainFcd.GetTrain(id);
 
@@ -50,54 +55,14 @@ namespace TrainSeatReservation.Controllers
             {
                 return NotFound();
             }
-
-            var dateTime = Convert.ToDateTime(date);
-            
-            var allRouteStations = _routeStationFcd.GetRouteStations();
-            var routeStations = allRouteStations.Where(x => x.RouteId == routeId).OrderBy(x => x.Order);
-            var tickets = _ticketFcd.GetTrainTicketsWithDate(dateTime, id);
-            var trainStations = _trainStationFcd.GetTrainStations();
-            var firstTrainStation = trainStations.FirstOrDefault(x => x.StationId == firstStationId && x.TrainId == id);
-            var lastTrainStation = trainStations.FirstOrDefault(x => x.StationId == endStationId && x.TrainId == id);
-            var freeSeats = 0;
-            var capacity = 0;
-            var occupiedSeats = 0;
-            foreach (var item in tickets)
-            {
-                if((item.DepartureTrainStation.TrainTimeTable.DepartureTime < firstTrainStation.TrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < lastTrainStation.TrainTimeTable.ArrivalTime) 
-                   || (item.DepartureTrainStation.TrainTimeTable.DepartureTime>= firstTrainStation.TrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime <= lastTrainStation.TrainTimeTable.ArrivalTime)
-                   || (item.DepartureTrainStation.TrainTimeTable.DepartureTime > firstTrainStation.TrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > lastTrainStation.TrainTimeTable.ArrivalTime))
-                {
-                    occupiedSeats += item.Seats.Count;
-                }
-            }
-            
-            foreach (var item in train.TrainCarriages)
-            {
-                capacity += item.Carriage.Capacity;
-            }
-            freeSeats = capacity - occupiedSeats;
-
-            var trainTypes = _dictionaryFcd.GetDictionaryItems(2);
-            var trainClassTypes = _dictionaryFcd.GetDictionaryItems(3);
-            var seatsTypes = _dictionaryFcd.GetDictionaryItems(4);
-            var discountList = _discountFcd.GetDiscounts();
-            ViewBag.FreeSeats = (freeSeats / capacity * 100);
-            ViewBag.CarriageType = GetSelectList(2);
-            ViewBag.CarriageClass = GetSelectList(3);
-            ViewBag.SeatType = GetSelectList(4);
-            ViewBag.Discount = GetSelectDiscountList();
-            /*ViewBag.FirstStation = firstStationId;
-            ViewBag.LastStation = endStationId;*/
-            var ticket = new TicketDto
-            {
-                Id = 0,
-                DepartureTrainStationId = firstStationId,
-                ArrivalTrainStationId = endStationId,
-                TripDate = dateTime,
-
-            };
-            return View(ticket);
+            ViewBag.SeatsCount = normalTickets;
+            if (discountCounter.HasValue)
+                ViewBag.SeatsCount += discountCounter.Value;
+            return View(train);
+        }
+        public IActionResult PersonalData()
+        {
+            return View();
         }
         [HttpPost]
         [ActionName("AddPassengers")]
