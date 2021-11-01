@@ -77,6 +77,9 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddTransient<IEmailService, EmailService>();
             serviceCollection.AddSingleton<TemplateManager>();
 
+            serviceCollection.AddSingleton<IPayPalConfiguration>(configuration.GetSection("PayPal").Get<PayPalConfig>());
+           // serviceCollection.AddSingleton<PayPalConfiguration>(configuration.GetSection("PayPal")/*.Get<PayPalConfiguration>()*/);
+
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MapperProfile());

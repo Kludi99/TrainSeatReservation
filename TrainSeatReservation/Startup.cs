@@ -36,7 +36,12 @@ namespace TrainSeatReservation
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddDependencies(Configuration);
             services.AddDatabaseDeveloperPageExceptionFilter();
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//We set Time here 
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -62,6 +67,7 @@ namespace TrainSeatReservation
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

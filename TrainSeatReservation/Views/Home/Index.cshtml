@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TrainSeatReservation.Commons.DisplayItems.SearchingView
+@{
     ViewData["Title"] = "Home Page";
 }
 <div class="text-center">
@@ -33,6 +34,8 @@
             @Html.Hidden("datePickerValue")
             @Html.Hidden("firstDiscountId")
             @Html.Hidden("firstDiscountCounter")
+            @Html.Hidden("dictionary")
+
             <button type="submit" id="submitButton">Szukaj</button>
         </div>
     }
@@ -91,6 +94,7 @@
 
     $(document).ready(function () {
         datepicker.min = new Date().toISOString().split("T")[0];
+        var dictionary = new Array();
 
         var dateToday = new Date();
         var datepickerValue = new Date();
@@ -169,12 +173,36 @@
             }
         });
         $("#submitModalButton").click(function () {
-           // alert("The Form has been Submitted.");
+            // alert("The Form has been Submitted.");
             var div = document.getElementById("disountsDiv");
-           // alert("Div");
+            // alert("Div");
             var discountType1 = $("#firstDiscountType option:selected").text();
             var discountCount1 = $("#firstDiscountTickets").val();
             var disc = $("#firstDiscountType option:selected").val();
+            var discountType2 = $("#secondDiscountType option:selected").text();
+            var discountCount2 = $("#secondDiscountTickets").val();
+            var disc2 = $("#secondDiscountType option:selected").val();
+            var discountType3 = $("#thirdDiscountType option:selected").text();
+            var discountCount3 = $("#thirdDiscountTickets").val();
+            var disc3 = $("#thirdDiscountType option:selected").val();
+            if (disc != "") {
+                $("#disountsDiv").html('<input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name"firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />');
+                dictionary.push({ discountTypeId: disc,discountCount: discountCount1 });
+            }
+            if (disc2 != "") {
+                $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
+                    '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />');
+                //dictionary[disc2] = discountCount2;
+                dictionary.push({ discountTypeId: disc2, discountCount: discountCount2 });
+            }
+            if (disc3 != "") {
+                //dictionary[disc3] = discountCount3;
+                dictionary.push({ discountTypeId: disc3, discountCount: discountCount3 });
+                $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
+                    '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />' +
+                    '<input name="thirdDiscountTypeName" id="thirdDiscountTypeName" value="' + discountType3 + '" readonly /><input name="thirdDiscountCount" id="thirdDiscountCount" value="' + discountCount3 + '" readonly /><input name="thirdDiscountTypeId" id="thirdDiscountTypeId" value="' + disc3 + '" readonly hidden />');
+            }
+          
             console.log(JSON.stringify(disc));
            // alert(discountType1);
            // alert(discountCount1);
@@ -186,11 +214,14 @@
               //  $("#disountsDiv span").append(discountCount1);
                
                 
-            $("#disountsDiv").html('<input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name"firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />');
+           
                // $("#disountsDiv").append('<input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly />');
             $('#firstDiscountId').val(disc);
             $('#firstDiscountCounter').val(discountCount1);
-              
+            console.log(dictionary);
+           // alert("Słownik");
+            var dictionaryString = JSON.stringify(dictionary);
+            $('#dictionary').val(dictionaryString);
                 $('#addPassengerModal').modal('hide');
             
             

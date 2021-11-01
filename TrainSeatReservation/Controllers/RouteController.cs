@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,21 +36,19 @@ namespace TrainSeatReservation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(int firstStationId, int lastStationId, string date, string timeValue, string normalPriceTickets, string firstDiscountId, string firstDiscountCounter) 
+        public IActionResult Index(int firstStationId, int lastStationId, string date, string timeValue, string normalPriceTickets, string firstDiscountId, string firstDiscountCounter, string dictionary) 
         {
             var time = TimeSpan.Parse(timeValue);
+           // var dict = JsonConvert.DeserializeObject<List<SearchingView>>(dictionary);
             var normalTickets = 0;
             if (normalPriceTickets != null)
                 normalTickets = int.Parse(normalPriceTickets);
-            if(firstDiscountId != null && firstDiscountCounter != null)
-            {
-                var discountType = int.Parse(firstDiscountId);
-                var discountCount = int.Parse(firstDiscountCounter);
-                return RedirectToAction("Index", controllerName: "SearchingList", new { firstStationId = firstStationId, lastStationId = lastStationId, time = time, date = Convert.ToDateTime(date), discountType = discountType, discountCounter = discountCount, normalTickets = normalTickets });
-            }
+         
+                return RedirectToAction("Index", controllerName: "SearchingList", new { firstStationId = firstStationId, lastStationId = lastStationId, time = time, date = Convert.ToDateTime(date), normalTickets = normalTickets, discounts = dictionary });
+
             
          
-            return RedirectToAction("Index", controllerName: "SearchingList",new {firstStationId = firstStationId, lastStationId = lastStationId, time =time, date = Convert.ToDateTime(date), normalTickets =normalTickets }); 
+           // return RedirectToAction("Index", controllerName: "SearchingList",new {firstStationId = firstStationId, lastStationId = lastStationId, time =time, date = Convert.ToDateTime(date), normalTickets =normalTickets }); 
         }
 
         private List<SelectListItem> GetSelectDiscountList()

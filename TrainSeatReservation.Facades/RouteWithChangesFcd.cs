@@ -332,8 +332,61 @@ namespace TrainSeatReservation.Facades
                 trainView.Route.EndTrainTimeTable = endStationTime;
                 trainView.TravelTime = endStationTime.ArrivalTime.Value - firstRouteStation.StartTrainTimeTable.DepartureTime.Value;
             }
-               
+            trainView.Price += trainView.Route.Price;
+            if(trainView.Transits > 0)
+            {
+                if (trainView.Transits == 1)
+                {
+                    double price = 0;
+                    var route = _routeService.GetRoute(trainView.RouteTransits[0].Route.Id);
+                    var firstRouteStationTransit = _routeStationService.GetRoutesFromStation(trainView.RouteTransits[0].Station.Id).Where(x => x.RouteId == trainView.RouteTransits[0].Route.Id).Single();
+                    var routes = _routeStationService.GetRouteStations().Where(x => x.Order >= firstRouteStationTransit.Order && x.Order <= lastRouteStation.Order && x.RouteId == lastRouteId);
+                    foreach (var item in routes)
+                    {
+                        price += item.Price;
+                    }
 
+                    // var selectedStations = route.RouteStations.Where(x => x.)
+                    /*foreach (var item in route.RouteStations)
+                    {
+                        if(item.StartStationId == trainView.RouteTransits[0].Station.Id)
+                        {
+
+                        }
+                    }*/
+                    trainView.Price += price;
+                }
+                else
+                {
+                    var i = 0;
+                    double price = 0;
+                    foreach (var item in trainView.RouteTransits)
+                    {
+                        var route = _routeService.GetRoute(trainView.RouteTransits[i].Route.Id);
+                        var firstRouteStationTransit = _routeStationService.GetRoutesFromStation(trainView.RouteTransits[i].Station.Id).Where(x => x.RouteId == trainView.RouteTransits[i].Route.Id).Single();
+                        if (route.Id != lastRouteId)
+                        {
+                            var lastRouteStationTransit = _routeStationService.GetRouteStations().Where(x => x.RouteId == route.Id && x.EndStationId == trainView.RouteTransits[i+1].Station.Id).Single();
+                            var routes = _routeStationService.GetRouteStations().Where(x => x.Order >= firstRouteStationTransit.Order && x.Order <= lastRouteStationTransit.Order && x.RouteId == route.Id);
+                            foreach (var r in routes)
+                            {
+                                price += r.Price;
+                            }
+                        }
+                        else
+                        {
+                            var routes = _routeStationService.GetRouteStations().Where(x => x.Order >= firstRouteStationTransit.Order && x.Order <= lastRouteStation.Order && x.RouteId == lastRouteId);
+                            foreach (var r in routes)
+                            {
+                                price += r.Price;
+                            }
+                        }
+                        // trainView.Price += item.Rou
+                    }
+                    trainView.Price += price;
+                }
+               
+            }
             return trainView;
         }
         private double CheckFreeSeats(DateTime date, RouteStationDto firstRoute, RouteStationDto lastRoute)
@@ -368,22 +421,7 @@ namespace TrainSeatReservation.Facades
         public bool charge { get; set; }
         public int routeId { get; set; }
         public TrainTimeTableDto TrainTimeTableDto { get; set; }
-        /*public void SetId(int id)
-        {
-            this.id = id;
-        }
-        public void SetCharge(bool charge)
-        {
-            this.charge = charge;
-        }
-        public int GetId()
-        {
-            return id;
-        }
-        public bool GetCharge()
-        {
-            return charge;
-        }*/
+
         public PreviousStation(int id, bool charge, int routeId, TrainTimeTableDto trainTimeTableDto)
         {
             this.id = id;

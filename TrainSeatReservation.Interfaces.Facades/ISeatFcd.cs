@@ -11,6 +11,7 @@ namespace TrainSeatReservation.Interfaces.Facades
     {
 
         List<SeatDto> GetSeats();
+        List<SeatDto> GetSeatsInCarriage(int carriageId);
         SeatDto GetSeat(int id);
         void AddSeat(SeatDto seat);
         void UpdateSeat(SeatDto seat);

@@ -6,34 +6,42 @@
 }
 
 <div class="container">
-    <div class="optional-items">
-        <div class="row">
-            <div class="col-6">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal">Wybierz</button>
+    @using (Html.BeginForm("PersonalData", "SearchingList", FormMethod.Post))
+    {
+        <div class="optional-items">
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal">Wybierz</button>
+                </div>
+                <div class="col-6">
+                    <p>Wybierz miejsce ze schematu</p>
+                </div>
+                <div id="seatsDiv" style="display:none" class="col-12">
+                 
+                </div>
             </div>
-            <div class="col-6">
-                <p>Wybierz miejsce ze schematu</p>
-            </div>
-            <div id="seatsDiv" style="display:none" class="col-12"></div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                checkbox tu
-            </div>
-            <div class="col-6">
-                <p>Zezwól na informacje SMS</p>
-            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="checkbox" id="allowInformation" name="allowInformation"  />
+                </div>
+                <div class="col-6">
+                    <p>Zezwól na informacje SMS</p>
+                </div>
 
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="next-button">
-                    <a asp-action="PersonalData">Przejdź dalej</a>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="next-button">
+                        @Html.Hidden("carriageId")
+                        @Html.Hidden("seats")
+                        @Html.Hidden("allow")
+                        <button type="submit" id="submitButton">Przejdź dalej</button>
+                    </div>
                 </div>
             </div>
         </div>
+    }
     </div>
-</div>
 <div class="modal fade" id="chooseSeatsModal" tabindex="-1" role="dialog" aria-labelledby="chooseSeatsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -377,7 +385,7 @@
             var arr = seatListElm.value.split(',');
            // if (arr.length < c) {
                 if (arr.join() == '') { arr = []; }
-                console.log(seatValue);
+                //console.log(seatValue);
                 var p = arr.indexOf(seatValue);
                 if (p == -1) {
                     arr.push(seatValue); //append
@@ -455,9 +463,7 @@
         }
 
         $("#submitModalButton").click(function () {
-            //var x = document.querySelector(".active  #submitModalButton");
-            //console.log(JSON.stringify(x));
-           // alert("The Form has been Submitted.");
+
             var div = document.getElementById("seatsDiv");
            // alert("Div");
             var activecarriageSeats = document.querySelector(".active  input:first-of-type").value;
@@ -465,11 +471,7 @@
             var paragrahpCarriage = document.querySelector(".active  p:first-of-type").innerHTML;
            // console.log(paragrahpCarriage);
             var activeCarriageNumber = paragrahpCarriage.split(' ')[1];
-           // alert(activeCarriageNumber);
-           // var discountType1 = $("#firstDiscountType option:selected").text();
-           // var discountCount1 = $("#firstDiscountTickets").val();
-            //alert(discountType1);
-            //alert(discountCount1);
+
             if (div.style.display === "none") {
                 div.style.display = "block";
             }
@@ -484,8 +486,21 @@
             $("#seatsDiv")
                 .html('<p>Wybrane miejsca: Wagon numer</p><input name"carriageInput" id="carriageInput" value = "' + activeCarriageNumber + '" readonly /><p>Numery siedzeń: </p><input name"seatsInput" id="seatsInput" value = "' + activecarriageSeats + '" readonly />');
 
+            $('#carriageId').val(activeCarriageNumber);
+            console.log(activeCarriageNumber);
+            $('#seats').val(activecarriageSeats);
+            console.log($('#seats').val());
+            console.log($('#carriageId').val());
             $('#chooseSeatsModal').modal('hide');
 
+
+        });
+        $("#submitButton").click(function () {
+            $('#carriageId').val($('#carriageInput').val());
+            $('#seats').val($('#seatsInput').val());
+            var allow = $("#allowInformation").prop("checked") ;
+            alert(allow);
+            $('#allow').val(allow);
 
         });
     });
