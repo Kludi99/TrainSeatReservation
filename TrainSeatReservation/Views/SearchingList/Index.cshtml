@@ -20,9 +20,16 @@
             <div>
                 Czas :  @item.Route.Time
             </div>
+            <div>
+                Cena :  @item.Price zł
+            </div>
             @if (item.Transits == 0)
             {
                 @item.Train.Name @:&nbsp; @item.Train.Number
+
+
+
+
 
 
 
@@ -61,7 +68,7 @@
 
             }
             <div class="reserve-button">
-                <a asp-action="AddOptionalItems" asp-route-id="@item.Train.Id" asp-route-firstStationId="@item.StartStation.Id" asp-route-endStationId="@item.EndStation.Id" asp-route-date="@Model.Date.ToString()" asp-route-routeId="@item.Route.RouteId." asp-route-normalTickets="@Model.NormalTicketsCount" asp-route-discountTypeId="@Model.DiscountTypeId", asp-route-discountCounter="@Model.DiscountCount" asp-route-transits ="@item.RouteTransits ">Zarezerwuj </a>
+                <a asp-action="AddOptionalItems" asp-route-id="@item.Train.Id" asp-route-firstStationId="@item.StartStation.Id" asp-route-endStationId="@item.EndStation.Id" asp-route-date="@Model.Date.ToString()" asp-route-routeId="@item.Route.RouteId." asp-route-normalTickets="@Model.NormalTicketsCount" asp-route-discountTypeId="@Model.DiscountTypeId" , asp-route-discountCounter="@Model.DiscountCount" asp-route-transits="@item.RouteTransits ">Zarezerwuj </a>
             </div>
             @*   @item.Name
         <div>

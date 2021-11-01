@@ -32,6 +32,11 @@ namespace TrainSeatReservation.EntityFramework.Services
             _logger.LogInformation("Executing GetSeats service method");
             return GetSeatsQuery().ToList();
         }
+        public List<SeatDto> GetSeatsInCarriage(int carriageId)
+        {
+            _logger.LogInformation("Executing GetSeatsInCarriage service method");
+            return GetSeatsInCarriageQuery(carriageId).ToList();
+        }
         public SeatDto GetSeat(int id)
         {
             _logger.LogInformation("Executing GetSeat service method");
@@ -101,6 +106,18 @@ namespace TrainSeatReservation.EntityFramework.Services
         private IEnumerable<SeatDto> GetSeatsQuery()
         {
             var seats = _context.Seats;
+            try
+            {
+                return _mapper.Map<SeatDto[]>(seats);
+            }
+            catch
+            {
+                return Array.Empty<SeatDto>();
+            }
+        }
+        private IEnumerable<SeatDto> GetSeatsInCarriageQuery(int carriageId)
+        {
+            var seats = _context.Seats.Where(x => x.CarriageId == carriageId).AsNoTracking();
             try
             {
                 return _mapper.Map<SeatDto[]>(seats);

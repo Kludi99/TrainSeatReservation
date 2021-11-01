@@ -1,0 +1,61 @@
+﻿@model TrainSeatReservation.Commons.DisplayItems.TicketSummaryView;
+
+<div class="summary">
+    <div class="row">
+        <div class="col-6">
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" readonly />
+            </div>
+            @if (Model != null && Model.PhoneNumber != null)
+            {
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" readonly />
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="TripDate" class="control-label"></label>
+                <input asp-for="TripDate" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label>Stacja początkowa</label>
+                <input asp-for="DepartureTrainStation.Station.Name" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label>Stacja końcowa</label>
+                <input asp-for="ArrivalTrainStation.Station.Name" class="form-control" readonly />
+            </div>
+            @if (Model != null )
+            {
+                @foreach (var item in Model.TicketDiscounts)
+                {
+                    <div class="form-group">
+                        <label>Rodzaj zniżki </label>
+                        <input asp-for="@item.Discount.Name" class="form-control" readonly />
+                        <label>Ilość </label>
+                        <input asp-for="@item.Count" class="form-control" readonly />
+                    </div>
+                }
+            }
+                <div class="form-group">
+                    <label>Cena</label>
+                    <input asp-for="Price" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <a asp-action="PaymentWithPaypal">Przejdź do płatności</a>
+                </div>
+
+            </div>
+        
+    </div>
+</div>

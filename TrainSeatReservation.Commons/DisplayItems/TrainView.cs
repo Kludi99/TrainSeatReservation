@@ -17,6 +17,7 @@ namespace TrainSeatReservation.Commons.DisplayItems
         public RouteDto FirstRoute { get; set; }
         public double FreeSeats { get; set; }
         public TimeSpan TravelTime { get; set; }
+        public double Price { get; set; }
         public List<RouteTransitView> RouteTransits { get; set; }
     }
 }

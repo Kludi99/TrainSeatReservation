@@ -22,6 +22,10 @@ namespace TrainSeatReservation.Facades
         {
             return _service.GetSeats();
         }
+        public List<SeatDto> GetSeatsInCarriage(int carriageId)
+        {
+            return _service.GetSeatsInCarriage(carriageId);
+        }
         public SeatDto GetSeat(int id)
         {
             return _service.GetSeat(id);

@@ -14,5 +14,6 @@ namespace TrainSeatReservation.Commons.DisplayItems
         public int NormalTicketsCount { get; set; }
         public int? DiscountTypeId { get; set; }
         public int? DiscountCount { get; set; }
+        public List<SearchingView> Discounts { get; set; }
     }
 }

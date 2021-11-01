@@ -10,6 +10,7 @@ namespace TrainSeatReservation.Interfaces.Infrastructure.Services
     public interface ISeatService
     {
         List<SeatDto> GetSeats();
+        List<SeatDto> GetSeatsInCarriage(int carriageId);
         SeatDto GetSeat(int id);
         void AddSeat(SeatDto seat);
         void UpdateSeat(SeatDto seat);
