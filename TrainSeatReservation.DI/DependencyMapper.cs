@@ -68,6 +68,9 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddScoped<ISeatFcd, SeatFcd>();
             serviceCollection.AddScoped<ISeatService, SeatService>();
 
+            serviceCollection.AddScoped<ISeatTicketFcd, SeatTicketFcd>();
+            serviceCollection.AddScoped<ISeatTicketService, SeatTicketService>();
+
             serviceCollection.AddScoped<ITrainTimeTableFcd, TrainTimeTableFcd>();
             serviceCollection.AddScoped<ITrainTimeTableService, TrainTimeTableService>();
 

@@ -264,6 +264,7 @@ namespace TrainSeatReservation.Facades
                     trainView.Route.Price += item.Price;
                   
                 }
+                trainView.Route.RouteId = firstRouteId;
                 trainView.Route.Route = firstRouteStation.Route;
                 trainView.Route.StartTrainTimeTable = firstRouteStation.StartTrainTimeTable;
                 trainView.Route.EndTrainTimeTable = lastRouteStation.EndTrainTimeTable;
@@ -393,17 +394,23 @@ namespace TrainSeatReservation.Facades
         {
             var train = _trainService.GetTrain(firstRoute.TrainId);
             var tickets = _ticketService.GetTrainTicketsWithDate(date, firstRoute.TrainId);
-            var freeSeats = 0;
-            var capacity = 0;
+            double freeSeats = 0;
+            double capacity = 0;
             var occupiedSeats = 0;
+            var isChecked = false;
+            var seatsList = new List<int>();
             foreach (var item in tickets)
             {
-                if ((item.DepartureTrainStation.TrainTimeTable.DepartureTime < firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < lastRoute.EndTrainTimeTable.ArrivalTime)
+                var seats = item.SeatTickets.Select(x => x.SeatId);
+                
+                if ((item.DepartureTrainStation.TrainTimeTable.DepartureTime < firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < lastRoute.EndTrainTimeTable.ArrivalTime && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime< firstRoute.StartTrainTimeTable.DepartureTime))
                    || (item.DepartureTrainStation.TrainTimeTable.DepartureTime >= firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime <= lastRoute.EndTrainTimeTable.ArrivalTime)
-                   || (item.DepartureTrainStation.TrainTimeTable.DepartureTime > firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > lastRoute.EndTrainTimeTable.ArrivalTime))
+                   || (item.DepartureTrainStation.TrainTimeTable.DepartureTime > firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > lastRoute.EndTrainTimeTable.ArrivalTime) && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > firstRoute.StartTrainTimeTable.DepartureTime))
                 {
-                    occupiedSeats += item.Seats.Count;
+                    if(!(seatsList.Any(x => seats.Any(y => y == x))))
+                        occupiedSeats += item.SeatTickets.Count;
                 }
+                seatsList = seats.ToList();
             }
             foreach (var item in train.TrainCarriages)
             {
@@ -411,7 +418,7 @@ namespace TrainSeatReservation.Facades
             }
             freeSeats = capacity - occupiedSeats;
 
-            return (freeSeats / capacity * 100); ;
+            return Math.Round((freeSeats / capacity * 100), 2); ;
         }
 
     }

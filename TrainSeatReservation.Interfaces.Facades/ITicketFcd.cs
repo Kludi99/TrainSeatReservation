@@ -13,7 +13,7 @@ namespace TrainSeatReservation.Interfaces.Facades
         List<TicketDto> GetTrainTicketsWithDate(DateTime date, int trainId);
         TicketDto GetTicket(int id);
         TicketDto AddTicket(TicketDto ticket);
-        void UpdateTicket(TicketDto ticket);
+        TicketDto UpdateTicket(TicketDto ticket);
         void DeleteTicket(int id);
         bool IsTicketExists(int id);
     }

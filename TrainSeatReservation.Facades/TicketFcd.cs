@@ -30,9 +30,9 @@ namespace TrainSeatReservation.Facades
         {
            return  _service.AddTicket(Ticket);
         }
-        public void UpdateTicket(TicketDto Ticket)
+        public TicketDto UpdateTicket(TicketDto Ticket)
         {
-            _service.UpdateTicket(Ticket);
+            return _service.UpdateTicket(Ticket);
         }
         public void DeleteTicket(int id)
         {

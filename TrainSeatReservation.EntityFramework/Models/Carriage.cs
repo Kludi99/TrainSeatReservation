@@ -17,6 +17,9 @@ namespace TrainSeatReservation.EntityFramework.Models
        // public int Capacity { get; set; }
        // public int FreeSeats { get; set; }
         public bool IsActive { get; set; }
+        public bool? EletricalOutlet { get; set; }
+        public bool? CateringCar { get; set; }
+        public bool? BicyclePlace { get; set; }
         public ICollection<TrainCarriage> TrainCarriages { get; set; }
         public ICollection<Seat> Seats { get; set; }
     }

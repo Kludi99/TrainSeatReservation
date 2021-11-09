@@ -25,6 +25,7 @@ namespace TrainSeatReservation.Data
         public DbSet<DictionaryItem> DictionaryItems { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<TrainTimeTable> TrainTimeTables { get; set; }
+        public DbSet<SeatTicket> SeatTickets { get; set; }
 
       /*  public ApplicationDbContext() : base()
         {
@@ -93,6 +94,16 @@ namespace TrainSeatReservation.Data
             builder.Entity<TicketDiscount>()
                 .HasOne(x => x.Ticket)
                 .WithMany(x => x.TicketDiscounts);
+
+            builder.Entity<SeatTicket>()
+                .HasOne(x => x.Seat)
+                .WithMany(x => x.SeatTickets)
+                .HasForeignKey(x => x.SeatId);
+
+            builder.Entity<SeatTicket>()
+              .HasOne(x => x.Ticket)
+              .WithMany(x => x.SeatTickets)
+              .HasForeignKey(x => x.TicketId);
 
             //Indexes
 
