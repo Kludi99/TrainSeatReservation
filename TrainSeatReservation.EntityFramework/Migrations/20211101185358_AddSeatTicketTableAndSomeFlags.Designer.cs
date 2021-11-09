@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211101185358_AddSeatTicketTableAndSomeFlags")]
+    partial class AddSeatTicketTableAndSomeFlags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "87400d76-f016-4111-84b3-97468281f1f7",
-                            ConcurrencyStamp = "eecab211-fe05-49ea-b51b-48489966ed04",
+                            Id = "aa6f7c6b-a5d7-4a8a-bc0d-00d4ab8d1603",
+                            ConcurrencyStamp = "1d0ab432-7e03-4e8d-b002-1a443e8179d4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f7e6c141-1279-4c4f-a106-97b2eab71941",
-                            ConcurrencyStamp = "72fe0c7a-af2d-4cd5-8831-4d68d351dbbd",
+                            Id = "15e0241d-914f-4099-9633-bd383274588e",
+                            ConcurrencyStamp = "f36fab1a-71d5-4b9c-b752-26b64871a563",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -281,9 +283,7 @@ namespace TrainSeatReservation.Data.Migrations
                         new
                         {
                             Id = 1,
-                            BicyclePlace = true,
                             CarriageClassId = 7,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 1,
                             TypeId = 6
@@ -307,7 +307,6 @@ namespace TrainSeatReservation.Data.Migrations
                         new
                         {
                             Id = 4,
-                            BicyclePlace = true,
                             CarriageClassId = 7,
                             IsActive = true,
                             Number = 4,
@@ -332,7 +331,6 @@ namespace TrainSeatReservation.Data.Migrations
                         new
                         {
                             Id = 7,
-                            BicyclePlace = true,
                             CarriageClassId = 8,
                             IsActive = true,
                             Number = 7,
@@ -366,7 +364,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 11,
                             CarriageClassId = 8,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 1,
                             TypeId = 6
@@ -375,7 +372,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 12,
                             CarriageClassId = 8,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 2,
                             TypeId = 6
@@ -384,7 +380,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 13,
                             CarriageClassId = 8,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 3,
                             TypeId = 6
@@ -393,7 +388,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 14,
                             CarriageClassId = 8,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 4,
                             TypeId = 6
@@ -402,7 +396,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 15,
                             CarriageClassId = 8,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 5,
                             TypeId = 6
@@ -411,7 +404,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 16,
                             CarriageClassId = 7,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 6,
                             TypeId = 6
@@ -420,7 +412,6 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = 17,
                             CarriageClassId = 7,
-                            EletricalOutlet = true,
                             IsActive = true,
                             Number = 7,
                             TypeId = 6

@@ -16,5 +16,6 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int SeatTypeId { get; set; }
         public int CarriageId { get; set; }
         public Carriage Carriage { get; set; }
+        public ICollection<SeatTicket> SeatTickets { get; set; }
     }
 }

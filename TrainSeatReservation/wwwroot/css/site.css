@@ -119,7 +119,7 @@ body {
     background-color: #f0f0f0;
     border-color: transparent;
 }
-.train-searching-form button, .modal-button, .train-result a, .next-button a, .personal-data a {
+.train-searching-form button, .modal-button, .train-result a, .next-button a, .personal-data a, .summary a {
     padding: 5px 10px;
     background-color: #db8325;
     border-color: transparent;
@@ -132,7 +132,7 @@ body {
         .next-button a{
             float:right;
         }
-        .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover {
+        .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover, .summary a:hover {
             background-color: #9c5c19;
             font-weight: 700;
             border-color: transparent;
@@ -233,14 +233,42 @@ body {
     background-color: #0A0;
     color: #0F0;
 }
-#seatsDiv p{
+
+[id^="seatsDiv_"] p {
     display: inline-block;
 }
-#seatsDiv input {
+[id^="seatsDiv_"] input {
     border: none;
     font-size: larger;
     color: #db8325;
     font-weight: bold;
     padding: 0 5px;
     width: 200px
+}
+.optional-items button, .personal-data input[type="submit"] {
+    padding: 5px 10px;
+    background-color: #db8325;
+    border-color: transparent;
+    border-radius: 15px;
+    color: #fff;
+}
+    .optional-items button:hover, .personal-data input[type="submit"]:hover {
+        background-color: #9c5c19;
+        font-weight: 700;
+        border-color: transparent;
+    }
+    .next-button button{
+        float:right;
+    }
+    .next-button{
+        margin: 1.5rem;
+    }
+.summary input{
+    border:none;
+    background-color: transparent !important;
+    font-weight:700;
+
+}
+.summary input:hover{
+    border: none;
 }

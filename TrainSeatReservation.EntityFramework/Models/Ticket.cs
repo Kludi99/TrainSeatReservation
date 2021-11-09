@@ -25,7 +25,9 @@ namespace TrainSeatReservation.EntityFramework.Models
         public TrainStation DepartureTrainStation { get; set; }
         public ICollection<TicketDiscount> TicketDiscounts { get; set; }
         public double Price { get; set; }
-        public ICollection<Seat> Seats { get; set; }
+        public bool IsPaid { get; set; }
+        public DateTime CreateDate { get; set; }
+        public ICollection<SeatTicket> SeatTickets { get; set; }
        // public int SeatId { get; set; }
     }
 }

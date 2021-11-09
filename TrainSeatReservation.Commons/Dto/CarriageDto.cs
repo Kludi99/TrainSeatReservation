@@ -14,6 +14,9 @@ namespace TrainSeatReservation.Commons.Dto
         public int TypeId { get; set; }
         public DictionaryItemDto CarriageClass { get; set; }
         public int CarriageClassId { get; set; }
+        public bool? EletricalOutlet { get; set; }
+        public bool? CateringCar { get; set; }
+        public bool? BicyclePlace { get; set; }
         public int Capacity { get
             {
                 return Seats.Count();
