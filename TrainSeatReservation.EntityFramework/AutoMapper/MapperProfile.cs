@@ -62,6 +62,9 @@ namespace TrainSeatReservation.EntityFramework.AutoMapper
             CreateMap<RouteStation, RouteStationDto>();
             CreateMap<RouteStationDto, RouteStation>();
 
+            CreateMap<RouteTicket, RouteTicketDto>();
+            CreateMap<RouteTicketDto, RouteTicket>();
+
         }
     }
 }

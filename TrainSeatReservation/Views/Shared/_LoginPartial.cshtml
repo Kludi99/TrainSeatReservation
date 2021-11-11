@@ -16,7 +16,7 @@
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Mój profil</a>
                 @if (!User.IsInRole("Admin"))
                 {
-                    <a class="dropdown-item" href="@Url.Action("Index", "Tickets")" id="order">Moje bilety</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Tickets", new {area =""})" id="order">Moje bilety</a>
                 }
 
 

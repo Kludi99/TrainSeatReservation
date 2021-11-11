@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -20,10 +20,19 @@
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Capacity)
+                @Html.DisplayNameFor(model => model.CarriageClass)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FreeSeats)
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EletricalOutlet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CateringCar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BicyclePlace)
             </th>
             <th></th>
         </tr>
@@ -35,13 +44,22 @@
                 @Html.DisplayFor(modelItem => item.Number)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type.Name)
+                @Html.DisplayFor(modelItem => item.Type.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
+                @Html.DisplayFor(modelItem => item.CarriageClass.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FreeSeats)
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EletricalOutlet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CateringCar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BicyclePlace)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

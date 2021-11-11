@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211111184523_UpdateTicket")]
+    partial class UpdateTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "28cd66e7-f6bc-481d-8323-09ecfdf56a78",
-                            ConcurrencyStamp = "26aeddcf-4e33-4401-95eb-a9fbeff06832",
+                            Id = "6b7fe95f-ac9b-4d49-b0fe-413f2d429c87",
+                            ConcurrencyStamp = "422cbdf3-fec8-449e-9145-8cd15a11a874",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d04d0e70-7d77-4dd8-875b-e03020224da7",
-                            ConcurrencyStamp = "724933d2-41ed-4c8d-b00c-0b99ac88b18b",
+                            Id = "d466a767-7a6a-4e81-8206-91ae8d9f1801",
+                            ConcurrencyStamp = "9c4e21ec-fc95-4ac8-a8b6-028035bf8c7c",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -1677,31 +1679,6 @@ namespace TrainSeatReservation.Data.Migrations
                             StartTrainTimeTableId = 69,
                             TrainId = 3
                         });
-                });
-
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.RouteTicket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("RouteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TripDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RouteId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("RouteTickets");
                 });
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Seat", b =>
@@ -7460,9 +7437,6 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -8948,25 +8922,6 @@ namespace TrainSeatReservation.Data.Migrations
                     b.Navigation("Train");
                 });
 
-            modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.RouteTicket", b =>
-                {
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.Route", "Route")
-                        .WithMany()
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrainSeatReservation.EntityFramework.Models.Ticket", "Ticket")
-                        .WithMany("RouteTickets")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Route");
-
-                    b.Navigation("Ticket");
-                });
-
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Seat", b =>
                 {
                     b.HasOne("TrainSeatReservation.EntityFramework.Models.Carriage", "Carriage")
@@ -9150,8 +9105,6 @@ namespace TrainSeatReservation.Data.Migrations
 
             modelBuilder.Entity("TrainSeatReservation.EntityFramework.Models.Ticket", b =>
                 {
-                    b.Navigation("RouteTickets");
-
                     b.Navigation("SeatTickets");
 
                     b.Navigation("TicketDiscounts");
