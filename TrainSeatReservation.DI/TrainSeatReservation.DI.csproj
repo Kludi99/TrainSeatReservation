@@ -12,6 +12,7 @@
     <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
     <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="RazorLight" Version="2.0.0-rc.3" />
+    <PackageReference Include="Vonage" Version="5.9.2" />
   </ItemGroup>
 
   <ItemGroup>

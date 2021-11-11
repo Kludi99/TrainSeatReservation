@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211111192751_AddRouteTicketTable")]
+    partial class AddRouteTicketTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "28cd66e7-f6bc-481d-8323-09ecfdf56a78",
-                            ConcurrencyStamp = "26aeddcf-4e33-4401-95eb-a9fbeff06832",
+                            Id = "611b0535-8de4-4f0c-b104-6e2d925b5ee5",
+                            ConcurrencyStamp = "b50041fb-e125-4668-8cbe-4f5fd23b34c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d04d0e70-7d77-4dd8-875b-e03020224da7",
-                            ConcurrencyStamp = "724933d2-41ed-4c8d-b00c-0b99ac88b18b",
+                            Id = "b069c573-4f85-4e2d-8222-bc5de44ed70b",
+                            ConcurrencyStamp = "3716baf7-580d-4a11-89b7-18f88e21fbb5",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -7458,9 +7460,6 @@ namespace TrainSeatReservation.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")

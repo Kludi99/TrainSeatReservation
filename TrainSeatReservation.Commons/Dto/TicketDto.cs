@@ -30,7 +30,12 @@ namespace TrainSeatReservation.Commons.Dto
         [DisplayName("Cena")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
+        public bool? SendInformation { get; set; }
         public bool IsPaid { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+        public int CarriageId { get; set; }
+        public CarriageDto Carriage { get; set; }
         public DateTime CreateDate { get; set; }
         [DisplayName("Wybrane siedzenia")]
         public ICollection<SeatTicketDto> SeatTickets { get; set; }

@@ -73,6 +73,9 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddScoped<ISeatTicketFcd, SeatTicketFcd>();
             serviceCollection.AddScoped<ISeatTicketService, SeatTicketService>();
 
+            serviceCollection.AddScoped<IRouteTicketFcd, RouteTicketFcd>();
+            serviceCollection.AddScoped<IRouteTicketService, RouteTicketService>();
+
             serviceCollection.AddScoped<ITrainTimeTableFcd, TrainTimeTableFcd>();
             serviceCollection.AddScoped<ITrainTimeTableService, TrainTimeTableService>();
 
@@ -81,6 +84,9 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddSingleton<IEmailConfiguration>(configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             serviceCollection.AddTransient<IEmailService, EmailService>();
             serviceCollection.AddSingleton<TemplateManager>();
+
+            serviceCollection.AddScoped<INotificationFcd, NotificationFcd>();
+            serviceCollection.AddScoped<INotificationService, NotificationService>();
 
             serviceCollection.AddSingleton<IPayPalConfiguration>(configuration.GetSection("PayPal").Get<PayPalConfig>());
            // serviceCollection.AddSingleton<PayPalConfiguration>(configuration.GetSection("PayPal")/*.Get<PayPalConfiguration>()*/);

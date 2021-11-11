@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Delete</h1>
@@ -22,19 +22,37 @@
             @Html.DisplayNameFor(model => model.Type)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
+            @Html.DisplayFor(model => model.Type.Id)
+        </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Capacity)
+            @Html.DisplayNameFor(model => model.CarriageClass)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Capacity)
-        </dd>
+            @Html.DisplayFor(model => model.CarriageClass.Id)
+        </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FreeSeats)
+            @Html.DisplayNameFor(model => model.IsActive)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FreeSeats)
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EletricalOutlet)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EletricalOutlet)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CateringCar)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CateringCar)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BicyclePlace)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BicyclePlace)
         </dd>
     </dl>
     

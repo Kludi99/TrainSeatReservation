@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,16 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int DepartureTrainStationId { get; set; }
         [ForeignKey("DepartureTrainStationId")]
         public TrainStation DepartureTrainStation { get; set; }
+        public int CarriageId { get; set; }
         public ICollection<TicketDiscount> TicketDiscounts { get; set; }
         public double Price { get; set; }
         public bool IsPaid { get; set; }
+        public bool? SendInformation { get; set; }
         public DateTime CreateDate { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
         public ICollection<SeatTicket> SeatTickets { get; set; }
+        public ICollection<RouteTicket> RouteTickets { get; set; }
        // public int SeatId { get; set; }
     }
 }
