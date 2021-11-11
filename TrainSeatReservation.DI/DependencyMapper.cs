@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +32,7 @@ namespace TrainSeatReservation.DI
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
+            serviceCollection.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             serviceCollection.AddScoped<ITrainFcd, TrainFcd>();
             serviceCollection.AddScoped<ITrainService, TrainService>();

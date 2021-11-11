@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="MailKit" Version="2.15.0" />
     <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
     <PackageReference Include="PayPal" Version="1.9.1" />
+    <PackageReference Include="RazorLight" Version="2.0.0-rc.3" />
   </ItemGroup>
 
   <ItemGroup>

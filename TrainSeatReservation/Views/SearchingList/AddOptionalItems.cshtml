@@ -300,6 +300,32 @@
                                                     </div>
                                                 </div>
                                             }
+                                        <div class="extras">
+                                            @if (item.Carriage.EletricalOutlet == true || item.Carriage.BicyclePlace == true)
+                                            {
+                                                <div>W wagonie znajdują się</div>
+                                                @if (item.Carriage.EletricalOutlet == true)
+                                                {
+                                                    <div>
+                                                        <p> <i class="fas fa-plug"></i> - gniazdka</p>
+                                                    </div>
+
+                                                }
+                                                @if (item.Carriage.BicyclePlace == true)
+                                                {
+                                                    <div>
+                                                         <p><i class="fas fa-bicycle"></i> - miejsce na rowery</p>
+                                                    </div>
+                                                }
+
+                                            }
+                                            @if (item.Carriage.CateringCar == true)
+                                            {
+                                                <div>
+                                                    <p> <i class="fas fa-utensils"></i>- wagon retauracyjny</p>
+                                                </div>
+                                            }
+                                        </div>
                                         </div>
                                     </div>
 

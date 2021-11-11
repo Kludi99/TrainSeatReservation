@@ -1,0 +1,56 @@
+﻿@model TrainSeatReservation.Commons.Dto.TicketDto
+
+<div>
+    <h4>Bilet</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            User Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.UserId
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Email
+        </dd>
+        <dt class="col-sm-2">
+            Imię
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Name
+        </dd>
+        <dt class="col-sm-2">
+            Nazwisko
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Surname
+        </dd>
+        <dt class="col-sm-2">
+            Data podrózy
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TripDate
+        </dd>
+        <dt class="col-sm-2">
+            Stacja koncowa
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ArrivalTrainStation.Station.Name
+        </dd>
+        <dt class="col-sm-2">
+           Stacja poczatkowa
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DepartureTrainStation.Station.Name
+        </dd>
+        <dt class="col-sm-2">
+            Cena
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Price zł
+        </dd>
+    </dl>
+</div>

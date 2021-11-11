@@ -272,3 +272,7 @@ body {
 .summary input:hover{
     border: none;
 }
+.fas {
+    font-size: 50px;
+    color: #db8325;
+}
