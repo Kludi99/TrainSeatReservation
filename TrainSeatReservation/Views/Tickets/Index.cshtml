@@ -59,11 +59,10 @@
                 @Html.DisplayFor(modelItem => item.TripDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTrainStation.Id)
+                @Html.DisplayFor(modelItem => item.ArrivalTrainStation.Station.Name)
             </td>
             <td>
-                <a href="C:\Users\klaud\source\repos\TrainSeatReservation\TrainSeatReservation\Areas\Administration\Controllers\TicketsController.cs">C:\Users\klaud\source\repos\TrainSeatReservation\TrainSeatReservation\Areas\Administration\Controllers\TicketsController.cs</a>
-                @Html.DisplayFor(modelItem => item.DepartureTrainStation.Id)
+                @Html.DisplayFor(modelItem => item.DepartureTrainStation.Station.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
