@@ -33,7 +33,7 @@ namespace TrainSeatReservation.Commons.DisplayItems
         [DisplayName("Bilety normalne")]
         public int NormalSeats { get; set; }
         [DisplayName("Siedzenia")]
-        public SeatsView Seats { get; set; }
+        public List<SeatsView> Seats { get; set; }
         public ICollection<SeatsView> SeatsView { get; set; }
 
         public ICollection<DiscountView> TicketDiscounts { get; set; }

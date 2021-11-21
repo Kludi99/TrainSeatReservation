@@ -159,24 +159,56 @@ namespace TrainSeatReservation.Controllers
             HttpContext.Session.SetString("TrainView", JsonConvert.SerializeObject(trainView));
             return View(trains);
         }
-        public IActionResult PersonalData(int carriageId, string seats, bool allow)//przy przesiadkach moze byc kilka wagonów
+        public IActionResult PersonalData(string carriagesString, string seats, bool allow, string carriagesWithSeats)//przy przesiadkach moze byc kilka wagonów
         {
             var parameters = HttpContext.Request.RouteValues;
             var seatSession = HttpContext.Session.GetString("Seats");
-            if (seatSession == null)
+            var carriageSession = HttpContext.Session.GetString("Carriage");
+            var carriageId = 0;
+            var carriageId2 = 0;
+            var carriageId3 = 0;
+         
+
+            if (seatSession == null && carriageSession == null)
             {
-                var seatsArr = seats.Split(',');
-                var seatsIds = Array.ConvertAll(seatsArr, int.Parse);
+                var carriageSeatsDto = JsonConvert.DeserializeObject<List<CarriageSeatsDto>>(carriagesWithSeats);
+                //var seatsArr = seats.Split(',');
+                //var seatsIds = Array.ConvertAll(seatsArr, int.Parse);
+                //
+                //var carriageArr = carriagesString.Split(',');
+                //var carriagesIds = Array.ConvertAll(carriageArr, int.Parse);
+                var trainsCounter = carriageSeatsDto.Count();
+                if (carriageSeatsDto.Count() == 0)
+                    return null;
+                var allSelectedSeats = new List<IEnumerable<SeatDto>>();
+                foreach (var item in carriageSeatsDto)
+                {
+                    var selectedSeats = _seatFcd.GetSeatsInCarriage(item.CarriageId).Where(x => item.SeatsIds.Contains(x.Number));
+                    allSelectedSeats.Add(selectedSeats);
+                }
                 /*foreach (var item in seatsIds)
                 {*/
-                    var selectedSeats = _seatFcd.GetSeatsInCarriage(carriageId).Where(x => seatsIds.Contains(x.Number));
+                //var selectedSeats = _seatFcd.GetSeatsInCarriage(carriagesIds[0]).Where(x => seatsIds.Contains(x.Number));
+                //var selectedSeats1 = _seatFcd.GetSeatsInCarriage(carriagesIds[1]).Where(x => seatsIds.Contains(x.Number));
+                //var selectedSeats2 = _seatFcd.GetSeatsInCarriage(carriagesIds[2]).Where(x => seatsIds.Contains(x.Number));
                 // }
-              //  foreach (var item in selectedSeats)
-              //  {
-              //      item.IsFree = false;
-              //      _seatFcd.UpdateSeat(item);
-              //  }
-                
+                //foreach (var item in selectedSeats)
+                //{
+                //item.IsFree = false;
+                //_seatFcd.UpdateSeat(item);
+                //}
+                //foreach (var item in selectedSeats1)
+                //{
+                //item.IsFree = false;
+                //_seatFcd.UpdateSeat(item);
+                //}
+                //foreach (var item in selectedSeats2)
+                //{
+                //item.IsFree = false;
+                //_seatFcd.UpdateSeat(item);
+                //}
+
+
                 var url = Request.Path;
                 ViewBag.ReturnUrl = url;
                 ViewBag.PhoneAllow = allow;
@@ -196,19 +228,50 @@ namespace TrainSeatReservation.Controllers
                     Price = trainView.Price,
                     IsPaid = false,
                     SendInformation = allow,
-                    CarriageId = carriageId
+                   // CarriageId = carriageId
 
                 };
                 var ticket = _ticketFcd.AddTicket(ticketDto);
 
-                foreach (var item in selectedSeats)
+                //foreach (var item in selectedSeats)
+                //{
+                    //_seatTicketFcd.AddSeatTicket(new SeatTicketDto
+                    //{
+                        //SeatId = item.Id,
+                        //TicketId = ticket.Id,
+                        //IsFree = false
+                    //});
+                //}
+                //foreach (var item in selectedSeats1)
+                //{
+                    //_seatTicketFcd.AddSeatTicket(new SeatTicketDto
+                    //{
+                        //SeatId = item.Id,
+                        //TicketId = ticket.Id,
+                        //IsFree = false
+                    //});
+                //}
+                //foreach (var item in selectedSeats2)
+                //{
+                    //_seatTicketFcd.AddSeatTicket(new SeatTicketDto
+                    //{
+                        //SeatId = item.Id,
+                        //TicketId = ticket.Id,
+                        //IsFree = false
+                    //});
+                //}
+
+                foreach (var item in allSelectedSeats)
                 {
-                    _seatTicketFcd.AddSeatTicket(new SeatTicketDto
+                    foreach (var seat in item)
                     {
-                        SeatId = item.Id,
+                        _seatTicketFcd.AddSeatTicket(new SeatTicketDto
+                        {
+                        SeatId = seat.Id,
                         TicketId = ticket.Id,
                         IsFree = false
-                    });
+                        });
+                    }
                 }
                 var routesIds = new List<int>();
                 routesIds.Add(trainView.Route.RouteId);
@@ -229,14 +292,20 @@ namespace TrainSeatReservation.Controllers
                         TripDate = ticket.TripDate
                     }); 
                 }
-
-                var seatsView = new SeatsView()
+                var seatsList = new List<SeatsView>();
+                foreach (var item in carriageSeatsDto)
                 {
-                    Seats = seatsIds.ToList(),
-                    CarriageId = carriageId
-                };
+                    var seatsView = new SeatsView()
+                    {
+                        Seats = item.SeatsIds.ToList(),
+                        CarriageId = carriageId
+                    };
+                    seatsList.Add(seatsView);
+                }
+                
                 //parameters.Add("Seats", seatsView);
-                HttpContext.Session.SetString("Seats", JsonConvert.SerializeObject(seatsView));
+                HttpContext.Session.SetString("Seats", JsonConvert.SerializeObject(seatsList));
+                HttpContext.Session.SetString("Carriage", JsonConvert.SerializeObject(carriageSeatsDto));
                 HttpContext.Session.SetString("Ticket", JsonConvert.SerializeObject(ticket));
             }
             return View();
@@ -251,7 +320,7 @@ namespace TrainSeatReservation.Controllers
             var ticketDto = JsonConvert.DeserializeObject<TicketDto>(ticketVal);
 
             var seatsVal = HttpContext.Session.GetString("Seats");
-            var seatsDto = JsonConvert.DeserializeObject<SeatsView>(seatsVal);
+            var seatsDto = JsonConvert.DeserializeObject<List<SeatsView>>(seatsVal);
 
             var currentUser = await _userManager.GetUserAsync(User);
 
@@ -300,9 +369,9 @@ namespace TrainSeatReservation.Controllers
                 TripDate = ticket.TripDate,
                 TicketDiscounts = discountsView,
                 Seats = seatsDto,
-                NormalSeats = seatsDto.Seats.Count - discountsView.Sum(x => x.Count)
+                NormalSeats = seatsDto[0].Seats.Count - discountsView.Sum(x => x.Count)
             };
-            ViewBag.SeatsNum = string.Join(";", ticketView.Seats.Seats);
+            //ViewBag.SeatsNum = string.Join(";", ticketView.Seats.Seats);
             HttpContext.Session.SetString("TicketSummaryView", JsonConvert.SerializeObject(ticketView));
             return View(ticketView);
 

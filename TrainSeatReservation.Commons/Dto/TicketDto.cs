@@ -36,6 +36,10 @@ namespace TrainSeatReservation.Commons.Dto
         public string PhoneNumber { get; set; }
         public int CarriageId { get; set; }
         public CarriageDto Carriage { get; set; }
+        public int? SecondCarriageId { get; set; }
+        public CarriageDto SecondCarriage { get; set; }
+        public int? ThirdCarriageId { get; set; }
+        public CarriageDto ThirdCarriage { get; set; }
         public DateTime CreateDate { get; set; }
         [DisplayName("Wybrane siedzenia")]
         public ICollection<SeatTicketDto> SeatTickets { get; set; }

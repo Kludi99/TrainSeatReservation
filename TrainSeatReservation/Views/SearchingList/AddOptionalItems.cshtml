@@ -58,6 +58,7 @@
                         @Html.Hidden("carriageId")
                         @Html.Hidden("seats")
                         @Html.Hidden("allow")
+                        @Html.Hidden("carriagesWithSeats")
                         <button type="submit" id="submitButton">Przejdź dalej</button>
                     </div>
                 </div>
@@ -82,9 +83,10 @@
                             @foreach (var item in Model[i].TrainCarriages)
                             {
                                 <div class="carousel-item @(first ? Html.Raw("active") : Html.Raw(""))">
-                                    <div class="row">
+                                    <div class="row row_@i">
+                                        <span hidden>@item.Carriage.Id</span>
                                         <div class="col-sm-12"><p>Wagon: @item.Carriage.Number </p></div>
-                                        <div class="col-sm-12">Wybrane miejsca:  <input id="seats" value=""></div>
+                                        <div class="col-sm-12 overflow-hidden">Wybrane miejsca:  <input id="seats_@i" hidden value=""></div>
                                         <div class="col-sm-12">
 
                                             @if (item.Carriage.TypeId == 6) //bezprzedziałowy
@@ -461,8 +463,6 @@
                     removeSeat(activecarriage, seat.value);
                     return;
                 }
-
-
         }
 
 
@@ -473,21 +473,31 @@
         }
         for (let j = 0; j < @Model.Count; j++) {
             console.log(j);
-            $("#submitModalButton_"+j).click(function () {
-                alert(j);
-                var div = document.getElementById("seatsDiv_"+j);
-                alert(div);
+            $("#submitModalButton_" + j).click(function () {
+                //alert(j);
+                var selectedSeatsArr = [];
+                var div = document.getElementById("seatsDiv_" + j);
+                var x = document.getElementById("chooseSeatsModal_" + j);
+                var selected = x.getElementsByClassName('seat selected');
+                for (var i = 0; i < selected.length; i++) {
+                    console.log("miejsca: " + selected[i].value);
+                    selectedSeatsArr.push(selected[i].value);
+                }
+                // var selected = elms.getElementsByClassName('selected');
+                console.log(selected);
+                // alert(div);
                 // alert("Div");
-                var activecarriageSeats = document.querySelector(".active  input:first-of-type").value;
+                var activecarriageSeats = selectedSeatsArr.join();//document.querySelector(".active .row_" + j +" input:first-of-type").value;
                 // alert(activecarriageSeats);
-                var paragrahpCarriage = document.querySelector(".active  p:first-of-type").innerHTML;
-                // console.log(paragrahpCarriage);
+                var paragrahpCarriage = document.querySelector(" .active .row_" + j + " p:first-of-type").innerHTML;
+                var paragrahpCarriageId = document.querySelector(" .active .row_" + j + " span:first-of-type").innerHTML;
+                console.log("Id wagonu:  " + paragrahpCarriageId);
                 var activeCarriageNumber = paragrahpCarriage.split(' ')[1];
-
+                //console.log(paragrahpCarriage);
                 if (div.style.display === "none") {
                     div.style.display = "block";
                 }
-                if (counter != c)
+                if (selected.length < c)
                     alert("Nie wybrano wszystkich siedzeń. Mogą zostać wybrane losowo");
                 // $("#disountsDiv span").append(discountType1);
                 //  $("#disountsDiv span").append(discountCount1);
@@ -496,10 +506,10 @@
                 //$("#disountsDiv").append('<input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly />');
                 //$("#disountsDiv").append('<input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly />');
                 $("#seatsDiv_" + j)
-                    .html('<p>Wybrane miejsca: Wagon numer</p><input name"carriageInput" id="carriageInput" value = "' + activeCarriageNumber + '" readonly /><p>Numery siedzeń: </p><input name"seatsInput" id="seatsInput" value = "' + activecarriageSeats + '" readonly />');
+                    .html('<p>Wybrane miejsca: Wagon numer</p><input name"carriageInput" id="carriageInput' + j + '" value = "' + activeCarriageNumber + '" readonly /><p>Numery siedzeń: </p><input name"seatsInput" id="seatsInput' + j + '" value = "' + activecarriageSeats + '" readonly />');
 
                 $('#carriageId').val(activeCarriageNumber);
-                console.log(activeCarriageNumber);
+                //console.log(activeCarriageNumber);
                 $('#seats').val(activecarriageSeats);
                 console.log($('#seats').val());
                 console.log($('#carriageId').val());
@@ -507,15 +517,42 @@
 
                 counter = 0;
             });
-        }
-       
-        $("#submitButton").click(function () {
-            $('#carriageId').val($('#carriageInput').val());
-            $('#seats').val($('#seatsInput').val());
-            var allow = $("#allowInformation").prop("checked") ;
-            alert(allow);
-            $('#allow').val(allow);
+            $("#chooseSeatsModal_" + j).on('shown.bs.modal', function (e) {
 
-        });
+                var x = document.getElementById("chooseSeatsModal_" + j);
+                var selected = x.getElementsByClassName('seat');
+
+                // const el = document.querySelector('#el');
+
+                for (var i = 0; i < selected.length; i++) {
+                    if (selected[i].classList.contains("selected")) {
+                        selected[i].classList.remove("selected");
+
+                    }
+                }
+            });
+        }
+        var dictionary = new Array();
+        $("#submitButton").click(function () {
+            alert(allow);
+                for (let j = 0; j < @Model.Count; j++) {
+                    var carriageId = document.querySelector(" .active .row_" + j + " span:first-of-type").innerHTML;
+                    var seats = $('#seatsInput' + j).val().split(',').map(Number);
+                    ///const toNumbers = seatsString => seatsString.map(Number);
+                    dictionary.push({ carriageId: carriageId, seatsIds: seats });
+
+                    $('#carriageId').val(carriageId);
+                    $('#seats').val($('#seatsInput' + j).val());
+                  
+                }
+                var allow = $("#allowInformation").prop("checked");
+                alert(allow);
+            $('#allow').val(allow);
+            var carriageWithSeats = JSON.stringify(dictionary);
+            alert(JSON.stringify(dictionary));
+            $('#carriagesWithSeats').val(carriageWithSeats);
+            });
+    
+
     });
 </script>

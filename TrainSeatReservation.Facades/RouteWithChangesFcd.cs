@@ -281,6 +281,7 @@ namespace TrainSeatReservation.Facades
                 trainView.Route.StartTrainTimeTable = firstRouteStation.StartTrainTimeTable;
                 trainView.Route.EndTrainTimeTable = lastRouteStation.EndTrainTimeTable;
                 var firstRoute = _routeService.GetRoute(firstRouteStation.RouteId);
+                var price = 0.0;
                 TrainTimeTableDto endStationTime = new TrainTimeTableDto();
                 var tmpFirstRouteStation = new RouteStationDto();
                 var tmpLastStation = new RouteStationDto();
@@ -321,12 +322,25 @@ namespace TrainSeatReservation.Facades
                             //FreeSeats = CheckFreeSeats(date, firstRouteStationInfo, secondRouteStationInfo)
                         });
                         changePosition = i + 1;
+
+                        if (changes == 1)
+                        {
+                           // var lastStationFromRoute = _routeStationService.GetRoutesFromStation(stationList[i + 1].StationId);
+                            var firstRouteStations = _routeStationService.GetRouteStations().Where(x => x.Order >= firstRouteStation.Order && x.Order <= firstRouteStationInfo.Order && x.RouteId == stationList[i].RouteId);
+
+                            foreach (var item in firstRouteStations)
+                            {
+                                price += item.Price;
+                            }
+                            trainView.Route.Price = price;
+                        }
                     }
+                   
                 }
                 var tmpRouteInfo = _routeStationService.GetRouteStations().Where(x => x.EndStationId == stationList[changePosition].StationId && x.RouteId == stationList.Last().RouteId).Single();
                 freeSeats = CheckFreeSeats(date, tmpRouteInfo, lastRouteStation);
                 routeTransits.Last().FreeSeats = freeSeats;
-
+                trainView.Route.RouteId = firstRouteId;
                 trainView.RouteTransits = routeTransits;
                 trainView.Transits = changes;
                 trainView.Route.StartTrainTimeTable = firstRouteStation.StartTrainTimeTable;
