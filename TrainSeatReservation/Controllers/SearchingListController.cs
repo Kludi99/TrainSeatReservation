@@ -110,12 +110,9 @@ namespace TrainSeatReservation.Controllers
             var reservedSeats = new List<int>();
             if(trainView.Transits == 0)
             {
-                train.TrainCarriages = GetSeats(routeView.Date, trainView.Route, trainView.Route, trainView.Train);
+                train.TrainCarriages = GetSeats(routeView.Date, trainView.Route, trainView.Route, trainView.Train, trainView.Train);
             }
-            else
-            {
 
-            }
             //reservedSeats = /*GetSeats(routeView.Date, trainView.Route);*/_seatTicketFcd.GetSeatTickets().Where(x => x.Ticket.DepartureTrainStation.RouteId == trainView.Route.RouteId && x.Ticket.TripDate.Date == routeView.Date.Date).Select(x => x.SeatId).ToList();
            /* if(reservedSeats.Count >0)
             {
@@ -139,20 +136,57 @@ namespace TrainSeatReservation.Controllers
                 }
             }
             var trains = new List<TrainDto>();
-            trains.Add(train);
+           
+            var previous = new RouteStationDto();
             if(trainView.Transits >0)
             {
+                var routeStationFirst = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == trainView.FirstRoute.Id && x.EndStationId == trainView.RouteTransits[0].Station.Id).FirstOrDefault();
+                train.TrainCarriages = GetSeats(routeView.Date, trainView.Route, routeStationFirst, trainView.Train, trainView.Train);
+                trains.Add(train);
                 foreach (var item in trainView.RouteTransits)
                 {
                     var nextTrain = _trainFcd.GetTrain(item.Train.Id);
+                    var routeStations = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id);
                     /*TODO: Dodać sprawdzenie dla przesiadek*/
-                  /*  foreach (var carriage in nextTrain.TrainCarriages)
+                    /*  foreach (var carriage in nextTrain.TrainCarriages)
+                      {
+                          carriage.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
+
+                      }*/
+                    if(trainView.Transits == 1)
                     {
-                        carriage.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
-  
-                    }*/
+                        var routeStation1 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.StartStationId == item.Station.Id).FirstOrDefault();//routeStations.Where(x => x.EndStationId ==trainView.EndStation.Id).FirstOrDefault();
+                        var routeStation2 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.EndStationId == trainView.EndStation.Id).FirstOrDefault();//routeStations.Where(x => x.EndStationId ==trainView.EndStation.Id).FirstOrDefault();
+                        nextTrain.TrainCarriages = GetSeats(routeView.Date, routeStation1, routeStation2, trainView.Train, nextTrain);
+                        previous = routeStation2;
+                    }
+                    else if(trainView.Transits == 2 )
+                    {
+                        if(previous.Id == 0)
+                        {
+                            var routeStation1 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.StartStationId == item.Station.Id).FirstOrDefault();//routeStations.Where(x => x.EndStationId ==trainView.EndStation.Id).FirstOrDefault();
+                            var routeStation2 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.EndStationId == trainView.RouteTransits.Last().Station.Id).FirstOrDefault();//routeStations.Where(x => x.EndStationId ==trainView.EndStation.Id).FirstOrDefault();
+                            nextTrain.TrainCarriages = GetSeats(routeView.Date, routeStation1, routeStation2, trainView.Train, nextTrain);
+                            previous = routeStation2;
+                        }
+                        else
+                        {
+                            var routeStation1 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.EndStationId == previous.EndStationId).FirstOrDefault();//or StartStationId
+                            var routeStation2 = _routeStationFcd.GetRouteStations().Where(x => x.RouteId == item.Route.Id && x.EndStationId == trainView.EndStation.Id).FirstOrDefault();
+                            nextTrain.TrainCarriages = GetSeats(routeView.Date, routeStation1, routeStation2, trainView.Train, nextTrain);
+                            previous = routeStation2;
+                        }
+                       
+                    }
+                   // nextTrain.TrainCarriages = GetSeats(routeView.Date, trainView.Route, trainView.Route, trainView.Train);
                     trains.Add(nextTrain);
+                    
+                    
                 }
+            }
+            else
+            {
+                trains.Add(train);
             }
 
             ViewBag.Transits = trainView.Transits;
@@ -164,9 +198,6 @@ namespace TrainSeatReservation.Controllers
             var parameters = HttpContext.Request.RouteValues;
             var seatSession = HttpContext.Session.GetString("Seats");
             var carriageSession = HttpContext.Session.GetString("Carriage");
-            var carriageId = 0;
-            var carriageId2 = 0;
-            var carriageId3 = 0;
          
 
             if (seatSession == null && carriageSession == null)
@@ -220,17 +251,36 @@ namespace TrainSeatReservation.Controllers
                 var time = trainView.Route.StartTrainTimeTable.DepartureTime.ToString();
                 var date = routeView.Date.Date;
                 var dateTime = date.Day+ "." + date.Month + "." + date.Year + " " + time;
+                var firstTrainStation = _trainStationFcd.GetTrainStations().Where(x => x.StationId == trainView.StartStation.Id && x.RouteId == trainView.Route.RouteId).FirstOrDefault();
+                var lastTrainStations = _trainStationFcd.GetTrainStations().Where(x => x.StationId == trainView.EndStation.Id );
+                var lastTrainStation = new TrainStationDto();
+                if (trainView.Transits == 0)
+                    lastTrainStation = lastTrainStations.Where(x => x.RouteId == trainView.Route.RouteId).FirstOrDefault();
+                else
+                {
+                   var lastRoute = trainView.RouteTransits.Last().Route.Id;
+                   lastTrainStation = lastTrainStations.Where(x => x.RouteId == lastRoute).FirstOrDefault();
+                }
+
                 var ticketDto = new TicketDto()
                 {
                     TripDate = Convert.ToDateTime(dateTime),
-                    ArrivalTrainStationId = trainView.EndStation.Id,
-                    DepartureTrainStationId = trainView.StartStation.Id,
+                    ArrivalTrainStationId = lastTrainStation.Id,
+                    DepartureTrainStationId = firstTrainStation.Id,
+                    ArrivalStationId = trainView.EndStation.Id,
+                    DepartureStationId = trainView.StartStation.Id,
                     Price = trainView.Price,
                     IsPaid = false,
                     SendInformation = allow,
-                   // CarriageId = carriageId
+                    CarriageId = carriageSeatsDto[0].CarriageId
 
                 };
+                if (carriageSeatsDto.Count() > 1)
+                {
+                    ticketDto.SecondCarriageId = carriageSeatsDto[1].CarriageId;
+                    if(carriageSeatsDto.Count() > 2)
+                        ticketDto.ThirdCarriageId = carriageSeatsDto[2].CarriageId;
+                }
                 var ticket = _ticketFcd.AddTicket(ticketDto);
 
                 //foreach (var item in selectedSeats)
@@ -298,7 +348,7 @@ namespace TrainSeatReservation.Controllers
                     var seatsView = new SeatsView()
                     {
                         Seats = item.SeatsIds.ToList(),
-                        CarriageId = carriageId
+                        CarriageId = item.CarriageId
                     };
                     seatsList.Add(seatsView);
                 }
@@ -357,10 +407,12 @@ namespace TrainSeatReservation.Controllers
             ticket.TicketDiscounts = discounts;
 
             var ticketWithStations = _ticketFcd.GetTicket(ticket.Id);
+            var arrivalStation = _stationFcd.GetStation(ticketWithStations.ArrivalTrainStationId);
+            var departueStation = _stationFcd.GetStation(ticketWithStations.DepartureTrainStationId);
             var ticketView = new TicketSummaryView 
             {
-                ArrivalTrainStation = ticketWithStations.ArrivalTrainStation,
-                DepartureTrainStation = ticketWithStations.DepartureTrainStation,
+                ArrivalTrainStation = ticketWithStations.ArrivalStation,
+                DepartureTrainStation = ticketWithStations.DepartureStation,
                 Email = ticket.Email,
                 Name = ticket.Name,
                 Surname = ticket.Surname,
@@ -486,42 +538,54 @@ namespace TrainSeatReservation.Controllers
             return selectList;
         }
 
-        private List<TrainCarriageDto> GetSeats(DateTime date, RouteStationDto firstRoute, RouteStationDto lastRoute,TrainDto trainDto)
+        private List<TrainCarriageDto> GetSeats(DateTime date, RouteStationDto firstRoute, RouteStationDto lastRoute,TrainDto trainDto, TrainDto trainChange)
         {
-            var train = _trainFcd.GetTrain(trainDto.Id);
+            var train = _trainFcd.GetTrain(trainChange.Id);
             var tickets = _ticketFcd.GetTrainTicketsWithDate(date, trainDto.Id);
             double freeSeats = 0;
             double capacity = 0;
             var occupiedSeats = 0;
-            var reservedSeats = _seatTicketFcd.GetSeatTickets().Where(x => x.Ticket.DepartureTrainStation.RouteId == firstRoute.RouteId && x.Ticket.TripDate.Date == date.Date).Select(x => x.SeatId).ToList();
+            var reservedSeats = _seatTicketFcd.GetSeatTickets().Where(x => (x.Ticket.DepartureTrainStation.RouteId == firstRoute.RouteId || x.Ticket.ArrivalTrainStation.RouteId == lastRoute.RouteId) && x.Ticket.TripDate.Date == date.Date).Select(x => x.SeatId).ToList();
             if (reservedSeats.Count > 0)
             {
-               /* foreach (var item in train.TrainCarriages)
+                if (firstRoute == lastRoute)
                 {
-                    item.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
-                    // seats.Select(x => { x.IsFree = false; return x; }).ToList();
-                }*/
-                foreach (var item in tickets)
-                {
-                    foreach (var carriage in train.TrainCarriages)
+                    foreach (var item in tickets)
                     {
-                        if ((item.DepartureTrainStation.TrainTimeTable.DepartureTime < firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < lastRoute.EndTrainTimeTable.ArrivalTime && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < firstRoute.StartTrainTimeTable.DepartureTime))
-                    || (item.DepartureTrainStation.TrainTimeTable.DepartureTime >= firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime <= lastRoute.EndTrainTimeTable.ArrivalTime)
-                    || (item.DepartureTrainStation.TrainTimeTable.DepartureTime > firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > lastRoute.EndTrainTimeTable.ArrivalTime) && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > firstRoute.StartTrainTimeTable.DepartureTime))
+                        foreach (var carriage in train.TrainCarriages)
                         {
-                            // occupiedSeats += item.SeatTickets.Count;
-                            carriage.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
+                            if ((item.DepartureTrainStation.TrainTimeTable.DepartureTime < firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < lastRoute.EndTrainTimeTable.ArrivalTime && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime < firstRoute.StartTrainTimeTable.DepartureTime))
+                        || (item.DepartureTrainStation.TrainTimeTable.DepartureTime >= firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime <= lastRoute.EndTrainTimeTable.ArrivalTime)
+                        || (item.DepartureTrainStation.TrainTimeTable.DepartureTime > firstRoute.StartTrainTimeTable.DepartureTime && item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > lastRoute.EndTrainTimeTable.ArrivalTime) && !(item.ArrivalTrainStation.TrainTimeTable.ArrivalTime > firstRoute.StartTrainTimeTable.DepartureTime))
+                            {
+                                // occupiedSeats += item.SeatTickets.Count;
+                                carriage.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
+                            }
                         }
+
+                    }
+                    foreach (var item in train.TrainCarriages)
+                    {
+                        capacity += item.Carriage.Capacity;
+                    }
+                    freeSeats = capacity - occupiedSeats;
+
+                }
+                else
+                {
+                    foreach (var item in tickets)
+                    {
+                        foreach (var carriage in train.TrainCarriages)//Naprawić!!! ustawić zajętość miejsc na cały route na ten dzień
+                        {
+                        
+
+                                carriage.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c => c.IsFree = false);
+                        }
+
                     }
 
+                    //Math.Round((freeSeats / capacity * 100), 2); ;
                 }
-                foreach (var item in train.TrainCarriages)
-                {
-                    capacity += item.Carriage.Capacity;
-                }
-                freeSeats = capacity - occupiedSeats;
-
-                //Math.Round((freeSeats / capacity * 100), 2); ;
             }
             return train.TrainCarriages.ToList();
         }

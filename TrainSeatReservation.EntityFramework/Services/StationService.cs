@@ -65,7 +65,7 @@ namespace TrainSeatReservation.EntityFramework.Services
         }
         public List<StationDto> FindStation(string prefix)
         {
-            var entities = _context.Stations.Where(x => x.Name.Contains(prefix));
+            var entities = _context.Stations.AsNoTracking().Where(x => x.Name.Contains(prefix));
             var stations = _mapper.Map<StationDto[]>(entities);
             return stations.ToList();
         }
@@ -110,7 +110,8 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var stations = _context.Stations
                 .Include(x => x.RouteStations)
-                .Include(x => x.TrainStations);
+                .Include(x => x.TrainStations)
+                .AsNoTracking();
             try
             {
                 return _mapper.Map<StationDto[]>(stations);

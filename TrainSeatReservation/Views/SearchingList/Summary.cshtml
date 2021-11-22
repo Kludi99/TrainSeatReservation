@@ -54,7 +54,7 @@
                     <label>Stacja początkowa</label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="DepartureTrainStation.Station.Name" class="form-control" readonly />
+                    <input asp-for="DepartureTrainStation.Name" class="form-control" readonly />
                 </div>
             </div>
             <div class="row">
@@ -62,7 +62,7 @@
                     <label>Stacja końcowa</label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="ArrivalTrainStation.Station.Name" class="form-control" readonly />
+                    <input asp-for="ArrivalTrainStation.Name" class="form-control" readonly />
                 </div>
             </div>
             @if (Model != null)

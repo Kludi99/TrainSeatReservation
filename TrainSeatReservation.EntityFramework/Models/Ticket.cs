@@ -24,6 +24,13 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int DepartureTrainStationId { get; set; }
         [ForeignKey("DepartureTrainStationId")]
         public TrainStation DepartureTrainStation { get; set; }
+
+        public int ArrivalStationId { get; set; }
+        [ForeignKey("ArrivalStationId")]
+        public Station ArrivalStation { get; set; }
+        public int DepartureStationId { get; set; }
+        [ForeignKey("DepartureStationId")]
+        public Station DepartureStation { get; set; }
         public int CarriageId { get; set; }
         public int? SecondCarriageId { get; set; }
         public int? ThirdCarriageId { get; set; }

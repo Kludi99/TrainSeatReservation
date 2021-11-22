@@ -26,7 +26,11 @@ namespace TrainSeatReservation.DI
         {
             serviceCollection
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    options.EnableSensitiveDataLogging();
+                }
+                    
                 );
             serviceCollection.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()

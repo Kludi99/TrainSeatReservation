@@ -67,7 +67,8 @@ namespace TrainSeatReservation.Controllers
             var ticketDto = JsonConvert.DeserializeObject<TicketDto>(ticketVal);
             var ticketUpdatedDto = _ticketFcd.GetTicket(ticketDto.Id);
             ticketUpdatedDto.IsPaid = true;
-            var ticket = _ticketFcd.UpdateTicket(ticketUpdatedDto);
+             _ticketFcd.UpdateTicket(ticketUpdatedDto);
+            var ticket = _ticketFcd.GetTicket(ticketDto.Id);
 
             var attachment = await PrintPDFAsync(ticket);
             

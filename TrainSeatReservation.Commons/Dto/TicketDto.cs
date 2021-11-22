@@ -27,6 +27,14 @@ namespace TrainSeatReservation.Commons.Dto
         public int DepartureTrainStationId { get; set; }
         [DisplayName("Stacja końcowa")]
         public TrainStationDto DepartureTrainStation { get; set; }
+
+        public int ArrivalStationId { get; set; }
+        [DisplayName("Stacja początkowa")]
+        public StationDto ArrivalStation { get; set; }
+        public int DepartureStationId { get; set; }
+        [DisplayName("Stacja końcowa")]
+        public StationDto DepartureStation { get; set; }
+
         [DisplayName("Cena")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }

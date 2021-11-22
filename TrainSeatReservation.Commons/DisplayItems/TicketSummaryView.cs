@@ -23,10 +23,10 @@ namespace TrainSeatReservation.Commons.DisplayItems
         public string PhoneNumber { get; set; }
         public int ArrivalTrainStationId { get; set; }
         [DisplayName("Stacja początkowa")]
-        public TrainStationDto ArrivalTrainStation { get; set; }
+        public StationDto ArrivalTrainStation { get; set; }
         public int DepartureTrainStationId { get; set; }
         [DisplayName("Stacja końcowa")]
-        public TrainStationDto DepartureTrainStation { get; set; }
+        public StationDto DepartureTrainStation { get; set; }
         [DisplayName("Cena")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
