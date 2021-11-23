@@ -319,6 +319,7 @@ namespace TrainSeatReservation.Facades
                             TimeForTransit = time.Value,
                             Station = stationTransit,
                             Train = secondRouteStationInfo.Train,
+                            TransitTime = secondRouteStationInfo.StartTrainTimeTable.DepartureTime.Value
                             //FreeSeats = CheckFreeSeats(date, firstRouteStationInfo, secondRouteStationInfo)
                         });
                         changePosition = i + 1;

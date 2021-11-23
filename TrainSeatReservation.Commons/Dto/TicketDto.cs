@@ -53,6 +53,8 @@ namespace TrainSeatReservation.Commons.Dto
         public ICollection<SeatTicketDto> SeatTickets { get; set; }
         [DisplayName("Zniżki")]
         public ICollection<TicketDiscountDto> TicketDiscounts { get; set; }
+        public ICollection<TicketChangeDto> TicketChanges { get; set; }
+        public IEnumerable<List<SeatTicketDto>> SeatTicketsList { get; set; }
         // public int SeatId { get; set; }
     }
 }

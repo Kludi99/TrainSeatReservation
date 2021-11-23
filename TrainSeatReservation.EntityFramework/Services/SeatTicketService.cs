@@ -105,6 +105,7 @@ namespace TrainSeatReservation.EntityFramework.Services
             var SeatTickets = _context.SeatTickets
                 .AsNoTracking()
                 .Include(x => x.Seat)
+                    .ThenInclude(x => x.Carriage)
                 .Include(x => x.Ticket)
                 .ThenInclude(x => x.DepartureTrainStation)
                 .Include(x => x.Ticket)

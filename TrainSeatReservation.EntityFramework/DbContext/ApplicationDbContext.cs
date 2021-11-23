@@ -27,6 +27,7 @@ namespace TrainSeatReservation.Data
         public DbSet<TrainTimeTable> TrainTimeTables { get; set; }
         public DbSet<SeatTicket> SeatTickets { get; set; }
         public DbSet<RouteTicket> RouteTickets { get; set; }
+        public DbSet<TicketChange> TicketChanges { get; set; }
 
       /*  public ApplicationDbContext() : base()
         {
@@ -110,6 +111,11 @@ namespace TrainSeatReservation.Data
             builder.Entity<RouteTicket>()
                 .HasOne(x => x.Ticket)
                 .WithMany(x => x.RouteTickets)
+                .HasForeignKey(x => x.TicketId);
+
+            builder.Entity<TicketChange>()
+                .HasOne(x => x.Ticket)
+                .WithMany(x => x.TicketChanges)
                 .HasForeignKey(x => x.TicketId);
 
             //Indexes

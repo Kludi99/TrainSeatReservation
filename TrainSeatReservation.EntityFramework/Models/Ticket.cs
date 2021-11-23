@@ -43,6 +43,7 @@ namespace TrainSeatReservation.EntityFramework.Models
         public string PhoneNumber { get; set; }
         public ICollection<SeatTicket> SeatTickets { get; set; }
         public ICollection<RouteTicket> RouteTickets { get; set; }
+        public ICollection<TicketChange> TicketChanges { get; set; }
        // public int SeatId { get; set; }
     }
 }

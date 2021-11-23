@@ -36,6 +36,7 @@ namespace TrainSeatReservation.Controllers
         private readonly ISeatFcd _seatFcd;
         private readonly IPayPalConfiguration _payPalConfiguration;
         private readonly ISeatTicketFcd _seatTicketFcd;
+        private readonly ITicketChangeFcd _ticketChangeFcd;
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
         private IConverter _converter;
@@ -43,7 +44,7 @@ namespace TrainSeatReservation.Controllers
         public PaymentController(UserManager<User> userManager, IStationFcd stationFcd, IRouteFcd routeFcd, IRouteStationFcd routeStationFcd,
             ITrainStationFcd trainStationFcd, ITrainFcd trainFcd, ITicketFcd ticketFcd, IDictionaryFcd dictionaryFcd, IDiscountFcd discountFcd,
             ITicketDiscountFcd ticketDiscountFcd, IRouteWithChangesFcd routeWithChangesFcd, ISeatFcd seatFcd, IPayPalConfiguration payPalConfiguration, 
-            ISeatTicketFcd seatTicketFcd, IConverter converter, IEmailService emailService)
+            ISeatTicketFcd seatTicketFcd, IConverter converter, IEmailService emailService, ITicketChangeFcd ticketChangeFcd)
         {
             _stationFcd = stationFcd;
             _trainFcd = trainFcd;
@@ -55,6 +56,8 @@ namespace TrainSeatReservation.Controllers
             _seatTicketFcd = seatTicketFcd;
             _converter = converter;//new SynchronizedConverter(new PdfTools());
             _emailService = emailService;
+            _ticketChangeFcd = ticketChangeFcd;
+            _ticketDiscountFcd = ticketDiscountFcd;
         }
         public async Task<IActionResult> Index(string paymentId, string token, string PayerId, bool? Cancel)
         {
@@ -69,6 +72,25 @@ namespace TrainSeatReservation.Controllers
             ticketUpdatedDto.IsPaid = true;
              _ticketFcd.UpdateTicket(ticketUpdatedDto);
             var ticket = _ticketFcd.GetTicket(ticketDto.Id);
+            var ticketTransitions = _ticketChangeFcd.GetTicketChanges().Where(x => x.TicketId == ticket.Id).ToList();
+            var ticketDiscounts = _ticketDiscountFcd.GetTicketDiscounts(ticket.Id);
+            var ticketDiscountsIds = ticketDiscounts.Select(x => x.DiscountId);
+            var seatsTicket = _seatTicketFcd.GetSeatTickets().Where(x => x.TicketId == ticket.Id).GroupBy(x=> x.Seat.CarriageId).Select(grp => grp.ToList());
+            var discounts = _discountFcd.GetDiscounts().Where(x => ticketDiscountsIds.Contains(x.Id)).ToList();
+            foreach (var item in ticketDiscounts)
+            {
+                item.Discount = discounts.Single(x => x.Id == item.DiscountId);
+            }
+            //var firstseat = seatsTicket[0];
+            ticket.SeatTicketsList = new List<List<SeatTicketDto>>();
+
+            //ticket.SeatTicketsList.Add(seatsTicket.SelectMany(x => x).ToList());
+
+
+            ticket.SeatTicketsList = seatsTicket;
+            ticket.TicketChanges = ticketTransitions;
+            ticket.TicketDiscounts = ticketDiscounts;
+            //ticket.SeatTickets = seatsTicket;
 
             var attachment = await PrintPDFAsync(ticket);
             
@@ -264,7 +286,6 @@ namespace TrainSeatReservation.Controllers
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Portrait,
                     PaperSize = PaperKind.A4,
-                    //Out = @"C:\Users\klaud\Desktop\ReportB.pdf",
 
                 },
 

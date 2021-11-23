@@ -83,6 +83,9 @@ namespace TrainSeatReservation.DI
             serviceCollection.AddScoped<ITrainTimeTableFcd, TrainTimeTableFcd>();
             serviceCollection.AddScoped<ITrainTimeTableService, TrainTimeTableService>();
 
+            serviceCollection.AddScoped<ITicketChangeFcd, TicketChangeFcd>();
+            serviceCollection.AddScoped<ITicketChangeService, TicketChangeService>();
+
             serviceCollection.AddScoped<IRouteWithChangesFcd, RouteWithChangesFcd>();
 
             serviceCollection.AddSingleton<IEmailConfiguration>(configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
