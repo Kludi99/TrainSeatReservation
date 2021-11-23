@@ -54,7 +54,7 @@
                     <label>Stacja początkowa</label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="DepartureTrainStation.Station.Name" class="form-control" readonly />
+                    <input asp-for="DepartureTrainStation.Name" class="form-control" readonly />
                 </div>
             </div>
             <div class="row">
@@ -62,7 +62,7 @@
                     <label>Stacja końcowa</label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="ArrivalTrainStation.Station.Name" class="form-control" readonly />
+                    <input asp-for="ArrivalTrainStation.Name" class="form-control" readonly />
                 </div>
             </div>
             @if (Model != null)
@@ -85,33 +85,38 @@
                     </div>
                 }
             }
-            <div class="row">
-                <div class="col-6">
-                    <label>Siedzenia </label>
+            @foreach (var item in Model.Seats)
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <label>Siedzenia </label>
+                    </div>
+                    <div class="col-6">
+                        @{string seats = string.Join(";", item.Seats); }
+                        <input value=@seats class="form-control" readonly />
+                    </div>
+                    <div class="col-6">
+                        <label>W wagonie numer </label>
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="@item.CarriageId" class="form-control" readonly />
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input value=@ViewBag.SeatsNum class="form-control" readonly />
-                </div>
-                <div class="col-6">
-                    <label>W wagonie numer </label>
-                </div>
-                <div class="col-6">
-                    <input asp-for="@Model.Seats.CarriageId" class="form-control" readonly />
-                </div>
-            </div>
+            }
+
             <div class="row">
                 <div class="col-6">
                     <label>Cena</label>
-                    </div>
+                </div>
                 <div class="col-6">
                     <input value="@Model.Price.ToString("C")" class="form-control" readonly />
                 </div>
-                </div>
-                <div class="form-group">
-                    <a asp-action="PaymentWithPaypal" asp-controller="Payment">Przejdź do płatności</a>
-                </div>
-
             </div>
+            <div class="form-group">
+                <a asp-action="PaymentWithPaypal" asp-controller="Payment">Przejdź do płatności</a>
+            </div>
+
+        </div>
 
         </div>
 </div>

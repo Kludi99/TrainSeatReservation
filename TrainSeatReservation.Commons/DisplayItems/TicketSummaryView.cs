@@ -23,17 +23,17 @@ namespace TrainSeatReservation.Commons.DisplayItems
         public string PhoneNumber { get; set; }
         public int ArrivalTrainStationId { get; set; }
         [DisplayName("Stacja początkowa")]
-        public TrainStationDto ArrivalTrainStation { get; set; }
+        public StationDto ArrivalTrainStation { get; set; }
         public int DepartureTrainStationId { get; set; }
         [DisplayName("Stacja końcowa")]
-        public TrainStationDto DepartureTrainStation { get; set; }
+        public StationDto DepartureTrainStation { get; set; }
         [DisplayName("Cena")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
         [DisplayName("Bilety normalne")]
         public int NormalSeats { get; set; }
         [DisplayName("Siedzenia")]
-        public SeatsView Seats { get; set; }
+        public List<SeatsView> Seats { get; set; }
         public ICollection<SeatsView> SeatsView { get; set; }
 
         public ICollection<DiscountView> TicketDiscounts { get; set; }

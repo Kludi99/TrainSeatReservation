@@ -63,8 +63,15 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             _logger.LogInformation("Executing UpdateTicket service method");
 
-            var entity = GetTicketEntity(ticket);
-            var result = _context.Update(entity);
+            //var entity = GetTicketEntity(ticket);
+            var ticketDto = _context.Tickets.Where(x => x.Id == ticket.Id).FirstOrDefault();
+            ticketDto.Email = ticket.Email;
+            ticketDto.Name = ticket.Name;
+            ticketDto.Surname = ticket.Surname;
+            ticketDto.UserId = ticket.UserId;
+            ticketDto.PhoneNumber = ticket.PhoneNumber;
+            ticketDto.IsPaid = ticket.IsPaid;
+            var result = _context.Update(ticketDto);
             _context.SaveChanges();
             return _mapper.Map<TicketDto>(result.Entity);
         }
@@ -97,9 +104,11 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var ticket = _context.Tickets.AsNoTracking()
                 .Include(x => x.ArrivalTrainStation)
-                .ThenInclude(x => x.Station)
+                .ThenInclude(x => x.TrainTimeTable)
                 .Include(x => x.DepartureTrainStation)
-                .ThenInclude(x => x.Station)
+                .ThenInclude(x => x.TrainTimeTable)
+                .Include(x => x.ArrivalStation)
+                .Include(x => x.DepartureStation)
                 .SingleOrDefault(x => x.Id == id);
             try
             {
@@ -126,9 +135,12 @@ namespace TrainSeatReservation.EntityFramework.Services
         private IEnumerable<TicketDto> GetTicketsQuery()
         {
             var tickets = _context.Tickets.Include(x => x.ArrivalTrainStation)
-                .ThenInclude(x => x.Station)
+                .ThenInclude(x => x.TrainTimeTable)
                 .Include(x => x.DepartureTrainStation)
-                .ThenInclude(x => x.Station);
+                .ThenInclude(x => x.TrainTimeTable)
+                .Include(x => x.ArrivalStation)
+                .Include(x => x.DepartureStation)
+                .AsNoTracking();
             try
             {
                 return _mapper.Map<TicketDto[]>(tickets);

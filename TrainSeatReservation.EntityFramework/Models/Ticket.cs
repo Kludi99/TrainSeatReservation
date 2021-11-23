@@ -24,7 +24,16 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int DepartureTrainStationId { get; set; }
         [ForeignKey("DepartureTrainStationId")]
         public TrainStation DepartureTrainStation { get; set; }
+
+        public int ArrivalStationId { get; set; }
+        [ForeignKey("ArrivalStationId")]
+        public Station ArrivalStation { get; set; }
+        public int DepartureStationId { get; set; }
+        [ForeignKey("DepartureStationId")]
+        public Station DepartureStation { get; set; }
         public int CarriageId { get; set; }
+        public int? SecondCarriageId { get; set; }
+        public int? ThirdCarriageId { get; set; }
         public ICollection<TicketDiscount> TicketDiscounts { get; set; }
         public double Price { get; set; }
         public bool IsPaid { get; set; }
@@ -34,6 +43,7 @@ namespace TrainSeatReservation.EntityFramework.Models
         public string PhoneNumber { get; set; }
         public ICollection<SeatTicket> SeatTickets { get; set; }
         public ICollection<RouteTicket> RouteTickets { get; set; }
+        public ICollection<TicketChange> TicketChanges { get; set; }
        // public int SeatId { get; set; }
     }
 }

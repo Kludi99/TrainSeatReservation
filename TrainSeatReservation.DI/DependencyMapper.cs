@@ -26,7 +26,11 @@ namespace TrainSeatReservation.DI
         {
             serviceCollection
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    options.EnableSensitiveDataLogging();
+                }
+                    
                 );
             serviceCollection.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -78,6 +82,9 @@ namespace TrainSeatReservation.DI
 
             serviceCollection.AddScoped<ITrainTimeTableFcd, TrainTimeTableFcd>();
             serviceCollection.AddScoped<ITrainTimeTableService, TrainTimeTableService>();
+
+            serviceCollection.AddScoped<ITicketChangeFcd, TicketChangeFcd>();
+            serviceCollection.AddScoped<ITicketChangeService, TicketChangeService>();
 
             serviceCollection.AddScoped<IRouteWithChangesFcd, RouteWithChangesFcd>();
 

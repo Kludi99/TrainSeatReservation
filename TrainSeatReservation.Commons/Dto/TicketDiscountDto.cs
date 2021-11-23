@@ -11,6 +11,7 @@ namespace TrainSeatReservation.Commons.Dto
         public int Id { get; set; }
         public int TicketId { get; set; }
         public int? DiscountId { get; set; }
+        public DiscountDto Discount { get; set; }
         public int Count { get; set; }
     }
 }

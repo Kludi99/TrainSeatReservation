@@ -35,6 +35,12 @@
                 @Html.DisplayNameFor(model => model.DepartureTrainStation)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ArrivalStation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureStation)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th></th>
@@ -59,10 +65,16 @@
                 @Html.DisplayFor(modelItem => item.TripDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTrainStation.Station.Name)
+                @Html.DisplayFor(modelItem => item.ArrivalTrainStation.TrainTimeTable.ArrivalTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartureTrainStation.Station.Name)
+                @Html.DisplayFor(modelItem => item.DepartureTrainStation.TrainTimeTable.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalStation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureStation.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)

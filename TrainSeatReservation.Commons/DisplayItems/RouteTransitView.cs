@@ -13,6 +13,7 @@ namespace TrainSeatReservation.Commons.DisplayItems
         public RouteDto Route { get; set; }
         public TrainDto Train { get; set; }
         public TimeSpan TimeForTransit { get; set; }
+        public TimeSpan TransitTime { get; set; }
         public StationDto Station { get; set; }
         public double FreeSeats { get; set; }
     }

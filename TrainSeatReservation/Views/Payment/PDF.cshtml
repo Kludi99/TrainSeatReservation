@@ -38,13 +38,13 @@
             Stacja koncowa
         </dt>
         <dd class="col-sm-10">
-            @Model.ArrivalTrainStation.Station.Name
+            @Model.ArrivalStation.Name
         </dd>
         <dt class="col-sm-2">
-           Stacja poczatkowa
+            Stacja poczatkowa
         </dt>
         <dd class="col-sm-10">
-            @Model.DepartureTrainStation.Station.Name
+            @Model.DepartureStation.Name
         </dd>
         <dt class="col-sm-2">
             Cena
@@ -52,5 +52,54 @@
         <dd class="col-sm-10">
             @Model.Price zł
         </dd>
+        @if (Model.TicketChanges.Count() > 0)
+        {
+            @foreach (var item in Model.TicketChanges)
+            {
+                <dt class="col-sm-2">
+                    Przesiadka numer @item.Order
+                </dt>
+                <dd class="col-sm-10">
+                    @item.Station.Name  @item.TransitionDate
+                </dd>
+            }
+        }
+        @{ int i = 0;}
+        @foreach (var item in Model.SeatTicketsList)
+        {
+            <dt class="col-sm-2">
+                Wagon
+            </dt>
+            <dd class="col-sm-10">
+                @item[i++].Seat.Carriage.Number
+            </dd>
+            <dt class="col-sm-2">
+                Siedzenia
+            </dt>
+            @foreach (var seat in item)
+            {
+                <dd class="col-sm-10">
+                    @seat.Seat.Number
+                </dd>
+            }
+
+
+        }
+        @foreach (var item in Model.TicketDiscounts)
+        {
+            <dt class="col-sm-2">
+                Rodzaj zniżki
+            </dt>
+            <dd class="col-sm-10">
+                @item.Discount.Name @item.Discount.Value %
+            </dd>
+            <dt class="col-sm-2">
+                Ilość
+            </dt>
+            <dd class="col-sm-10">
+                @item.Count
+            </dd>
+        }
+
     </dl>
 </div>
