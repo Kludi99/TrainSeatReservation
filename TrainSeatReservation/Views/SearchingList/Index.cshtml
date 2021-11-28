@@ -7,114 +7,88 @@
     @foreach (var item in Model.Trains)
     {
 
-    <div class="col-4">
-        <div class="train-result">
-            <div>
-                <b>@item.StartStation.Name  -</b>
-                <b>@item.EndStation.Name</b>
-            </div>
-            <div>
-                <b>@item.Route.StartTrainTimeTable.DepartureTime</b>
-                <b>@item.Route.EndTrainTimeTable.ArrivalTime</b>
-            </div>
-            <div>
-                Czas :  @item.Route.Time
-            </div>
-            <div>
-                Cena :  @item.Price zł
-            </div>
-            @if (item.Transits == 0)
-            {
-                @item.Train.Name @:&nbsp; @item.Train.Number
-
-
-
-
-
-
-
-
+        <div class="col-4">
+            <div class="train-result">
                 <div>
-                    Dostępne miejsca : @item.FreeSeats %
-                </div>
-            }
-            else
-            {
-                <div>
-                    Liczba przesiadek : @item.Transits
+                    <b>@item.StartStation.Name  -</b>
+                    <b>@item.EndStation.Name</b>
                 </div>
                 <div>
-                    @item.Train.Name &nbsp; @item.Train.Number
+                    <b>@item.Route.StartTrainTimeTable.DepartureTime</b>
+                    <b>@item.Route.EndTrainTimeTable.ArrivalTime</b>
+                </div>
+                <div>
+                    Czas :  @item.Route.Time
+                </div>
+                <div>
+                    Cena :  @item.Price zł
+                </div>
+                @if (item.Transits == 0)
+                {
+                    @item.Train.Name @:&nbsp; @item.Train.Number
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <div>
-                        Dostępne miejsca :  @item.FreeSeats %
-                    </div>
-                </div>
-                @foreach (var train in item.RouteTransits)
-                {
-                    <div class="col-md-12">
-                        @train.Train.Name @train.Train.Number
-                        <div>
-                            Miejsce przesiadki: @train.Station.Name
-                        </div>
-                        <div>
-                            Czas przesiadki: @train.TimeForTransit
-                        </div>
-                        <div>
-                            Dostępne miejsca :  @train.FreeSeats %
-                        </div>
+                        Dostępne miejsca : @item.FreeSeats %
                     </div>
                 }
-
-            }
-            <div class="reserve-button">
-                <a asp-action="AddOptionalItems" asp-route-id="@item.Train.Id" asp-route-firstStationId="@item.StartStation.Id" asp-route-endStationId="@item.EndStation.Id" asp-route-date="@Model.Date.ToString()" asp-route-routeId="@item.Route.RouteId." asp-route-normalTickets="@Model.NormalTicketsCount" asp-route-discountTypeId="@Model.DiscountTypeId" , asp-route-discountCounter="@Model.DiscountCount" asp-route-transits="@item.RouteTransits ">Zarezerwuj </a>
-            </div>
-            @*   @item.Name
-        <div>
-            @item.Train.Name @item.Train.Number
-        </div>
-        <div>
-            @foreach (var details in ViewBag.RouteDetails)
-            {
-                @if (item.Id == details.RouteId)
+                else
                 {
-                    <b>@details.StartStation.Name</b>
-                    <b>@details.EndStation.Name</b>
                     <div>
-                        Długość trasy: @details.Distance
+                        Liczba przesiadek : @item.Transits
                     </div>
                     <div>
-                        Cena za przejazd bez zniżek: @details.Price
+                        @item.Train.Name &nbsp; @item.Train.Number
+
+                        <div>
+                            Dostępne miejsca :  @item.FreeSeats %
+                        </div>
                     </div>
-                    @foreach (var trainStation in ViewBag.TrainStationDetails)
+                    @foreach (var train in item.RouteTransits)
                     {
-                        @if (item.TrainId == trainStation.TrainId && trainStation.StationId == details.StartStation.Id)
-                        {
-
-                            <b>@trainStation.TrainTimeTable.DepartureTime   - </b>
-
-                        }
-                        @if (item.TrainId == trainStation.TrainId && trainStation.StationId == details.EndStation.Id)
-                        {
-
-                            <b>@trainStation.TrainTimeTable.ArrivalTime</b>
-
-                        }
-
+                        <div class="col-md-12">
+                            @train.Train.Name @train.Train.Number
+                            <div>
+                                Miejsce przesiadki: @train.Station.Name
+                            </div>
+                            <div>
+                                Czas przesiadki: @train.TimeForTransit
+                            </div>
+                            <div>
+                                Dostępne miejsca :  @train.FreeSeats %
+                            </div>
+                        </div>
                     }
-        <div>
-             <a asp-action="AddPassengers" asp-route-id="@item.TrainId" asp-route-firstStationId="@details.StartStation.Id" asp-route-endStationId="@details.EndStation.Id" asp-route-date="@ViewBag.Date.ToString()" asp-route-routeId="@item.Id">Zarezerwuj </a>
-        </div>
-                    break;
 
                 }
+                <div class="reserve-button">
+                    <a asp-action="AddOptionalItems" asp-route-id="@item.Train.Id" asp-route-firstStationId="@item.StartStation.Id" asp-route-endStationId="@item.EndStation.Id" asp-route-date="@Model.Date.ToString()" asp-route-routeId="@item.Route.RouteId." asp-route-normalTickets="@Model.NormalTicketsCount" asp-route-discountTypeId="@Model.DiscountTypeId" , asp-route-discountCounter="@Model.DiscountCount" asp-route-transits="@item.RouteTransits ">Zarezerwuj </a>
+                </div>
 
-            }
-
-
-        </div> *@
+            </div>
         </div>
-    </div>
+    }
+    @if (Model.Trains.Count() == 0)
+    {
+        <div class="row">
+            <h2>Niestety nie znaleziono żadnego połączenia</h2>
+            <div class="reserve-button">
+                <a asp-action="Index" asp-controller="Home">Wyszukiwarka </a>
+            </div>
+        </div>
     }
 </div>

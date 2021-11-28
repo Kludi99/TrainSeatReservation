@@ -39,7 +39,7 @@ namespace TrainSeatReservation.Controllers
             else
             {
                 var stations = _stationFcd.GetStations();
-                var stationNames = stations.Where(x => x.Name.Contains(prefix)).Select(x => new { Id = x.Id, Name = x.Name }).ToList();
+                var stationNames = stations.Where(x => x.Name.Contains(prefix, StringComparison.CurrentCultureIgnoreCase)).Select(x => new { Id = x.Id, Name = x.Name }).ToList();
 
                 return Json(new { data = stationNames }/*, System.Web.Mvc.JsonRequestBehavior.AllowGet*/);
             }

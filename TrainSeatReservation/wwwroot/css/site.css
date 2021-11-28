@@ -1,6 +1,11 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
+:root {
+    --primary-color: 19, 122, 249;
+    --orange: #fa9e2c;
+    --purple: #8f50fb;
+    --background-gradient: linear-gradient( var(--orange), var(--purple));
+}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -120,11 +125,14 @@ body {
     border-color: transparent;
 }
 .train-searching-form button, .modal-button, .train-result a, .next-button a, .personal-data a, .summary a {
-    padding: 5px 10px;
-    background-color: #db8325;
-    border-color: transparent;
+    padding: 5px 20px;
+    background-image: var(--background-gradient);
+   border: none;
+    
     border-radius: 15px;
     color: #fff;
+    background-repeat: no-repeat !important;
+    background-attachment: local;
 }
     .train-result a{
         margin: 10px 0;
@@ -132,13 +140,14 @@ body {
         .next-button a{
             float:right;
         }
-        .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover, .summary a:hover {
-            background-color: #9c5c19;
-            font-weight: 700;
-            border-color: transparent;
-            font-size: large;
-            text-decoration: none;
-        }
+            .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover, .summary a:hover {
+                background-color: #9c5c19;
+                font-weight: 700;
+                border-color: transparent;
+                font-size: large;
+                text-decoration: none;
+                color: #fff;
+            }
     .discount-add{
         align-content:flex-end;
         text-align:end;
@@ -275,4 +284,63 @@ body {
 .fas {
     font-size: 50px;
     color: #db8325;
+}
+.clockpicker{
+    display:inline-block;
+}
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
+}
+input.clockpicker{
+    width: 5rem;
+    text-align: center;
+}
+.popover-title{
+    background: var(--background-gradient);
+    text-align: center;
+    color:#fff !important;
+    font-size: 18px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+    .popover-title .text-primary {
+        color: #fff !important;
+        font-weight: 600;
+    }
+.clockpicker-popover .btn {
+    margin: 10px 0 0 0;
+    background: var(--background-gradient);
+    color:#fff;
+}
+    .clockpicker-popover .btn:hover {
+        background: var(--background-gradient);
+        color: #fff;
+        font-weight: 600;
+    }
+.clockpicker-canvas line{
+    stroke: var(--purple);
+}
+.clockpicker-canvas circle{
+    fill: var(--purple);
+    opacity: 0.3;
 }

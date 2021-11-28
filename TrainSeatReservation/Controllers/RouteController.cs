@@ -36,13 +36,16 @@ namespace TrainSeatReservation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(int firstStationId, int lastStationId, string date, string timeValue, string normalPriceTickets, string firstDiscountId, string firstDiscountCounter, string dictionary) 
+        public IActionResult Index(int firstStationId, int lastStationId, string date, string timeValue, int normalPriceTickets, string dictionary) 
         {
+            if(firstStationId == 0 || lastStationId == 0 || String.IsNullOrEmpty(date) || String.IsNullOrEmpty(timeValue) || (normalPriceTickets==0 && String.IsNullOrEmpty(dictionary)) )
+            {
+                ModelState.AddModelError("lastStationId", "Należy wybrać stację początkową końcową, datę i godzinę podróży oraz liczbę osób");
+                return RedirectToAction("Index", controllerName: "Home");
+            }
             var time = TimeSpan.Parse(timeValue);
-           // var dict = JsonConvert.DeserializeObject<List<SearchingView>>(dictionary);
-            var normalTickets = 0;
-            if (normalPriceTickets != null)
-                normalTickets = int.Parse(normalPriceTickets);
+           
+            var normalTickets = normalPriceTickets;
          
                 return RedirectToAction("Index", controllerName: "SearchingList", new { firstStationId = firstStationId, lastStationId = lastStationId, time = time, date = Convert.ToDateTime(date), normalTickets = normalTickets, discounts = dictionary });
 
