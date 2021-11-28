@@ -7,31 +7,31 @@
 <div class="personal-data">
     <div class="row">
         <div class="col-6">
-            <form asp-action="Summary">
+            <form asp-action="Summary" id="personal-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     var user = await UserManager.GetUserAsync(User);
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="@user.Name" class="form-control" />
+                        <input asp-for="@user.Name" class="form-control" required/>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="@user.Surname" class="form-control" />
+                        <input asp-for="@user.Surname" class="form-control" required/>
                         <span asp-validation-for="Surname" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="@user.Email" class="form-control" />
+                        <input asp-for="@user.Email" class="form-control" required/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     @if (ViewBag.PhoneAllow)
                     {
                         <div class="form-group">
                             <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="@user.PhoneNumber" class="form-control" />
+                            <input asp-for="@user.PhoneNumber" class="form-control" required />
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                     }
@@ -40,24 +40,24 @@
                 {
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" />
+                        <input asp-for="Name" class="form-control" required/>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="Surname" class="form-control" />
+                        <input asp-for="Surname" class="form-control" required />
                         <span asp-validation-for="Surname" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
+                        <input asp-for="Email" class="form-control" required/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     @if (ViewBag.PhoneAllow)
                     {
                         <div class="form-group">
                             <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="PhoneNumber" class="form-control" />
+                            <input asp-for="PhoneNumber" class="form-control" required/>
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                     }
@@ -76,3 +76,48 @@
             </div>
         </div>
     </div>
+<script>
+
+
+    $(document).ready(function () {
+        $("#personal-data").validate({
+            
+            rules: {
+                Name: {
+                    required: true,
+
+                },
+                Surname: {
+                    required: true,
+                },
+                Email: {
+                    required: true,
+                },
+                PhoneNumber: {
+                    required: true,
+                },
+                
+
+            },
+            messages: {
+                Name: {
+                    required: "Należy podać imię",
+
+                },
+                Surname: {
+                    required: "Należy podać nazwisko",
+
+                },
+                Email: {
+                    required: "Należy podać email",
+
+                },
+                PhoneNumber: {
+                    required: "Należy podać numer telefonu",
+                },
+
+            }
+        });
+    });
+
+</script>

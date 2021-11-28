@@ -449,7 +449,7 @@
                         if (counter < c) {
                             addSeat(activecarriage, seat.value);
                             seat.classList.add('selected');
-                        } else { alert("Wybrano maksymalną liczbę miejsc!");}
+                        } else { swal("Uwaga!", "Wybrano już wszystkie miejsca ", "info");}
 
                     } else {
                         removeSeat(activecarriage, seat.value);
@@ -497,8 +497,12 @@
                 if (div.style.display === "none") {
                     div.style.display = "block";
                 }
-                if (selected.length < c)
-                    alert("Nie wybrano wszystkich siedzeń. Mogą zostać wybrane losowo");
+                if (selected.length < c) {
+                    //alert("Nie wybrano wszystkich siedzeń!");
+                    swal("Uwaga!", "Należy wybrać ilość siedzeń:  " + c , "error");
+                    return;
+                }
+                    
                 // $("#disountsDiv span").append(discountType1);
                 //  $("#disountsDiv span").append(discountCount1);
 
@@ -514,11 +518,14 @@
                 console.log($('#seats').val());
                 console.log($('#carriageId').val());
                 $('#chooseSeatsModal_' + j).modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
 
                 counter = 0;
             });
-            $("#chooseSeatsModal_" + j).on('shown.bs.modal', function (e) {
-
+            $("#chooseSeatsModal_" + j).on('hide. bs. modal', function () {
+                //$('#myModal form')[0].reset();
+                counter = 0;
                 var x = document.getElementById("chooseSeatsModal_" + j);
                 var selected = x.getElementsByClassName('seat');
 
@@ -531,25 +538,49 @@
                     }
                 }
             });
+            $("#chooseSeatsModal_" + j).on('shown.bs.modal', function (e) {
+
+                var x = document.getElementById("chooseSeatsModal_" + j);
+                var selected = x.getElementsByClassName('seat');
+                counter = 0;
+                // const el = document.querySelector('#el');
+
+                for (var i = 0; i < selected.length; i++) {
+                    if (selected[i].classList.contains("selected")) {
+                        selected[i].classList.remove("selected");
+
+                    }
+                }
+            });
+
         }
         var dictionary = new Array();
         $("#submitButton").click(function () {
-            alert(allow);
+            //alert(allow);
                 for (let j = 0; j < @Model.Count; j++) {
                     var carriageId = document.querySelector(" .active .row_" + j + " span:first-of-type").innerHTML;
-                    var seats = $('#seatsInput' + j).val().split(',').map(Number);
-                    ///const toNumbers = seatsString => seatsString.map(Number);
-                    dictionary.push({ carriageId: carriageId, seatsIds: seats });
+                    if (carriageId != 0 && $('#seatsInput' + j).val() != undefined) {
 
-                    $('#carriageId').val(carriageId);
-                    $('#seats').val($('#seatsInput' + j).val());
+
+                        var seats = $('#seatsInput' + j).val().split(',').map(Number);
+                        ///const toNumbers = seatsString => seatsString.map(Number);
+                        dictionary.push({ carriageId: carriageId, seatsIds: seats });
+                        //alert(carriageId);
+                        //alert(seats);
+                        $('#carriageId').val(carriageId);
+                        $('#seats').val($('#seatsInput' + j).val());
+                    }
+                    else {
+                        swal("Nie wybrano siedzeń!", " Wybierz spośród dostępnych siedzeń i spróbuj ponownie  ", "error");
+                        return false;
+                    }
                   
                 }
                 var allow = $("#allowInformation").prop("checked");
-                alert(allow);
+               // alert(allow);
             $('#allow').val(allow);
             var carriageWithSeats = JSON.stringify(dictionary);
-            alert(JSON.stringify(dictionary));
+            //alert(JSON.stringify(dictionary));
             $('#carriagesWithSeats').val(carriageWithSeats);
             });
     

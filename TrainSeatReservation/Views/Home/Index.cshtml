@@ -1,43 +1,52 @@
-﻿@model TrainSeatReservation.Commons.DisplayItems.SearchingView
+﻿@model TrainSeatReservation.Commons.DisplayItems.SearchBoxModel
 @{
     ViewData["Title"] = "Home Page";
 }
 <div class="text-center">
-    @using (Html.BeginForm("Index", "Route", FormMethod.Post))
+    @using (Html.BeginForm("Index", "Route", FormMethod.Post, new { id = "searchform" }))
     {
-        <div class="train-searching-form">
-            <h2>Szukaj połączenia</h2>
-            <div class="station-input">
-                <label for="firstStation">Z:</label><input type="text" id="firstStation" name="firstStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
-                @Html.Hidden("firstStationId")
-            </div>
-            <div class="station-input">
-                <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
-                @Html.Hidden("lastStationId")
-            </div>
-
-            <p>Data podróży: <input type="date" id="datepicker"> <input type="time" id="time" /> </p>
-            <p>Liczba pasażerów</p>
-            <div class="choose-seat">
-                <label class="control-label">Ilość biletów normalnych</label>
-                <input type="number" min="0" id="normalPriceTickets" value="0" name="normalPriceTickets" />
-                <div id="disountsDiv" style="display:none">
-                    <span></span>
-                </div>
-                <div class="discount-add">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPassengerModal"> + </button>
-                </div>
-            </div>
-
-            @Html.Hidden("date")
-            @Html.Hidden("timeValue")
-            @Html.Hidden("datePickerValue")
-            @Html.Hidden("firstDiscountId")
-            @Html.Hidden("firstDiscountCounter")
-            @Html.Hidden("dictionary")
-
-            <button type="submit" id="submitButton">Szukaj</button>
+    <div class="train-searching-form">
+      
+        <h2>Szukaj połączenia</h2>
+        <div class="station-input">
+            <label for="firstStation">Z:</label><input type="text" id="firstStation" name="firstStation" class="station" required @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+            @Html.Hidden("firstStationId")
+       
         </div>
+        <div class="station-input">
+            <label for="lastStation">Do:</label><input type="text" id="lastStation" name="lastStation" class="station" required @*data-autocomplete-url="@Url.Action("StationsList")"*@ />
+            @Html.Hidden("lastStationId")
+           
+         
+        </div>
+
+        <p>
+            Data podróży: <input type="date" id="datepicker" name="datepicker" required onkeydown="return false">  <input class="clockpicker" type="text" onkeydown="return false" placeholder="--:--" id="time" autoComplete="off" required name="time">
+            <div class="form-group ">
+
+            </div>@*<input type="time" id="time" />*@
+        </p>
+        <p>Liczba pasażerów (minimum 1 pasażer)</p>
+        <div class="choose-seat">
+            <label class="control-label">Ilość biletów normalnych</label>
+            <input type="number" min="0" id="normalPriceTickets" class="traveler"  name="normalPriceTickets" />
+            <div id="disountsDiv" style="display:none">
+                <span></span>
+            </div>
+            <div class="discount-add">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPassengerModal"> + </button>
+            </div>
+        </div>
+
+        @Html.Hidden("date")
+        @Html.Hidden("timeValue")
+        @Html.Hidden("datePickerValue")
+        @Html.Hidden("firstDiscountId")
+        @Html.Hidden("firstDiscountCounter")
+        @Html.Hidden("dictionary")
+
+        <button type="submit" id="submitButton">Szukaj</button>
+    </div>
     }
     <form id="modal-form" onsubmit="return false">
         <div id="addPassengerModal" class="modal" tabindex="-1" role="dialog">
@@ -52,14 +61,14 @@
                     <div class="modal-body">
                         <div class="choose-seat" id="firstDiscountPrice" style="display:none">
                             <label class="control-label">Ilość biletów ulgowych</label>
-                            <input type="number" min="0" value="0" id="firstDiscountTickets" name="firstDiscountTickets" />
+                            <input type="number" min="0" class="traveler" id="firstDiscountTickets" name="firstDiscountTickets" />
                             <div class="discount-type">
                                 @Html.DropDownList("firstDiscountType", (List<SelectListItem>)ViewBag.Discount,
                           "Rodzaj zniżki", new { @class = "form-control", @id = "firstDiscountType" })
                             </div>
                             <div class="choose-seat" id="secondDiscountPrice" style="display:none">
                                 <label class="control-label">Ilość biletów ulgowych</label>
-                                <input type="number" min="0" value="0" id="secondDiscountTickets" name="secondDiscountTickets" />
+                                <input type="number" min="0" class="traveler" id="secondDiscountTickets" name="secondDiscountTickets" />
                                 <div class="discount-type">
                                     @Html.DropDownList("secondDiscountType", (List<SelectListItem>)ViewBag.Discount,
                               "Rodzaj zniżki", new { @class = "form-control", @id = "secondDiscountType" })
@@ -67,7 +76,7 @@
                             </div>
                             <div class="choose-seat" id="thirdDiscountPrice" style="display:none">
                                 <label class="control-label">Ilość biletów ulgowych</label>
-                                <input type="number" min="0" value="0" id="thirdDiscountTickets" name="thirdDiscountTickets" />
+                                <input type="number" min="0" class="traveler" id="thirdDiscountTickets" name="thirdDiscountTickets" />
                                 <div class="discount-type">
                                     @Html.DropDownList("thirdDiscountType", (List<SelectListItem>)ViewBag.Discount,
                               "Rodzaj zniżki", new { @class = "form-control", @id = "thirdDiscountType" })
@@ -89,10 +98,84 @@
     @*  <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
-                <script type="text/javascript">
+
+<script type="text/javascript">
 
 
     $(document).ready(function () {
+
+    $("#searchform").validate({
+        groups: {
+            traveler: "normalPriceTickets firstDiscountTickets secondDiscountTickets thirdDiscountTickets"
+        },
+        rules: {
+            firstStation: {
+                required: true,
+               
+            },
+            lastStation: {
+                required: true,
+            },
+            firstStationId: {
+                required: true,
+
+            },
+            lastStationId: {
+                required: true,
+            },
+            datepicker: {
+                required: true,
+            },
+            time: {
+                required: true,
+            },
+            traveler: {
+
+            }
+           
+        },
+        messages: {
+            firstStation: {
+                required: "Należy wybrać stację początkową",
+
+            },
+            firstStationId: {
+                required: "Należy wybrać poprawną stację początkową",
+               
+            },
+            lastStation: {
+                required: "Należy wybrać stację końcową",
+
+            },
+            lastStationId: {
+                required: "Należy wybrać poprawną stację końcową",
+
+            },
+            datepicker: {
+                required: "Należy wybrać datę",
+
+            },
+            time: {
+                required: "Należy wybrać godzinę",
+            },
+          
+        }
+    });
+
+
+
+
+
+        $('.clockpicker').clockpicker({
+            'default': 'now',
+            vibrate: true,
+            placement: "bottom",
+            align: "left",
+
+            twelvehour: false,
+            donetext: 'Ok'
+        });
+    
         datepicker.min = new Date().toISOString().split("T")[0];
         var dictionary = new Array();
 
@@ -102,7 +185,7 @@
             $("#date").val($("#datepicker").val().toString());
 
             datepickerValue = new Date($("#datepicker").val());
- 
+
             if (dateToday.getDate() === datepickerValue.getDate() && dateToday.getMonth() === datepickerValue.getMonth() && dateToday.getFullYear() === datepickerValue.getFullYear()) {
 
                 var timeNow = dateToday.toLocaleTimeString();
@@ -192,41 +275,34 @@
             if (disc2 != "") {
                 $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
                     '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />');
-                //dictionary[disc2] = discountCount2;
                 dictionary.push({ discountTypeId: disc2, discountCount: discountCount2 });
             }
             if (disc3 != "") {
-                //dictionary[disc3] = discountCount3;
                 dictionary.push({ discountTypeId: disc3, discountCount: discountCount3 });
                 $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
                     '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />' +
                     '<input name="thirdDiscountTypeName" id="thirdDiscountTypeName" value="' + discountType3 + '" readonly /><input name="thirdDiscountCount" id="thirdDiscountCount" value="' + discountCount3 + '" readonly /><input name="thirdDiscountTypeId" id="thirdDiscountTypeId" value="' + disc3 + '" readonly hidden />');
             }
-          
-            console.log(JSON.stringify(disc));
-           // alert(discountType1);
-           // alert(discountCount1);
+
+           // console.log(JSON.stringify(disc));
+
             if (div.style.display === "none") {
                 div.style.display = "block";
             }
-                
-               // $("#disountsDiv span").append(discountType1);
-              //  $("#disountsDiv span").append(discountCount1);
-               
-                
-           
-               // $("#disountsDiv").append('<input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly />');
+
             $('#firstDiscountId').val(disc);
             $('#firstDiscountCounter').val(discountCount1);
-            console.log(dictionary);
-           // alert("Słownik");
+            //console.log(dictionary);
+
             var dictionaryString = JSON.stringify(dictionary);
             $('#dictionary').val(dictionaryString);
-                $('#addPassengerModal').modal('hide');
-            
-            
+            $('#addPassengerModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+
         });
 
     });
 
-                </script>
+</script>

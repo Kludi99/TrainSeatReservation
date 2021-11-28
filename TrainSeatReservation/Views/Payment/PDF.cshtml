@@ -1,105 +1,263 @@
 ﻿@model TrainSeatReservation.Commons.Dto.TicketDto
 
-<div>
+<div class="ticket">
     <h4>Bilet</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            User Id
-        </dt>
-        <dd class="col-sm-10">
-            @Model.UserId
-        </dd>
-        <dt class="col-sm-2">
-            Email
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Email
-        </dd>
-        <dt class="col-sm-2">
-            Imię
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Name
-        </dd>
-        <dt class="col-sm-2">
-            Nazwisko
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Surname
-        </dd>
-        <dt class="col-sm-2">
-            Data podrózy
-        </dt>
-        <dd class="col-sm-10">
-            @Model.TripDate
-        </dd>
-        <dt class="col-sm-2">
-            Stacja koncowa
-        </dt>
-        <dd class="col-sm-10">
-            @Model.ArrivalStation.Name
-        </dd>
-        <dt class="col-sm-2">
-            Stacja poczatkowa
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DepartureStation.Name
-        </dd>
-        <dt class="col-sm-2">
-            Cena
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Price zł
-        </dd>
-        @if (Model.TicketChanges.Count() > 0)
-        {
-            @foreach (var item in Model.TicketChanges)
+    <table class="row">
+       
+        <tbody>
+            <tr class="row stations">
+                <td colspan="6" class="station1">
+                    Ze stacji
+                </td>
+                <td colspan="6" class="station2">
+                    Do stacji
+                </td>
+            </tr>
+            <tr class="row stations">
+                <td colspan="6" class="station1">
+                    @Model.DepartureStation.Name
+                </td>
+                <td colspan="6" class="station2">
+                    @Model.ArrivalStation.Name
+                </td>
+            </tr>
+
+            <tr class="row">
+                <td colspan="12" class="col-sm-12 tripDate">
+                    Data podróży
+                </td>
+            </tr>
+            <tr class="row">
+                <td colspan="12" class="col-sm-12 tripDate">
+                    @Model.TripDate
+                </td>
+            </tr>
+            <tr class="row">
+                <td colspan="6">
+                    @{ int i = 0;
+                        var seats = string.Empty;
+                        var firstCarriage = Model.SeatTicketsList.First();}
+                    @*@foreach (var item in Model.SeatTicketsList)
+                {*@
+                    <div class="col-sm-2">
+                        Wagon  @firstCarriage[i++].Seat.Carriage.Number
+                    </div>
+                    @foreach (var seat in firstCarriage)
+                    {
+                        seats += seat.Seat.Number.ToString() + ",";
+                    }
+                    <div class="col-sm-2">
+                        Siedzenia: @seats
+
+
+                    </div>
+
+
+                    @*}*@
+                </td>
+            </tr>
+            @if (Model.TicketChanges.Count() > 0)
             {
-                <dt class="col-sm-2">
-                    Przesiadka numer @item.Order
-                </dt>
-                <dd class="col-sm-10">
-                    @item.Station.Name  @item.TransitionDate
-                </dd>
+                @foreach (var item in Model.TicketChanges)
+                {
+                    <tr class="row">
+                        <td colspan="12">
+                            Przesiadka numer @item.Order
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td colspan="12">
+                            @item.Station.Name  @item.TransitionDate
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td colspan="6">
+                            @{
+                                var nextCarriage = Model.SeatTicketsList.ElementAt(item.Order);
+                                seats = string.Empty;
+                                i = 0;
+                            }
+                            @*@foreach (var nextCarriage in Model.SeatTicketsList)
+                            {*@
+
+                                <div class="col-sm-2">
+                                Wagon  @nextCarriage[i++].Seat.Carriage.Number
+                            </div>
+                                @foreach (var seat in nextCarriage)
+                                {
+                                    seats += seat.Seat.Number.ToString() + ",";
+                                }
+                                <div class="col-sm-2">
+                                    Siedzenia: @seats
+                                </div>
+
+                            @*}*@
+                        </td>
+                    </tr>
+                }
+
             }
-        }
-        @{ int i = 0;}
-        @foreach (var item in Model.SeatTicketsList)
-        {
-            <dt class="col-sm-2">
-                Wagon
-            </dt>
-            <dd class="col-sm-10">
-                @item[i++].Seat.Carriage.Number
-            </dd>
-            <dt class="col-sm-2">
-                Siedzenia
-            </dt>
-            @foreach (var seat in item)
+            @foreach (var item in Model.TicketDiscounts)
             {
-                <dd class="col-sm-10">
-                    @seat.Seat.Number
-                </dd>
+                <tr class="row">
+                    <td colspan="6" class="col-sm-2">
+                        Rodzaj zniżki
+                    </td>
+                </tr>
+                <tr class="row">
+                    <td colspan="6" class="col-sm-10">
+                        @item.Discount.Name @item.Discount.Value %
+                    </td>
+                </tr>
+                <tr class="row">
+                    <td colspan="6" class="col-sm-2">
+                        Ilość
+                    </td>
+                </tr>
+                <tr class="row">
+                    <td colspan="6" class="col-sm-10">
+                        @item.Count
+                    </td>
+                </tr>
             }
+            <tr>
+                <td colspan="6">
+                    <table>
+                        <tbody>
+                            <tr class="row">
+                                <td colspan="12">
+                                    obrazek jakiś
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td colspan="6">
+                    <table>
+                        <tbody>
+                            <tr class="row">
+                                <td colspan="6" class="col-sm-2">
+                                    Email
+                                </td>
+                                <td colspan="6" class="col-sm-10">
+                                    @Model.Email
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td colspan="6" class="col-sm-2">
+                                    Imię
+                                </td>
+                                <td colspan="6" class="col-sm-10">
+                                    @Model.Name
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td colspan="6" class="col-sm-2">
+                                    Nazwisko
+                                </td>
+                                <td colspan="6" class="col-sm-10">
+                                    @Model.Surname
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td colspan="6" class="col-sm-2">
+                                    Cena
+                                </td>
 
-
-        }
-        @foreach (var item in Model.TicketDiscounts)
-        {
-            <dt class="col-sm-2">
-                Rodzaj zniżki
-            </dt>
-            <dd class="col-sm-10">
-                @item.Discount.Name @item.Discount.Value %
-            </dd>
-            <dt class="col-sm-2">
-                Ilość
-            </dt>
-            <dd class="col-sm-10">
-                @item.Count
-            </dd>
-        }
-
-    </dl>
+                                <td colspan="6" class="col-sm-10">
+                                    @Model.Price zł
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+    @*<div class="row">
+        @if (Model.TicketChanges.Count() > 0)
+            {
+                @foreach (var item in Model.TicketChanges)
+                {
+                    <div class="col-sm-2">
+                        Przesiadka numer @item.Order
+                    </div>
+                    <div class="col-sm-10">
+                        @item.Station.Name  @item.TransitionDate
+                    </div>
+                }
+            }
+        @{ int i = 0;}
+            @foreach (var item in Model.SeatTicketsList)
+            {
+                <div class="col-sm-2">
+                    Wagon
+                </div>
+                <div class="col-sm-10">
+                    @item[i++].Seat.Carriage.Number
+                </div>
+                <div class="col-sm-2">
+                    Siedzenia
+                </div>
+                @foreach (var seat in item)
+                {
+                    <div class="col-sm-10">
+                        @seat.Seat.Number
+                    </div>
+                }
+
+
+            }
+        @foreach (var item in Model.TicketDiscounts)
+            {
+                <div class="col-sm-2">
+                    Rodzaj zniżki
+                </div>
+                <div class="col-sm-10">
+                    @item.Discount.Name @item.Discount.Value %
+                </div>
+                <div class="col-sm-2">
+                    Ilość
+                </div>
+                <div class="col-sm-10">
+                    @item.Count
+                </div>
+            }
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6">
+                <div class="col-sm-2">
+                    Email
+                </div>
+                <div class="col-sm-10">
+                    @Model.Email
+                </div>
+                <div class="col-sm-2">
+                    Imię
+                </div>
+                <div class="col-sm-10">
+                    @Model.Name
+                </div>
+                <div class="col-sm-2">
+                    Nazwisko
+                </div>
+                <div class="col-sm-10">
+                    @Model.Surname
+                </div>
+
+
+                <div class="col-sm-2">
+                    Cena
+                </div>
+
+                <div class="col-sm-10">
+                    @Model.Price zł
+                </div>
+            </div>
+        </div>
+    </div>*@
+

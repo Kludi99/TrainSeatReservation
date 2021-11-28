@@ -115,16 +115,6 @@ namespace TrainSeatReservation.Controllers
                 train.TrainCarriages = GetSeats(routeView.Date, trainView.Route, trainView.Route, trainView.Train, trainView.Train);
             }
 
-            //reservedSeats = /*GetSeats(routeView.Date, trainView.Route);*/_seatTicketFcd.GetSeatTickets().Where(x => x.Ticket.DepartureTrainStation.RouteId == trainView.Route.RouteId && x.Ticket.TripDate.Date == routeView.Date.Date).Select(x => x.SeatId).ToList();
-           /* if(reservedSeats.Count >0)
-            {
-                 foreach (var item in train.TrainCarriages)
-            {
-                 item.Carriage.Seats.Where(x => reservedSeats.Contains(x.Id)).ToList().ForEach(c =>  c.IsFree = false );
-              
-            }
-            }*/
-           
             if (train == null)
             {
                 return NotFound();
@@ -190,7 +180,7 @@ namespace TrainSeatReservation.Controllers
             HttpContext.Session.SetString("TrainView", JsonConvert.SerializeObject(trainView));
             return View(trains);
         }
-        public IActionResult PersonalData(string carriagesString, string seats, bool allow, string carriagesWithSeats)//przy przesiadkach moze byc kilka wagonów
+        public IActionResult PersonalData(string carriagesString, string seats, bool? allow, string carriagesWithSeats)//przy przesiadkach moze byc kilka wagonów
         {
             var parameters = HttpContext.Request.RouteValues;
             var seatSession = HttpContext.Session.GetString("Seats");
@@ -243,7 +233,7 @@ namespace TrainSeatReservation.Controllers
                     DepartureStationId = trainView.StartStation.Id,
                     Price = trainView.Price,
                     IsPaid = false,
-                    SendInformation = allow,
+                    SendInformation = allow.HasValue ? allow : false,
                     CarriageId = carriageSeatsDto[0].CarriageId
 
                 };
@@ -312,6 +302,7 @@ namespace TrainSeatReservation.Controllers
                 HttpContext.Session.SetString("Carriage", JsonConvert.SerializeObject(carriageSeatsDto));
                 HttpContext.Session.SetString("Ticket", JsonConvert.SerializeObject(ticket));
             }
+            ViewBag.PhoneAllow = allow.HasValue ? allow : false;
             return View();
         }
         public async Task<IActionResult> Summary(User user, string phone)
