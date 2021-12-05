@@ -30,7 +30,7 @@ namespace TrainSeatReservation.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
-
+        [Display(Name = "Użytkownik")]
         public string Username { get; set; }
 
         public string Email { get; set; }
@@ -47,7 +47,7 @@ namespace TrainSeatReservation.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nowy email")]
             public string NewEmail { get; set; }
         }
 

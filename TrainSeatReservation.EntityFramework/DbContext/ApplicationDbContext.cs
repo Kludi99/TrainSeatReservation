@@ -19,6 +19,7 @@ namespace TrainSeatReservation.Data
         public DbSet<RouteStation> RouteStations { get; set; }
         public DbSet<Station> Stations { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketResigned> TicketsResigned{ get; set; }
         public DbSet<TrainStation> TrainStations { get; set; }
         public DbSet<TicketDiscount> TicketDiscounts { get; set; }
         public DbSet<Dictionary> Dictionaries { get; set; }

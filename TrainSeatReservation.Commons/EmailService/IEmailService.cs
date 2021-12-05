@@ -9,6 +9,7 @@ namespace TrainSeatReservation.Commons.EmailService
 {
     public interface IEmailService
     {
+        void SendEmailResignedTicket(string name, string surname, string email, int id);
         void SendEmail(string name, string surname, string email, string subject, string content);
         void SendVerificationEmail(string name, string surname, string email, string subject, string content);
         void SendEmailWithAttachment(byte[] attachment, TicketDto ticket, string subject, string content);

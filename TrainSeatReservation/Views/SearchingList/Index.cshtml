@@ -2,12 +2,30 @@
 @{
     ViewData["Title"] = "Searching Result";
 }
+
+<div class="row seatsInformation">
+    <div class="col-4">
+        <p class="freeSeats"><i class="fas fa-users"></i></p>
+        <p> Duża dostępność miejsc</p>
+    </div>
+    <div class="col-4">
+        <p class="mediumFree"><i class="fas fa-users"></i></p>
+        <p> Średnia dostępność miejsc</p>
+    </div>
+    <div class="col-4">
+        <p class="noFree"><i class="fas fa-users"></i></p>
+        <p> Bardzo mała dostępność miejsc</p>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-12 "><h3 class="date">@Model.Date.ToShortDateString()</h3></div>
+</div>
 <div class="row">
-    @Model.Date.ToShortDateString()
     @foreach (var item in Model.Trains)
     {
-
-        <div class="col-4">
+        if (item.Transits > 0 && item.RouteTransits.Any(x => x.TimeForTransit < TimeSpan.FromMinutes(5)))
+            continue;
+        <div class="col-12 col-md-6 col-lg-4">
             <div class="train-result">
                 <div>
                     <b>@item.StartStation.Name  -</b>
@@ -20,7 +38,7 @@
                 <div>
                     Czas :  @item.Route.Time
                 </div>
-                <div>
+                <div class="price">
                     Cena :  @item.Price zł
                 </div>
                 @if (item.Transits == 0)
@@ -28,22 +46,11 @@
                     @item.Train.Name @:&nbsp; @item.Train.Number
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div>
-                        Dostępne miejsca : @item.FreeSeats %
+                        Dostępne miejsca
+                    </div>
+                    <div class="@(item.FreeSeats >= 75 ? "freeSeats": (item.FreeSeats>=25 && item.FreeSeats<75) ? "mediumFree" : "noFree")">
+                        <i class="fas fa-users"></i>
                     </div>
                 }
                 else
@@ -55,7 +62,10 @@
                         @item.Train.Name &nbsp; @item.Train.Number
 
                         <div>
-                            Dostępne miejsca :  @item.FreeSeats %
+                            Dostępne miejsca
+                        </div>
+                        <div class="@(item.FreeSeats >= 75 ? "freeSeats": (item.FreeSeats>=25 && item.FreeSeats<75) ? "mediumFree" : "noFree")">
+                            <i class="fas fa-users"></i>
                         </div>
                     </div>
                     @foreach (var train in item.RouteTransits)
@@ -69,7 +79,10 @@
                                 Czas przesiadki: @train.TimeForTransit
                             </div>
                             <div>
-                                Dostępne miejsca :  @train.FreeSeats %
+                                Dostępne miejsca
+                            </div>
+                            <div class="@(item.FreeSeats >= 75 ? "freeSeats": (item.FreeSeats>=25 && item.FreeSeats<75) ? "mediumFree" : "noFree")">
+                                <i class="fas fa-users"></i>
                             </div>
                         </div>
                     }
@@ -82,13 +95,17 @@
             </div>
         </div>
     }
-    @if (Model.Trains.Count() == 0)
-    {
-        <div class="row">
-            <h2>Niestety nie znaleziono żadnego połączenia</h2>
-            <div class="reserve-button">
-                <a asp-action="Index" asp-controller="Home">Wyszukiwarka </a>
-            </div>
-        </div>
-    }
 </div>
+            @if (Model.Trains.Count() == 0)
+            {
+                <div class="row no-connect">
+                    <h2>Niestety nie znaleziono żadnego połączenia</h2>
+                    <div class="previous-button">
+                        <a asp-action="Index" asp-controller="Home">Wyszukiwarka </a>
+                    </div>
+                </div>
+            }
+      
+
+
+    

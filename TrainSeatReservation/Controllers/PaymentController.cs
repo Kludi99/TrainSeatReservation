@@ -295,8 +295,8 @@ namespace TrainSeatReservation.Controllers
                         HtmlContent = page,
                         UseExternalLinks = true,
                         UseLocalLinks = true,
-                        WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "assets", "styles.css") },
-                        HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 },
+                        WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "assets", "styles.css"), LoadImages =true },
+                        HeaderSettings = { FontSize = 9,  Line = false, Spacing = 2.812 },
                         LoadSettings =  new LoadSettings { JSDelay = 2000 }
                     }
                 }

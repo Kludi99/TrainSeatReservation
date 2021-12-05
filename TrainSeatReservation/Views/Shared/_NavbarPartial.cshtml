@@ -5,37 +5,56 @@
 @inject UserManager<User> UserManager
 @if (User.IsInRole("Admin"))
 {
-    <div class="col-2">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" asp-area="Administration" asp-controller="Train" asp-action="Index">Pociągi</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Administration" asp-controller="Carriage" asp-action="Index">Wagony</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Administration" asp-controller="Route" asp-action="Index">Trasy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Administration" asp-controller="Station" asp-action="Index">Stacje</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Administration" asp-controller="Tickets" asp-action="Index">Bilety</a>
-            </li>
-        </ul>
+    <div class="col-lg-2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light left-nav">
+            <a class="navbar-brand" href="#">Navbar w/ text</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <div class="x">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="Administration" asp-controller="Train" asp-action="Index">Pociągi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Administration" asp-controller="Carriage" asp-action="Index">Wagony</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Administration" asp-controller="Route" asp-action="Index">Trasy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Administration" asp-controller="Station" asp-action="Index">Stacje</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Administration" asp-controller="Tickets" asp-action="Index">Bilety</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
 }
 else
 {
-    <div class="col-2">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Wyszukiwarka</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a>
-            </li>
-            
-        </ul>
+    <div class="col-lg-2">
+        <nav class="navbar navbar-expand-lg left-nav">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <div class="x">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index"><p>Wyszukiwarka</p><p><i class="fas fa-search"></i></p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact"><p> Kontakt</p><p><i class="far fa-envelope"></i></p></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
 }
