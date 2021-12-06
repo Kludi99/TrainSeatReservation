@@ -2,10 +2,11 @@
     letter-spacing: 2px;
 }
 .ticket {
-    padding: 10px;
-    border: 2px solid #a8a8a8;
+    padding: 20px 10px;
+    border: 2px solid #fa9e2c;
     border-radius: 10px;
-    background-color: #c0c2c0
+    background-color: #dbdbdb;
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.12);
 }
 .tripDate{
     text-align: center;
@@ -29,4 +30,17 @@
 td{
     padding: 5px;
     width: 100% !important;
+}
+.fa-train {
+    font-size: 25px;
+    color: #fa9e2c;
+}
+img{
+    margin-top:10px;
+    width:180px;
+    height:80px;
+}
+h4{
+    width:100%;
+    text-align: center;
 }

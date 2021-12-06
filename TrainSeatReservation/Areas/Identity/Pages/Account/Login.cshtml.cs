@@ -50,9 +50,10 @@ namespace TrainSeatReservation.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Zapamiętaj")]
             public bool RememberMe { get; set; }
         }
 

@@ -54,6 +54,38 @@ namespace TrainSeatReservation.Commons.EmailService
                 client.Disconnect(true);
             }
         }
+        public void SendEmailResignedTicket(string name, string surname, string email, int id)
+        {
+            var message = new MimeMessage();
+            var subject = "Rezygnacja z biletu";
+            var content = "Klient " + name + " " + surname + " zrezygnował z biletu o ID: " + id;
+            message.From.Add(new MailboxAddress($"{name} {surname}", email));
+
+            message.To.Add(new MailboxAddress(_emailConfiguration.SmtpName, _emailConfiguration.SmtpUserName));
+
+
+            var footer = string.Format(this.templateManager.EmailFooter, name, surname, email);
+
+            message.Subject = subject;
+            message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = content + footer,
+
+
+            };
+
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                client.Authenticate(_emailConfiguration.SmtpUserName, _emailConfiguration.SmtpPassword);
+
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
         public void SendEmailWithAttachment(byte[] attachment, TicketDto ticket, string subject, string content)
         {
             var message = new MimeMessage();

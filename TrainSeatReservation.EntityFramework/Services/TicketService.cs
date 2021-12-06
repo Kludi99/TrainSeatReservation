@@ -80,7 +80,7 @@ namespace TrainSeatReservation.EntityFramework.Services
             _logger.LogInformation("Executing DeleteTicket service method");
 
             var entity = _context.Tickets.SingleOrDefault(x => x.Id == id);
-
+            CreateResigned(entity);
             _context.Remove(entity);
             _context.SaveChanges();
 
@@ -149,6 +149,13 @@ namespace TrainSeatReservation.EntityFramework.Services
             {
                 return Array.Empty<TicketDto>();
             }
+        }
+        private void CreateResigned(Ticket ticket)
+        {
+            var resigned = _mapper.Map<TicketResigned>(ticket);
+            resigned.Id = 0;
+            _context.TicketsResigned.Add(resigned);
+            _context.SaveChanges();
         }
         #endregion
     }

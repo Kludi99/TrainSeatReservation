@@ -212,7 +212,7 @@
                     success: function (data) {
                         console.log(data);
                         resp($.map(data.data, function (item) {
-                            console.log(item);
+                            //console.log(item);
                             return { label: item.name, value: item.name, id: item.id };
                         }))
                     },
@@ -269,17 +269,17 @@
             var discountCount3 = $("#thirdDiscountTickets").val();
             var disc3 = $("#thirdDiscountType option:selected").val();
             if (disc != "") {
-                $("#disountsDiv").html('<input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name"firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />');
+                $("#disountsDiv").html('<p>Zniżki</p><input name"firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name"firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name"firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />');
                 dictionary.push({ discountTypeId: disc,discountCount: discountCount1 });
             }
             if (disc2 != "") {
-                $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
+                $("#disountsDiv").html('<p>Zniżki</p> <input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
                     '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />');
                 dictionary.push({ discountTypeId: disc2, discountCount: discountCount2 });
             }
             if (disc3 != "") {
                 dictionary.push({ discountTypeId: disc3, discountCount: discountCount3 });
-                $("#disountsDiv").html('<input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
+                $("#disountsDiv").html('<p>Zniżki</p> <input name="firstDiscountTypeName" id="firstDiscountTypeName" value="' + discountType1 + '" readonly /><input name="firstDiscountCount" id="firstDiscountCount" value="' + discountCount1 + '" readonly /><input name="firstDiscountTypeId" id="firstDiscountTypeId" value="' + disc + '" readonly hidden />' +
                     '<input name="secondDiscountTypeName" id="secondDiscountTypeName" value="' + discountType2 + '" readonly /><input name="secondDiscountCount" id="secondDiscountCount" value="' + discountCount2 + '" readonly /><input name="secondDiscountTypeId" id="secondDiscountTypeId" value="' + disc2 + '" readonly hidden />' +
                     '<input name="thirdDiscountTypeName" id="thirdDiscountTypeName" value="' + discountType3 + '" readonly /><input name="thirdDiscountCount" id="thirdDiscountCount" value="' + discountCount3 + '" readonly /><input name="thirdDiscountTypeId" id="thirdDiscountTypeId" value="' + disc3 + '" readonly hidden />');
             }

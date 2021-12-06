@@ -1,0 +1,30 @@
+﻿@model TrainSeatReservation.Commons.Dto.TicketDto
+
+<form asp-action="Resign">
+    <div id="resign" class="resignation">
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Rezygnuj</h5>
+                   @Html.HiddenFor(x => x.Name)
+                   @Html.HiddenFor(x => x.Surname)
+                   @Html.HiddenFor(x => x.Email)
+                </div>
+                <div class="body">
+                    <h3>Czy na pewno chcesz zrezygnować z biletu?</h3>
+                    <div class="row">
+                        <div class="col-6"> @Model.ArrivalStation.Name</div>
+                        <div class="col-6"> @Model.DepartureStation.Name</div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-12"> @Model.TripDate</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a asp-action="Index">Anuluj</a>   <button type="submit" class="modal-button">Rezygnuj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>

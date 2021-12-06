@@ -1,56 +1,7 @@
 ﻿@model TrainSeatReservation.Commons.Dto.TicketDto
 
-<div>
-    <h4>Ticket</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TripDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TripDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalTrainStation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalTrainStation.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureTrainStation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DepartureTrainStation.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-    </dl>
+<div class="success">
+    
+    <h3>Transakcja przebiegła pomyślnie</h3>
+    <p>Bilet został wysłany na podany adres email.</p>
 </div>

@@ -70,9 +70,11 @@
         <div class="col-6">
             @if (!SignInManager.IsSignedIn(User))
             {
+            <div class="login-col">
                 <h4>Posiadasz konto?</h4>
                 <a class="login" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Zaloguj się</a>
-            }
+            </div>
+                    }
             </div>
         </div>
     </div>
