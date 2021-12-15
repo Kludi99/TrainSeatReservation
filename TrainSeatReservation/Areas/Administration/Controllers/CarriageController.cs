@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TrainSeatReservation.Areas.Administration.Models;
 using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.Models;
@@ -27,11 +28,17 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         }
 
         // GET: Administration/Carriage
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             // var applicationDbContext = _context.Carriages.Include(c => c.CarriageClass).Include(c => c.Type);
             var carriages = _carriageFcd.GetCarriages();
-            return View(carriages);
+            var carriagesView = new CarriageViewModel
+            {
+                CarriagesPerPage = 10,
+                Carriages = carriages.OrderByDescending(x => x.Id),
+                CurrentPage = page
+            };
+            return View(carriagesView);
         }
 
         // GET: Administration/Carriage/Details/5
@@ -54,8 +61,8 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // GET: Administration/Carriage/Create
         public IActionResult Create()
         {
-            ViewData["CarriageClassId"] = new SelectList(_dictionaryFcd.GetDictionaryItems(), "Id", "Name");
-            ViewData["TypeId"] = new SelectList(_dictionaryFcd.GetDictionaryItems(), "Id", "Name");
+            ViewData["CarriageClassId"] = new SelectList(_dictionaryFcd.GetDictionaryItems(3), "Id", "Name");
+            ViewData["TypeId"] = new SelectList(_dictionaryFcd.GetDictionaryItems(2), "Id", "Name");
             return View();
         }
 
@@ -70,6 +77,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
             {
                 //_context.Add(carriage);
                 //await _context.SaveChangesAsync();
+                carriage.IsActive = true;
                 _carriageFcd.AddCarriage(carriage);
                 return RedirectToAction(nameof(Index));
             }
@@ -115,6 +123,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                     //_context.Update(carriage);
                     //await _context.SaveChangesAsync();
                     var oldCarriage = _carriageFcd.GetCarriage(carriage.Id);
+                    carriage.IsActive = true;
                     _carriageFcd.UpdateCarriage(carriage);
                     var newCarriage = _carriageFcd.GetCarriage(carriage.Id);
                     var message = MessageContent(oldCarriage, newCarriage);

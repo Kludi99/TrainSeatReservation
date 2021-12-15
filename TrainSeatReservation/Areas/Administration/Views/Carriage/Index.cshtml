@@ -1,72 +1,81 @@
-﻿@model IEnumerable<TrainSeatReservation.Commons.Dto.CarriageDto>
-
+﻿@*@model IEnumerable<TrainSeatReservation.Commons.Dto.CarriageDto>*@
+@model TrainSeatReservation.Areas.Administration.Models.CarriageViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Wagony</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="add">
+    <a asp-action="Create"><i class="fas fa-plus"></i> Dodaj</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Number)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarriageClass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EletricalOutlet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CateringCar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BicyclePlace)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarriageClass.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EletricalOutlet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CateringCar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BicyclePlace)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@{
+    var carriage = Model.PaginatedCarriages().First();
 }
-    </tbody>
-</table>
+<div class="admin-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.CarriageClass)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.EletricalOutlet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.CateringCar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => carriage.BicyclePlace)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PaginatedCarriages())
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarriageClass.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EletricalOutlet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CateringCar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BicyclePlace)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                        @*<a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount(); i++)
+        {
+            <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+
+        }
+    </ul>
+</div>

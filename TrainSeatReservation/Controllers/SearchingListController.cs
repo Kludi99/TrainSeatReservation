@@ -88,6 +88,8 @@ namespace TrainSeatReservation.Controllers
                     price += item.Price * routeView.NormalTicketsCount;
                 }
                 item.Price = price;
+                if (item.Price == 0)
+                    item.Price = 0.1;
             }
 
             var parameters = HttpContext.Request.RouteValues;

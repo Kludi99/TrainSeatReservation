@@ -30,7 +30,7 @@
                     @if (ViewBag.PhoneAllow)
                     {
                         <div class="form-group">
-                            <label asp-for="PhoneNumber" class="control-label"></label>
+                            <label class="control-label"> Numer telefonu</label>
                             <input asp-for="@user.PhoneNumber" class="form-control" required />
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>

@@ -3,12 +3,18 @@ for details on configuring this project to bundle and minify static web assets. 
 :root {
     --primary-color: 19, 122, 249;
     --orange: #fa9e2c;
+    --orange2: #d78571;
+    --green: #18cc93;
     --purple: #8f50fb;
+    --purple2: #cc7d86;
+    --green-transparent: rgba(24, 204, 147, 0.7);
     --orange-transparent: rgba(250, 158, 44, 0.7);
+    --orange2-transparent: rgba(215,133,113, 0.7);
     --purple-transparent: rgba(143, 80, 251, 0.7);
-    --background-gradient: linear-gradient( var(--orange), var(--purple));
-    --reverse-background-gradient: linear-gradient( var(--purple), var(--orange));
-    --header-background: linear-gradient( var(--purple-transparent), var(--orange-transparent));
+    --purple2-transparent: rgba(204, 125, 134, 0.7);
+    --background-gradient: linear-gradient( var(--orange2), var(--purple));
+    --reverse-background-gradient: linear-gradient( var(--purple), var(--orange2));
+    --header-background: linear-gradient( var(--purple-transparent), var(--orange2-transparent));
 }
 
 a.navbar-brand {
@@ -89,7 +95,7 @@ body {
     z-index: 100;
 }
 
-.train-searching-form, .train-result, .optional-items, .personal-data, .left-nav, .summary, .success, .error-view, .account, .resignation, .user-login {
+.train-searching-form, .train-result, .optional-items, .personal-data, .left-nav, .summary, .success, .error-view, .account, .resignation, .user-login,.contact-form {
     display: block;
     width: 100%;
     height: 100%;
@@ -107,7 +113,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 2px 40px rgba(0, 0, 0, 0.12);
 }
-.tickets-table {
+.tickets-table, .admin-table {
     display: block;
     width: 100%;
     padding: 20px .75rem;
@@ -155,7 +161,7 @@ body {
     }
 
 .train-searching-form h2 {
-    color: #db8325;
+    color: var(--orange2);
 }
 
 .train-searching-form input, .train-searching-form select, .modal-body input:not([type="button"]), .modal-body select, .user-login input {
@@ -167,15 +173,24 @@ body {
     box-shadow: 10px 10px 10px -10px var(--purple);
     text-align: center;
 }
-    .train-searching-form input:focus {
-        border-radius: 15px;
-        padding: 5px 5px 3px 5px;
-        margin: 5px;
-        border: none;
-        border-bottom: 3px solid var(--purple);
-        outline: none;
-    }
-.train-searching-form button, .modal-button, .train-result a, .next-button a, .personal-data a, .summary a, .account-button, .navbar-account .nav-pills .nav-link.active, .page-item.active .page-link  {
+.contact-form input:not([type="submit"]), .contact-form textarea {
+    border-radius: 15px;
+    padding: 5px;
+    margin: 5px 15px;
+    border: none;
+    border-bottom: 1px solid var(--purple);
+    box-shadow: 10px 10px 10px -10px var(--purple);
+    text-align: center;
+}
+.train-searching-form input:focus {
+    border-radius: 15px;
+    padding: 5px 5px 3px 5px;
+    margin: 5px;
+    border: none;
+    border-bottom: 3px solid var(--purple);
+    outline: none;
+}
+.train-searching-form button, .modal-button, .train-result a, .next-button a, .personal-data a, .summary a, .account-button, .navbar-account .nav-pills .nav-link.active, .page-item.active .page-link, .contact-form input[type="submit"] {
     padding: 5px 20px;
     background: var(--background-gradient);
     border: none;
@@ -209,7 +224,7 @@ body {
     float: right;
 }
 
-    .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover, .summary a:hover, .account-button:hover, .resignation a:hover {
+    .train-searching-form button:hover, .modal-button:hover, .train-result a:hover, .next-button a:hover, .personal-data a:hover, .summary a:hover, .account-button:hover, .resignation a:hover, .contact-form input[type="submit"]:hover {
         background: var(--reverse-background-gradient);
         font-weight: 700;
         border-color: transparent;
@@ -378,7 +393,7 @@ body {
 
 .fas {
     font-size: 50px;
-    color: #db8325;
+    color: var(--orange);
 }
 
 .clockpicker {
@@ -644,7 +659,7 @@ header nav a{
 }
 .fa-window-maximize {
     font-size: 50px;
-    color: var(--orange-transparent);
+    color: var(--orange2-transparent);
 }
 .window-icon{
     text-align:center;
@@ -684,7 +699,7 @@ header nav a{
     margin:10px;
 }
 .extras i{
-    color: var(--orange-transparent);
+    color: var(--orange2-transparent);
 }
     .extras .extra {
         display: inline-block;
@@ -866,4 +881,54 @@ input:checked + .slider {
     }
 .modal-seats .modal-body {
     overflow-x: auto;
+}
+.nav-link.admin{
+    word-break:keep-all;
+}
+.table tr th{
+    border-top:none;
+}
+.admin-table{
+    text-align:center;
+}
+.admin-table .fas, .admin-table .far{
+    font-size:20px;
+    color: var(--orange2);
+}
+.admin-table .col-md-4{
+    margin-left:auto;
+        margin-right:auto;
+}
+.admin-table .back{
+    text-align:left;
+}
+
+.add .fas, .add>a {
+    font-size: 20px;
+    color: var(--orange2);
+    text-decoration: none;
+}
+.admin-table a {
+    color: var(--orange2);
+    text-decoration: none;
+}
+.admin-table input[type="submit"] {
+    background-color: var(--orange2) !important;
+    color: #fff;
+}
+.contact-form .send{
+    text-align:right;
+}
+.contact-form h2, .contact-form label{
+    margin:15px;
+}
+.contact-form label{
+    font-weight:bold;
+    font-size: 20px;
+}
+.contact-form input{
+    margin:0 15px;
+}
+.contact-form .form-control{
+    width: 80%
 }

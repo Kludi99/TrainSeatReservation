@@ -3,21 +3,43 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainSeatReservation.Data;
 
 namespace TrainSeatReservation.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206162929_AddAdmin")]
+    partial class AddAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.ToTable("IdentityUserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = "16cff0e8-a7c6-4a7f-ae34-5e18425508ee",
+                            UserId = "1111111-1111-1111-1111-11111111"
+                        });
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -49,14 +71,14 @@ namespace TrainSeatReservation.Data.Migrations
                         new
                         {
                             Id = "16cff0e8-a7c6-4a7f-ae34-5e18425508ee",
-                            ConcurrencyStamp = "a437c795-0e4b-4f06-8a87-19614eaa75d5",
+                            ConcurrencyStamp = "cbd9d29c-0d08-45ec-baef-181c49366238",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e227ea38-2549-49bb-ad08-29a01d16706e",
-                            ConcurrencyStamp = "9b452183-3294-47a1-b135-8dd2e04c86ba",
+                            Id = "9476520c-e1f3-4bf7-85a1-6aeb66384c17",
+                            ConcurrencyStamp = "c4e1748e-9926-4988-a9fe-aa24498e8646",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -147,13 +169,6 @@ namespace TrainSeatReservation.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1111111-1111-1111-1111-11111111",
-                            RoleId = "16cff0e8-a7c6-4a7f-ae34-5e18425508ee"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -252,16 +267,16 @@ namespace TrainSeatReservation.Data.Migrations
                         {
                             Id = "1111111-1111-1111-1111-11111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d353da2a-26c4-4ff4-9434-68b66e69fe80",
+                            ConcurrencyStamp = "aa34be41-2446-4dcf-8f14-49e3e6213dc1",
                             Email = "train.reservation.mvc@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "TRAIN.RESERVATION.MVC@GMAIL.COM",
                             NormalizedUserName = "TRAIN.RESERVATION.MVC@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE7aR4/qdU5ljfiMEqajy37Qn2N/JuYF2xTA5OuZZfeFQCLN+SEvQfsPklwRigE3qw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG2EiQ4xwwRjyB5BUbEYJMmdkIsiBN7bihRafRTHdi0CSyvupbOivOv2po6w9bST0A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "75c15da5-5765-4bf8-8d5a-c1617bcdd567",
+                            SecurityStamp = "24fbe799-d4d1-4b8b-9415-02b7d9353e4e",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "train.reservation.mvc@gmail.com"

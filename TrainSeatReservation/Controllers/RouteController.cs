@@ -38,7 +38,8 @@ namespace TrainSeatReservation.Controllers
         [HttpPost]
         public IActionResult Index(int firstStationId, int lastStationId, string date, string timeValue, int normalPriceTickets, string dictionary) 
         {
-            if(firstStationId == 0 || lastStationId == 0 || String.IsNullOrEmpty(date) || String.IsNullOrEmpty(timeValue) || (normalPriceTickets==0 && String.IsNullOrEmpty(dictionary)) )
+            HttpContext.Session.Clear();
+            if (firstStationId == 0 || lastStationId == 0 || String.IsNullOrEmpty(date) || String.IsNullOrEmpty(timeValue) || (normalPriceTickets==0 && String.IsNullOrEmpty(dictionary)) )
             {
                 ModelState.AddModelError("lastStationId", "Należy wybrać stację początkową końcową, datę i godzinę podróży oraz liczbę osób");
                 return RedirectToAction("Index", controllerName: "Home");

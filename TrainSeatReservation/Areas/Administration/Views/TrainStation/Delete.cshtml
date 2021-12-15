@@ -1,4 +1,4 @@
-﻿@model TrainSeatReservation.Commons.Dto.TrainStationDto
+﻿@model TrainSeatReservation.EntityFramework.Models.TrainStation
 
 @{
     ViewData["Title"] = "Delete";
@@ -24,18 +24,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Station.Id)
         </dd class>
-      @*  <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalDate)
-        </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureDate)
+            @Html.DisplayNameFor(model => model.Route)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartureDate)
-        </dd>*@
+            @Html.DisplayFor(model => model.Route.Id)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainTimeTable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TrainTimeTable.Id)
+        </dd class>
     </dl>
     
     <form asp-action="Delete">

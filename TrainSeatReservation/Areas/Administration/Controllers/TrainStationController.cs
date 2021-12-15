@@ -5,32 +5,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.Models;
-using TrainSeatReservation.Interfaces.Facades;
 
 namespace TrainSeatReservation.Areas.Administration.Controllers
 {
     [Area("Administration")]
     public class TrainStationController : Controller
     {
-        private readonly ITrainStationFcd _trainStationFcd;
-        private readonly ITrainFcd _trainFcd;
-        private readonly IStationFcd _stationFcd;
+        private readonly ApplicationDbContext _context;
 
-        public TrainStationController(ITrainStationFcd trainStationFcd, ITrainFcd trainFcd, IStationFcd stationFcd)
+        public TrainStationController(ApplicationDbContext context)
         {
-            _trainStationFcd = trainStationFcd;
-            _trainFcd = trainFcd;
-            _stationFcd = stationFcd;
-
+            _context = context;
         }
+
         // GET: Administration/TrainStation
         public async Task<IActionResult> Index()
         {
-           
-            return View(_trainStationFcd.GetTrainStations());
+            var applicationDbContext = _context.TrainStations.Include(t => t.Route).Include(t => t.Station).Include(t => t.Train).Include(t => t.TrainTimeTable);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Administration/TrainStation/Details/5
@@ -41,7 +35,12 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var trainStation = _trainStationFcd.GetTrainStation(id.Value);
+            var trainStation = await _context.TrainStations
+                .Include(t => t.Route)
+                .Include(t => t.Station)
+                .Include(t => t.Train)
+                .Include(t => t.TrainTimeTable)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (trainStation == null)
             {
                 return NotFound();
@@ -53,8 +52,10 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // GET: Administration/TrainStation/Create
         public IActionResult Create()
         {
-            ViewData["StationId"] = new SelectList(_stationFcd.GetStations(), "Id", "Id");
-            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Id");
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Name");
+            ViewData["StationId"] = new SelectList(_context.Stations, "Id", "Name");
+            ViewData["TrainId"] = new SelectList(_context.Trains, "Id", "Name");
+            ViewData["TrainTimeTableId"] = new SelectList(_context.TrainTimeTables, "Id", "Id");
             return View();
         }
 
@@ -63,15 +64,18 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TrainId,StationId,ArrivalDate,DepartureDate")] TrainStationDto trainStation)
+        public async Task<IActionResult> Create([Bind("Id,TrainId,StationId,RouteId,TrainTimeTableId")] TrainStation trainStation)
         {
             if (ModelState.IsValid)
             {
-                _trainStationFcd.AddTrainStation(trainStation);
+                _context.Add(trainStation);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StationId"] = new SelectList(_stationFcd.GetStations(), "Id", "Id", trainStation.StationId);
-            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Id", trainStation.TrainId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trainStation.RouteId);
+            ViewData["StationId"] = new SelectList(_context.Stations, "Id", "Id", trainStation.StationId);
+            ViewData["TrainId"] = new SelectList(_context.Trains, "Id", "Id", trainStation.TrainId);
+            ViewData["TrainTimeTableId"] = new SelectList(_context.TrainTimeTables, "Id", "Id", trainStation.TrainTimeTableId);
             return View(trainStation);
         }
 
@@ -83,13 +87,15 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var trainStation = _trainStationFcd.GetTrainStation(id.Value);
+            var trainStation = await _context.TrainStations.FindAsync(id);
             if (trainStation == null)
             {
                 return NotFound();
             }
-            ViewData["StationId"] = new SelectList(_stationFcd.GetStations(), "Id", "Id", trainStation.StationId);
-            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Id", trainStation.TrainId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trainStation.RouteId);
+            ViewData["StationId"] = new SelectList(_context.Stations, "Id", "Id", trainStation.StationId);
+            ViewData["TrainId"] = new SelectList(_context.Trains, "Id", "Id", trainStation.TrainId);
+            ViewData["TrainTimeTableId"] = new SelectList(_context.TrainTimeTables, "Id", "Id", trainStation.TrainTimeTableId);
             return View(trainStation);
         }
 
@@ -98,7 +104,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TrainId,StationId,ArrivalDate,DepartureDate")] TrainStationDto trainStation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TrainId,StationId,RouteId,TrainTimeTableId")] TrainStation trainStation)
         {
             if (id != trainStation.Id)
             {
@@ -109,7 +115,8 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
             {
                 try
                 {
-                    _trainStationFcd.UpdateTrainStation(trainStation);
+                    _context.Update(trainStation);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,8 +131,10 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StationId"] = new SelectList(_stationFcd.GetStations(), "Id", "Id", trainStation.StationId);
-            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Id", trainStation.TrainId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trainStation.RouteId);
+            ViewData["StationId"] = new SelectList(_context.Stations, "Id", "Id", trainStation.StationId);
+            ViewData["TrainId"] = new SelectList(_context.Trains, "Id", "Id", trainStation.TrainId);
+            ViewData["TrainTimeTableId"] = new SelectList(_context.TrainTimeTables, "Id", "Id", trainStation.TrainTimeTableId);
             return View(trainStation);
         }
 
@@ -137,7 +146,12 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var trainStation = _trainStationFcd.GetTrainStation(id.Value);
+            var trainStation = await _context.TrainStations
+                .Include(t => t.Route)
+                .Include(t => t.Station)
+                .Include(t => t.Train)
+                .Include(t => t.TrainTimeTable)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (trainStation == null)
             {
                 return NotFound();
@@ -151,13 +165,15 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _trainStationFcd.DeleteTrainStation(id);
+            var trainStation = await _context.TrainStations.FindAsync(id);
+            _context.TrainStations.Remove(trainStation);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TrainStationExists(int id)
         {
-            return _trainStationFcd.IsTrainStationExists(id);
+            return _context.TrainStations.Any(e => e.Id == id);
         }
     }
 }
