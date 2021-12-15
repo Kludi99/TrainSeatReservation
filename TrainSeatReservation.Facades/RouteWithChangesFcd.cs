@@ -403,6 +403,7 @@ namespace TrainSeatReservation.Facades
                 }
                
             }
+            
             return trainView;
         }
         private double CheckFreeSeats(DateTime date, RouteStationDto firstRoute, RouteStationDto lastRoute, bool isTransits, RouteStationDto firstRouteInfo)

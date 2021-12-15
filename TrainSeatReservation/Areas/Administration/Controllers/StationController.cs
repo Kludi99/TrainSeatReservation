@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TrainSeatReservation.Areas.Administration.Models;
 using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.Models;
@@ -23,9 +24,16 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         }
 
         // GET: Administration/Station
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View(_stationFcd.GetStations());
+            var stations = _stationFcd.GetStations();
+            var stationsView = new StationViewModel
+            {
+                StationsPerPage = 10,
+                Stations = stations.OrderBy(x => x.Name),
+                CurrentPage = page
+            };
+            return View(stationsView);
         }
 
         // GET: Administration/Station/Details/5
@@ -56,7 +64,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Number,Name,Type")] StationDto station)
+        public async Task<IActionResult> Create([Bind("Id,Number,Name, City,Type")] StationDto station)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +95,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Name,Type")] StationDto station)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Name,City,Type")] StationDto station)
         {
             if (id != station.Id)
             {

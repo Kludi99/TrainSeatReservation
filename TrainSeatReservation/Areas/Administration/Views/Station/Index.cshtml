@@ -1,42 +1,56 @@
-﻿@model IEnumerable<TrainSeatReservation.Commons.Dto.StationDto>
+﻿@model TrainSeatReservation.Areas.Administration.Models.StationViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@{
+    var station = Model.PaginatedStations().First();
 }
-    </tbody>
-</table>
+<h1>Stacje</h1>
+<p class="add">
+    <a asp-action="Create"><i class="fas fa-plus"></i>Dodaj</a>
+</p>
+<div class="admin-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => station.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => station.City)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PaginatedStations())
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                        @*<a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount(); i++)
+        {
+            <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+
+        }
+    </ul>
+</div>

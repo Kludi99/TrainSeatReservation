@@ -5,58 +5,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Edytuj</h1>
+<div class="admin-table">
+    <h4>Wagon</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Number" class="control-label"></label>
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeId" class="control-label"></label>
+                    <select asp-for="TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
+                    <span asp-validation-for="TypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CarriageClassId" class="control-label"></label>
+                    <select asp-for="CarriageClassId" class="form-control" asp-items="ViewBag.CarriageClassId"></select>
+                    <span asp-validation-for="CarriageClassId" class="text-danger"></span>
+                </div>
+                @*<div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="EletricalOutlet" class="control-label"></label>
+                    <input asp-for="EletricalOutlet" class="form-control" />
+                    <span asp-validation-for="EletricalOutlet" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CateringCar" class="control-label"></label>
+                    <input asp-for="CateringCar" class="form-control" />
+                    <span asp-validation-for="CateringCar" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BicyclePlace" class="control-label"></label>
+                    <input asp-for="BicyclePlace" class="form-control" />
+                    <span asp-validation-for="BicyclePlace" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Zapisz" class="btn" />
+                </div>
+            </form>
+        </div>
+    </div>
 
-<h4>Carriage</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <select asp-for="TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
-                <span asp-validation-for="TypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CarriageClassId" class="control-label"></label>
-                <select asp-for="CarriageClassId" class="form-control" asp-items="ViewBag.CarriageClassId"></select>
-                <span asp-validation-for="CarriageClassId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="EletricalOutlet" class="control-label"></label>
-                <input asp-for="EletricalOutlet" class="form-control" />
-                <span asp-validation-for="EletricalOutlet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CateringCar" class="control-label"></label>
-                <input asp-for="CateringCar" class="form-control" />
-                <span asp-validation-for="CateringCar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BicyclePlace" class="control-label"></label>
-                <input asp-for="BicyclePlace" class="form-control" />
-                <span asp-validation-for="BicyclePlace" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="back">
+        <a asp-action="Index">Powrót</a>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

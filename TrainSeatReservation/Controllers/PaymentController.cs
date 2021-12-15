@@ -59,13 +59,18 @@ namespace TrainSeatReservation.Controllers
             _ticketChangeFcd = ticketChangeFcd;
             _ticketDiscountFcd = ticketDiscountFcd;
         }
-        public async Task<IActionResult> Index(string paymentId, string token, string PayerId, bool? Cancel)
+        public async Task<IActionResult> Index(string paymentId, string token, string PayerId, string guid, bool? Cancel)
         {
             var parameters = HttpContext.Request.RouteValues;
-            paymentId = parameters["paymentID"] as string;
-            token = parameters["token"] as string;
-            PayerId = parameters["PayerID"] as string;
-            Cancel = parameters["Cancel"] as bool?;
+            //paymentId = parameters["paymentID"] as string;
+            //token = parameters["token"] as string;
+            //PayerId = parameters["PayerID"] as string;
+            //Cancel = parameters["Cancel"] as bool?;
+
+            if(Cancel.HasValue && Cancel.Value == true)
+            {
+                return View("FailureView");
+            }
             var ticketVal = HttpContext.Session.GetString("Ticket");
             var ticketDto = JsonConvert.DeserializeObject<TicketDto>(ticketVal);
             var ticketUpdatedDto = _ticketFcd.GetTicket(ticketDto.Id);
@@ -125,7 +130,7 @@ namespace TrainSeatReservation.Controllers
                     var guid = Convert.ToString((new Random()).Next(100000));
                     //CreatePayment function gives us the payment approval url  
                     //on which payer is redirected for paypal account payment  
-                    var createdPayment = this.CreatePayment(apiContext, baseURI /*+ "guid=" + guid*/);
+                    var createdPayment = this.CreatePayment(apiContext, baseURI + "?guid=" + guid);
                     //get links returned from paypal in response to Create function call  
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectUrl = null;
@@ -185,6 +190,7 @@ namespace TrainSeatReservation.Controllers
             var ticketSummaryView = JsonConvert.DeserializeObject<TicketSummaryView>(ticketSummaryVal);
 
             var price = ticketSummaryView.Price.ToString();
+           
             price  = price.Replace(',', '.');
             //create itemlist and add item objects to it  
             var itemList = new ItemList()

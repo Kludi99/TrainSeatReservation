@@ -22,6 +22,10 @@ namespace TrainSeatReservation.Facades
         {
             return _service.GetTickets();
         }
+        public List<TicketResignedDto> GetResignedTickets()
+        {
+            return _service.GetResignedTickets();
+        }
         public TicketDto GetTicket(int id)
         {
             return _service.GetTicket(id);

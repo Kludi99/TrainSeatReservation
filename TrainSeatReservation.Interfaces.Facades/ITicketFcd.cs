@@ -10,6 +10,7 @@ namespace TrainSeatReservation.Interfaces.Facades
     public interface ITicketFcd
     {
         List<TicketDto> GetTickets();
+        List<TicketResignedDto> GetResignedTickets();
         List<TicketDto> GetTrainTicketsWithDate(DateTime date, int trainId);
         TicketDto GetTicket(int id);
         TicketDto AddTicket(TicketDto ticket);

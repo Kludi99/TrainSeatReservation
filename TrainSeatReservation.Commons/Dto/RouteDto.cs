@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -13,9 +14,11 @@ namespace TrainSeatReservation.Commons.Dto
     public class RouteDto
     {
         public int Id { get; set; }
+        [DisplayName("Trasa")]
         public string Name { get; set; }
-
+        [DisplayName("Pociąg")]
         public TrainDto Train { get; set; }
+        [DisplayName("Pociąg")]
         public int TrainId { get; set; }
         [JsonIgnore]
        

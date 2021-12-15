@@ -22,17 +22,17 @@ namespace TrainSeatReservation.Commons.Dto
         [DisplayName("Data podróży")]
         public DateTime TripDate { get; set; }
         public int ArrivalTrainStationId { get; set; }
-        [DisplayName("Stacja początkowa")]
+        [DisplayName("Stacja końcowa")]
         public TrainStationDto ArrivalTrainStation { get; set; }
         public int DepartureTrainStationId { get; set; }
-        [DisplayName("Stacja końcowa")]
+        [DisplayName("Stacja początkowa")]
         public TrainStationDto DepartureTrainStation { get; set; }
 
         public int ArrivalStationId { get; set; }
-        [DisplayName("Stacja początkowa")]
+        [DisplayName("Stacja końcowa")]
         public StationDto ArrivalStation { get; set; }
         public int DepartureStationId { get; set; }
-        [DisplayName("Stacja końcowa")]
+        [DisplayName("Stacja początkowa")]
         public StationDto DepartureStation { get; set; }
 
         [DisplayName("Cena")]

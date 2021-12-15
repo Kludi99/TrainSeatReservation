@@ -32,6 +32,11 @@ namespace TrainSeatReservation.EntityFramework.Services
             _logger.LogInformation("Executing GetTickets service method");
             return GetTicketsQuery().ToList();
         }
+        public List<TicketResignedDto> GetResignedTickets()
+        {
+            _logger.LogInformation("Executing GetTickets service method");
+            return GetResignedTicketsQuery().ToList();
+        }
         public List<TicketDto> GetTrainTicketsWithDate(DateTime date, int trainId)
         {
             var tickets = _context.Tickets
@@ -148,6 +153,24 @@ namespace TrainSeatReservation.EntityFramework.Services
             catch
             {
                 return Array.Empty<TicketDto>();
+            }
+        }
+        private IEnumerable<TicketResignedDto> GetResignedTicketsQuery()
+        {
+            var tickets = _context.TicketsResigned.Include(x => x.ArrivalTrainStation)
+                .ThenInclude(x => x.TrainTimeTable)
+                .Include(x => x.DepartureTrainStation)
+                .ThenInclude(x => x.TrainTimeTable)
+                .Include(x => x.ArrivalStation)
+                .Include(x => x.DepartureStation)
+                .AsNoTracking();
+            try
+            {
+                return _mapper.Map<TicketResignedDto[]>(tickets);
+            }
+            catch
+            {
+                return Array.Empty<TicketResignedDto>();
             }
         }
         private void CreateResigned(Ticket ticket)

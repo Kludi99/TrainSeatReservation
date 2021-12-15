@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainSeatReservation.Commons.Dto.TrainStationDto>
+﻿@model IEnumerable<TrainSeatReservation.EntityFramework.Models.TrainStation>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,12 +19,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Station)
             </th>
-          @*  <th>
-                @Html.DisplayNameFor(model => model.ArrivalDate)
+            <th>
+                @Html.DisplayNameFor(model => model.Route)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartureDate)
-            </th>*@
+                @Html.DisplayNameFor(model => model.TrainTimeTable)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,12 +37,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Station.Id)
             </td>
-          @*  <td>
-                @Html.DisplayFor(modelItem => item.ArrivalDate)
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartureDate)
-            </td>*@
+                @Html.DisplayFor(modelItem => item.TrainTimeTable.Id)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

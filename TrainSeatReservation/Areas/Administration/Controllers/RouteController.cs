@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TrainSeatReservation.Areas.Administration.Models;
 using TrainSeatReservation.Commons.Dto;
 using TrainSeatReservation.Data;
 using TrainSeatReservation.EntityFramework.Models;
@@ -16,16 +17,27 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
     public class RouteController : Controller
     {
         private readonly IRouteFcd _routeFcd;
+        private readonly ITrainFcd _trainFcd;
 
-        public RouteController(IRouteFcd routeFcd)
+
+        public RouteController(IRouteFcd routeFcd, ITrainFcd trainFcd)
         {
             _routeFcd = routeFcd;
+            _trainFcd = trainFcd;
         }
 
         // GET: Administration/Route
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page =1)
         {
-            return View(_routeFcd.GetRoutes());
+            var routes = _routeFcd.GetRoutes();
+
+            var routesView = new RouteViewModel
+            {
+                RoutesPerPage = 10,
+                Routes = routes.OrderBy(x => x.Name),
+                CurrentPage = page
+            };
+            return View(routesView);
         }
 
         // GET: Administration/Route/Details/5
@@ -36,18 +48,19 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var Route = _routeFcd.GetRoute(id.Value);
-            if (Route == null)
+            var route = _routeFcd.GetRoute(id.Value);
+            if (route == null)
             {
                 return NotFound();
             }
 
-            return View(Route);
+            return View(route);
         }
 
         // GET: Administration/Route/Create
         public IActionResult Create()
         {
+            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Name");
             return View();
         }
 
@@ -56,13 +69,14 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Number,Name,Type")] RouteDto route)
+        public async Task<IActionResult> Create([Bind("Id,Name,TrainId")] RouteDto route)
         {
             if (ModelState.IsValid)
             {
                 _routeFcd.AddRoute(route);
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Name", route.TrainId);
             return View(route);
         }
 
@@ -74,12 +88,13 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var Route = _routeFcd.GetRoute(id.Value);
-            if (Route == null)
+            var route = _routeFcd.GetRoute(id.Value);
+            if (route == null)
             {
                 return NotFound();
             }
-            return View(Route);
+            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Name", route.TrainId);
+            return View(route);
         }
 
         // POST: Administration/Route/Edit/5
@@ -87,7 +102,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Name,Type")] RouteDto route)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TrainId")] RouteDto route)
         {
             if (id != route.Id)
             {
@@ -113,6 +128,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TrainId"] = new SelectList(_trainFcd.GetTrains(), "Id", "Name", route.TrainId);
             return View(route);
         }
 
@@ -138,7 +154,7 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var Route = _RouteFcd.GetRoute(id);
+            var route = _routeFcd.GetRoute(id);
             _routeFcd.DeleteRoute(id);
             return RedirectToAction(nameof(Index));
         }

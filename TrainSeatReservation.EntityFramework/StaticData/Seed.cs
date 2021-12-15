@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrainSeatReservation.Commons;
 using TrainSeatReservation.EntityFramework.Models;
 
 namespace TrainSeatReservation.Data
@@ -32,11 +33,38 @@ namespace TrainSeatReservation.Data
             Stations();
             Routes();
             RouteStations();
+            Admin();
+        }
+        private void Admin()
+        {
+           
+            var user = new User()
+            {
+                Id = "1111111-1111-1111-1111-11111111",
+                NormalizedEmail = "TRAIN.RESERVATION.MVC@GMAIL.COM",
+                Email = "train.reservation.mvc@gmail.com",
+                UserName = "train.reservation.mvc@gmail.com",
+                NormalizedUserName = "TRAIN.RESERVATION.MVC@GMAIL.COM",
+                Name = "Admin",
+                Surname = "Admin",
+                EmailConfirmed = true
+            };
+            var password = new PasswordHasher<User>();
+            var hashed = password.HashPassword(user, "password");
+            user.PasswordHash = hashed;
+            modelBuilder.Entity<User>().HasData(user);
+
+            var userRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole() { RoleId = "16cff0e8-a7c6-4a7f-ae34-5e18425508ee", UserId = "1111111-1111-1111-1111-11111111" };
+          
+            //modelBuilder.Entity<IdentityUserRole<string>().HasKey(x => new{ x.RoleId, x.UserId});
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRole);
+
         }
         private void Roles()
         {
             var adminRole = new IdentityRole("Admin");
             adminRole.NormalizedName = adminRole.Name.ToUpper();
+            adminRole.Id = "16cff0e8-a7c6-4a7f-ae34-5e18425508ee";
             var clientRole = new IdentityRole("Client");
             clientRole.NormalizedName = clientRole.Name.ToUpper();
 
