@@ -50,27 +50,27 @@ namespace TrainSeatReservation.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required (ErrorMessage ="Imię jest obowiązkowe")]
             [Display(Name = "Imię")]
             public string Name { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Nazwisko jest obowiązkowe")]
             [Display(Name = "Nazwisko")]
             public string Surname { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Email jest obowiązkowy")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Hasło jest obowiązkowe")]
+            [StringLength(100, ErrorMessage = "{0} musi mieć od {2} do {1} znaków długości.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Potwierdzenie hasła")]
+            [Compare("Password", ErrorMessage = "Hasło oraz potwierdzenie hasła nie są takie same.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -102,7 +102,7 @@ namespace TrainSeatReservation.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     var subject = "Potwierdzenie stworzenia konta";
-                    var content = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
+                    var content = $"Proszę potwierdzić swoje konto <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>tutaj</a>.";
                     _emailService.SendVerificationEmail(user.Name, user.Surname, user.Email, subject, content);
                     /// await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

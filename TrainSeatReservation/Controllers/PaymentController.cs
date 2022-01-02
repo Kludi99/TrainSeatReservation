@@ -202,7 +202,7 @@ namespace TrainSeatReservation.Controllers
             {
                 name = "Bilety",
                 currency = "PLN",
-                price = price,//ticketSummaryView.Price.ToString(),
+                price = price,
                 quantity = "1",
                 sku = "sku"
             });
@@ -277,8 +277,7 @@ namespace TrainSeatReservation.Controllers
             string page = null;
             try
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Views", "Payment", "PDF.cshtml");//Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"Views/Home/Index.cshtml");
-
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Views", "Payment", "PDF.cshtml");
                 page = await engine.CompileRenderAsync(path, model);
             }
             catch (Exception e)
@@ -294,7 +293,6 @@ namespace TrainSeatReservation.Controllers
                     PaperSize = PaperKind.A4,
 
                 },
-
                 Objects = {
                     new ObjectSettings() {
                         PagesCount = true,
@@ -312,13 +310,11 @@ namespace TrainSeatReservation.Controllers
             try
             {
                 pdf = _converter.Convert(doc);
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-
             return pdf;
         }
 

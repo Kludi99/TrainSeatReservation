@@ -63,7 +63,7 @@ namespace TrainSeatReservation.Controllers
             }
         }
 
-        public IActionResult Privacy()
+        public IActionResult Info()
         {
             return View();
         }
