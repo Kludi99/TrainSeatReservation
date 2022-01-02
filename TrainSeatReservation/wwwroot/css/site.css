@@ -95,7 +95,7 @@ body {
     z-index: 100;
 }
 
-.train-searching-form, .train-result, .optional-items, .personal-data, .left-nav, .summary, .success, .error-view, .account, .resignation, .user-login,.contact-form {
+.train-searching-form, .train-result, .optional-items, .personal-data, .left-nav, .summary, .success, .error-view, .account, .resignation, .user-login,.contact-form, .information, .register {
     display: block;
     width: 100%;
     height: 100%;
@@ -931,4 +931,10 @@ input:checked + .slider {
 }
 .contact-form .form-control{
     width: 80%
+}
+footer p{
+    float:right;
+}
+.information,.register{
+    text-align:center;
 }

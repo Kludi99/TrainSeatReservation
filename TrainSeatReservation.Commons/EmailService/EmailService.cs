@@ -91,43 +91,30 @@ namespace TrainSeatReservation.Commons.EmailService
             var message = new MimeMessage();
 
             message.From.Add(new MailboxAddress(_emailConfiguration.SmtpName, _emailConfiguration.SmtpUserName));
-
             message.To.Add(new MailboxAddress($"{ticket.Name} {ticket.Surname}", ticket.Email));
 
-           
-
             var builder = new BodyBuilder();
-           
-
             var footer = string.Format(this.templateManager.EmailFooter, _emailConfiguration.SmtpName, "", _emailConfiguration.SmtpUserName);
 
             message.Subject = subject;
             var body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
                 Text = content + footer,
-
-
             };
             builder.HtmlBody = content + footer;
-            //builder.TextBody = body.Content.ToString();
 
             builder.Attachments.Add("bilet.pdf", attachment, new ContentType("application", "pdf"));
-            // var file = System.IO.File.WriteAllBytes("hello.pdf", fileContent);//new File(attachment, "application/pdf");
             var attachments = new List<MimeEntity>
-{
-
-    MimeEntity.Load(new ContentType("application", "pdf"), new MemoryStream(attachment))
-};
+            {
+                MimeEntity.Load(new ContentType("application", "pdf"), new MemoryStream(attachment))
+            };
             var multipart = new Multipart("mixed");
             multipart.Add(body);
             foreach (var item in attachments)
             {
-
                 multipart.Add(item);
             }
 
-            // now set the multipart/mixed as the message body
-            // message.Body = multipart;
             message.Body = builder.ToMessageBody();
             using (var client = new SmtpClient())
             {
@@ -140,7 +127,6 @@ namespace TrainSeatReservation.Commons.EmailService
                 client.Disconnect(true);
             }
         }
-
         public void SendVerificationEmail(string name, string surname, string email, string subject, string content)
         {
             var message = new MimeMessage();
@@ -156,10 +142,7 @@ namespace TrainSeatReservation.Commons.EmailService
             message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
                 Text = content + footer,
-
-
             };
-
 
             using (var client = new SmtpClient())
             {

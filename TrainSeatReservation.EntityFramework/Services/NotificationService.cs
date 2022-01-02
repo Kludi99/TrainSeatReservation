@@ -25,7 +25,8 @@ namespace TrainSeatReservation.EntityFramework.Services
         {
             var tickets = GetTicketsWithCarriage(carriageId);
             var date = DateTime.Now;
-            var filteredTickets = tickets.Where(x => x.SendInformation == true && x.TripDate.Date > date.Date && x.PhoneNumber != null).GroupBy(x => x.PhoneNumber).ToList();
+            var filteredTickets = tickets.Where(x => x.SendInformation == true && x.TripDate.Date > date.Date && x.PhoneNumber != null)
+                .GroupBy(x => x.PhoneNumber).ToList();
             foreach (var item in filteredTickets)
             {
                 VonageConfig.Send(content, item.Key);

@@ -88,7 +88,6 @@ namespace TrainSeatReservation.Facades
                 if (first.Id == current.Station.Id)
                     currentStationRoutes = currentStationRoutes.Where(x => x.StartTrainTimeTable.DepartureTime >= time);
 
-                //zapisywać gdzieś id route z którego przyszło się do noda
                 foreach (var item in currentStationRoutes)
                 {
                     if (visited[current.charge, item.EndStationId - 1] == false)
@@ -103,7 +102,6 @@ namespace TrainSeatReservation.Facades
                                 var currentOrder = item.Route.RouteStations.Where(x => x.StartStationId == current.Station.Id).Select(x => x.Order).FirstOrDefault();
                                 var lastOrder = item.Route.RouteStations.Where(x => x.EndStationId == lastStationId).Select(x => x.Order).FirstOrDefault();
                                 var stationsDjikstra = GetRouteStations(d, previousStations, charges, V, firstStationId, current.Station.Id);
-                                //stationsString += "RouteId " + item.RouteId;
                                 var last = stationsDjikstra.Where(x => x.Order == -1).SingleOrDefault();
                                 last.RouteId = item.RouteId;
                                 var stationsList = item.Route.RouteStations.Where(x => x.Order >= currentOrder && x.Order <= lastOrder);
@@ -117,12 +115,9 @@ namespace TrainSeatReservation.Facades
                                     });
                                 }
                                 return GetTrainInfo(stationsDjikstra, date);
-                                //break;
                             }
                             else
                             {
-
-
                                 if ((previousRouteId != 0 && previousRouteId != item.RouteId) && previous != null/* warunek jeśli route się zmienia*/ && current.charge != charges) // zmienia się trasa i może być przesiadka
                                 {
                                     current.TrainTimeTable = item.StartTrainTimeTable;
