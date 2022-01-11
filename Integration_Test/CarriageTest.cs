@@ -25,6 +25,7 @@ namespace Integration_Test
             Assert.That(carriageDB.Number, Is.EqualTo(carriage.Number));
             Assert.That(carriageDB.TypeId, Is.EqualTo(carriage.TypeId));
         }
+
         [Test, Isolated]
         public void DeleteCarriageFromDB()
         {

@@ -23,6 +23,7 @@ namespace TrainSeatReservation.Commons.Configuration
             VonageClient = new VonageClient(credentials);
             return VonageClient;
         }
+
         public static void Send(string content, string phone)
         {
             Config();
