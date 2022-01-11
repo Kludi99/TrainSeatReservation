@@ -1,394 +1,394 @@
 ﻿@model List<TrainSeatReservation.Commons.Dto.TrainDto>
-
-@{
-    ViewData["Title"] = "Reserve Seats";
-    Layout = "/Views/Shared/_Layout.cshtml";
-}
-
-<div class="container">
+    <!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
     @{
-       int i = 0;
+        ViewData["Title"] = "Reserve Seats";
+        Layout = "/Views/Shared/_Layout.cshtml";
     }
-    @using (Html.BeginForm("PersonalData", "SearchingList", FormMethod.Post))
-    {
-        <div class="optional-items">
-            <div class="row">
-                @if (ViewBag.Transits == 0)
-                {
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal_0">Wybierz</button>
-                    </div>
 
-                    <div class="col-6">
-                        <p>Wybierz miejsce ze schematu</p>
-                    </div>
-                    <div id="seatsDiv_0" style="display:none" class="col-12">
+    <div class="container">
+        @{
+            int i = 0;
+        }
+        @using (Html.BeginForm("PersonalData", "SearchingList", FormMethod.Post))
+        {
+            <div class="optional-items">
+                <div class="row">
+                    @if (ViewBag.Transits == 0)
+                    {
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal_0">Wybierz</button>
+                        </div>
 
-                    </div>
-                }
-                else
-                {
-                @for (i = 0; i <= ViewBag.Transits; i++)
-                {
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal_@i">Wybierz</button>
-                    </div>
-                    <div class="col-6">
-                        <p>Wybierz miejsce ze schematu dla @(i + 1). trasy </p>
-                    </div>
-                    <div id="seatsDiv_@i" style="display:none" class="col-12">
-
-                    </div>
-                }
-                }
-
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="toggle-container">
-                        <input type="checkbox" id="allowInformation" name="allowInformation" />
-
-                        <div class="slider round"></div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <p>Zezwól na informacje SMS</p>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="next-button">
-                        @Html.Hidden("carriageId")
-                        @Html.Hidden("seats")
-                        @Html.Hidden("allow")
-                        @Html.Hidden("carriagesWithSeats")
-                        <button type="submit" id="submitButton">Przejdź dalej</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-@for (i = 0; i < Model.Count; i++)
-{
-    <div class="modal fade" id="chooseSeatsModal_@i" tabindex="-1" role="dialog" aria-labelledby="chooseSeatsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content modal-seats">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="chooseSeatsModalLabel">Wybierz miejsce</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                </div>
-                <div class="modal-body" style="min-height: 600px">
-                    <div class="direction-info"><p><span>Kierunek podróży</span>  </p><p><i class="fas fa-long-arrow-alt-left"></i></p></div>
-                    <div class="window-icon"><i class="far fa-window-maximize"></i></div>
-                    <div id="carouselExampleControls_@i" class="carousel slide" data-ride="carousel" data-interval="false">
-                        <div class="carousel-inner">
-                            @{
-                                var first = true;
-                            }
-                            @foreach (var item in Model[i].TrainCarriages)
-                            {
-                                <div class="carousel-item @(first ? Html.Raw("active") : Html.Raw(""))">
-                                    <div class="row row_@i">
-                                        <span hidden>@item.Carriage.Id</span>
-                                        <div class="col-sm-12"><p>Wagon: @item.Carriage.Number </p></div>
-                                        <div class="col-sm-12 overflow-hidden hide">Wybrane miejsca:  <input id="seats_@i" hidden value=""></div>
-                                        <div class="col-sm-12">
-
-                                            @if (item.Carriage.TypeId == 6) //bezprzedziałowy
-                                            {
-                                            <div class="noCompartment window direction col-12">
-                                                @foreach (var seat in item.Carriage.Seats)
-                                                {
-                                                    @if (seat.SeatTypeId == 9 && seat.IsTravelDirection)
-                                                    {
-                                                       
-                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") direction window' value="@seat.Number">
-
-                                                            <span>@seat.Number</span>
-                                                        </button>
-                                                    }
-
-                                                }
-                                            </div>
-                                                <div class="noCompartment corridor direction col-12">
-                                                    @foreach (var seat in item.Carriage.Seats)
-                                                    {
-                                                        @if (seat.SeatTypeId == 10 && seat.IsTravelDirection)
-                                                        {
-                                                            <button class='seat @(seat.IsFree ? "available" : "reserved disabled") direction corridor' value="@seat.Number">
-                                                                <span>@seat.Number</span>
-                                                            </button>
-                                                        }
-                                                    }
-                                                </div>
-                                                <div class="noCompartment corridor nonDirection col-12">
-                                                    @foreach (var seat in item.Carriage.Seats)
-                                                    {
-                                                        @if (seat.SeatTypeId == 10 && !(seat.IsTravelDirection))
-                                                        {
-                                                            <button class='seat @(seat.IsFree ? "available" : "reserved disabled") nonDirection corridor' value="@seat.Number">
-                                                                <span>@seat.Number</span>
-                                                            </button>
-                                                        }
-                                                    }
-                                                </div>
-
-
-                                                <div class="noCompartment window nonDirection col-12">
-                                                    @foreach (var seat in item.Carriage.Seats)
-                                                    {
-                                                        @if (seat.SeatTypeId == 9 && !(seat.IsTravelDirection))
-                                                        {
-                                                            <button class='seat @(seat.IsFree ? "available" : "reserved disabled") nonDirection window' value="@seat.Number">
-                                                                <span>@seat.Number</span>
-                                                            </button>
-                                                        }
-                                                    }
-                                                </div>
-
-
-                                            }
-                                            else //przedziałowy
-                                            {
-                                                var counter = 0;
-                                                var windowDirection = false;
-                                                var middleDirection = false;
-                                                var corridorDirection = false;
-                                                var direction = false;
-                                                <div class="compartment">
-                                                    <div class="compartment-inside">
-                                                        @foreach (var seat in item.Carriage.Seats)
-                                                        {
-                                                            if (seat.Number < 20)
-                                                            {
-                                                                if (counter % 3 == 0)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                   
-                                                                }
-                                                                else if (counter % 3 == 2)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled")  @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                    
-                                                                }
-                                                                else
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                    //corridorDirection = !corridorDirection;
-                                                                }
-                                                                direction = !direction;
-                                                                counter++;
-                                                            }
-                                                            else continue;
-                                                        }
-                                                    </div>
-                                                </div>
-
-                                                <div class="compartment">
-                                                    <div class="compartment-inside">
-                                                        @foreach (var seat in item.Carriage.Seats)
-                                                        {
-                                                            if (seat.Number < 30 && seat.Number >= 20)
-                                                            {
-                                                                if (counter % 3 == 0)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
-                                                                        @seat.Number
-                                                                    </button>
-                                                                    //windowDirection = !windowDirection;
-                                                                }
-                                                                else if (counter % 3 == 2)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
-                                                                        @seat.Number
-                                                                    </button>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
-                                                                        @seat.Number
-                                                                    </button>
-                                                                }
-                                                                direction = !direction;
-                                                                counter++;
-                                                            }
-                                                            else continue;
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div class="compartment">
-                                                    <div class="compartment-inside">
-                                                        @foreach (var seat in item.Carriage.Seats)
-                                                        {
-                                                            if (seat.Number < 40 && seat.Number >= 30)
-                                                            {
-                                                                if (counter % 3 == 0)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                else if (counter % 3 == 2)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-
-                                                                counter++;
-                                                                direction = !direction;
-                                                            }
-                                                            else continue;
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div class="compartment">
-                                                    <div class="compartment-inside">
-                                                        @foreach (var seat in item.Carriage.Seats)
-                                                        {
-                                                            if (seat.Number < 50 && seat.Number >= 40)
-                                                            {
-                                                                if (counter % 3 == 0)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-window' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                    //windowDirection = !windowDirection;
-                                                                }
-                                                                else if (counter % 3 == 2)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-corridor' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-middle' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                direction = !direction;
-                                                                counter++;
-                                                            }
-                                                            else continue;
-                                                        }
-                                                    </div>
-                                                </div>
-
-                                                <div class="compartment">
-                                                    <div class="compartment-inside">
-                                                        @foreach (var seat in item.Carriage.Seats)
-                                                        {
-                                                            if (seat.Number < 60 && seat.Number >= 50)
-                                                            {
-                                                                if (counter % 3 == 0)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                else if (counter % 3 == 2)
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
-                                                                        <span>@seat.Number</span>
-                                                                    </button>
-                                                                }
-
-                                                                counter++;
-                                                                direction = !direction;
-                                                            }
-                                                            else continue;
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
-                                        <div class="extras">
-                                            @if (item.Carriage.EletricalOutlet == true || item.Carriage.BicyclePlace == true)
-                                            {
-                                                <h5>W wagonie znajdują się</h5>
-                                                @if (item.Carriage.EletricalOutlet == true)
-                                                {
-                                                    <div class="extra">
-                                                        <p> <i class="fas fa-plug"></i> - gniazdka</p>
-                                                    </div>
-
-                                                }
-                                                @if (item.Carriage.BicyclePlace == true)
-                                                {
-                                                    <div class="extra">
-                                                         <p><i class="fas fa-bicycle"></i> - miejsce na rowery</p>
-                                                    </div>
-                                                }
-
-                                            }
-                                            @if (item.Carriage.CateringCar == true)
-                                            {
-                                                <div class="extra">
-                                                    <p> <i class="fas fa-utensils"></i>- wagon retauracyjny</p>
-                                                </div>
-                                            }
-                                        </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                first = false;
-
-                            }
+                        <div class="col-6">
+                            <p>Wybierz miejsce ze schematu</p>
+                        </div>
+                        <div id="seatsDiv_0" style="display:none" class="col-12">
 
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls_@i" role="button"
-                           data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls_@i" role="button"
-                           data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                    }
+                    else
+                    {
+                        @for (i = 0; i <= ViewBag.Transits; i++)
+                        {
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseSeatsModal_@i">Wybierz</button>
+                            </div>
+                            <div class="col-6">
+                                <p>Wybierz miejsce ze schematu dla @(i + 1). trasy </p>
+                            </div>
+                            <div id="seatsDiv_@i" style="display:none" class="col-12">
+
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="toggle-container">
+                            <input type="checkbox" id="allowInformation" name="allowInformation" />
+
+                            <div class="slider round"></div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-4 info">
-                            <div class="square free"></div><p>wolne miejsca</p>
-                        </div>
-                        <div class="col-4 info">
-                            <div class="square disabled"></div><p>zajęte miejsca</p>
-                        </div>
-                        <div class="col-4 info">
-                            <div class="square choose"></div><p>wybrane miejsca</p>
-                        </div>
+                    <div class="col-6">
+                        <p>Zezwól na informacje SMS</p>
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="modal-button" id="submitModalButton_@i">Zatwierdź</button>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="next-button">
+                            @Html.Hidden("carriageId")
+                            @Html.Hidden("seats")
+                            @Html.Hidden("allow")
+                            @Html.Hidden("carriagesWithSeats")
+                            <button type="submit" id="submitButton">Przejdź dalej</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
-}
+    @for (i = 0; i < Model.Count; i++)
+    {
+        <div class="modal fade" id="chooseSeatsModal_@i" tabindex="-1" role="dialog" aria-labelledby="chooseSeatsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content modal-seats">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="chooseSeatsModalLabel">Wybierz miejsce</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body" style="min-height: 600px">
+                        <div class="direction-info"><p><span>Kierunek podróży</span>  </p><p><i class="fas fa-long-arrow-alt-left"></i></p></div>
+                        <div class="window-icon"><i class="far fa-window-maximize"></i></div>
+                        <div id="carouselExampleControls_@i" class="carousel slide" data-ride="carousel" data-interval="false">
+                            <div class="carousel-inner">
+                                @{
+                                    var first = true;
+                                }
+                                @foreach (var item in Model[i].TrainCarriages)
+                                {
+                                    <div class="carousel-item @(first ? Html.Raw("active") : Html.Raw(""))">
+                                        <div class="row row_@i">
+                                            <span hidden>@item.Carriage.Id</span>
+                                            <div class="col-sm-12"><p>Wagon: @item.Carriage.Number </p></div>
+                                            <div class="col-sm-12 overflow-hidden hide">Wybrane miejsca:  <input id="seats_@i" hidden value=""></div>
+                                            <div class="col-sm-12">
 
-<script>
+                                                @if (item.Carriage.TypeId == 6) //bezprzedziałowy
+                                                {
+                                                    <div class="noCompartment window direction col-12">
+                                                        @foreach (var seat in item.Carriage.Seats)
+                                                        {
+                                                            @if (seat.SeatTypeId == 9 && seat.IsTravelDirection)
+                                                            {
+
+                                                                <button class='seat @(seat.IsFree ? "available" : "reserved disabled") direction window' value="@seat.Number">
+
+                                                                    <span>@seat.Number</span>
+                                                                </button>
+                                                            }
+
+                                                        }
+                                                    </div>
+                                                    <div class="noCompartment corridor direction col-12">
+                                                        @foreach (var seat in item.Carriage.Seats)
+                                                        {
+                                                            @if (seat.SeatTypeId == 10 && seat.IsTravelDirection)
+                                                            {
+                                                                <button class='seat @(seat.IsFree ? "available" : "reserved disabled") direction corridor' value="@seat.Number">
+                                                                    <span>@seat.Number</span>
+                                                                </button>
+                                                            }
+                                                        }
+                                                    </div>
+                                                    <div class="noCompartment corridor nonDirection col-12">
+                                                        @foreach (var seat in item.Carriage.Seats)
+                                                        {
+                                                            @if (seat.SeatTypeId == 10 && !(seat.IsTravelDirection))
+                                                            {
+                                                                <button class='seat @(seat.IsFree ? "available" : "reserved disabled") nonDirection corridor' value="@seat.Number">
+                                                                    <span>@seat.Number</span>
+                                                                </button>
+                                                            }
+                                                        }
+                                                    </div>
+
+
+                                                    <div class="noCompartment window nonDirection col-12">
+                                                        @foreach (var seat in item.Carriage.Seats)
+                                                        {
+                                                            @if (seat.SeatTypeId == 9 && !(seat.IsTravelDirection))
+                                                            {
+                                                                <button class='seat @(seat.IsFree ? "available" : "reserved disabled") nonDirection window' value="@seat.Number">
+                                                                    <span>@seat.Number</span>
+                                                                </button>
+                                                            }
+                                                        }
+                                                    </div>
+
+
+                                                }
+                                                else //przedziałowy
+                                                {
+                                                    var counter = 0;
+                                                    var windowDirection = false;
+                                                    var middleDirection = false;
+                                                    var corridorDirection = false;
+                                                    var direction = false;
+                                                    <div class="compartment">
+                                                        <div class="compartment-inside">
+                                                            @foreach (var seat in item.Carriage.Seats)
+                                                            {
+                                                                if (seat.Number < 20)
+                                                                {
+                                                                    if (counter % 3 == 0)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+
+                                                                    }
+                                                                    else if (counter % 3 == 2)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled")  @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                        //corridorDirection = !corridorDirection;
+                                                                    }
+                                                                    direction = !direction;
+                                                                    counter++;
+                                                                }
+                                                                else continue;
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="compartment">
+                                                        <div class="compartment-inside">
+                                                            @foreach (var seat in item.Carriage.Seats)
+                                                            {
+                                                                if (seat.Number < 30 && seat.Number >= 20)
+                                                                {
+                                                                    if (counter % 3 == 0)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
+                                                                            @seat.Number
+                                                                        </button>
+                                                                        //windowDirection = !windowDirection;
+                                                                    }
+                                                                    else if (counter % 3 == 2)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
+                                                                            @seat.Number
+                                                                        </button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
+                                                                            @seat.Number
+                                                                        </button>
+                                                                    }
+                                                                    direction = !direction;
+                                                                    counter++;
+                                                                }
+                                                                else continue;
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="compartment">
+                                                        <div class="compartment-inside">
+                                                            @foreach (var seat in item.Carriage.Seats)
+                                                            {
+                                                                if (seat.Number < 40 && seat.Number >= 30)
+                                                                {
+                                                                    if (counter % 3 == 0)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    else if (counter % 3 == 2)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+
+                                                                    counter++;
+                                                                    direction = !direction;
+                                                                }
+                                                                else continue;
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="compartment">
+                                                        <div class="compartment-inside">
+                                                            @foreach (var seat in item.Carriage.Seats)
+                                                            {
+                                                                if (seat.Number < 50 && seat.Number >= 40)
+                                                                {
+                                                                    if (counter % 3 == 0)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-window' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                        //windowDirection = !windowDirection;
+                                                                    }
+                                                                    else if (counter % 3 == 2)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-corridor' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection" ) compartment-middle' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    direction = !direction;
+                                                                    counter++;
+                                                                }
+                                                                else continue;
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="compartment">
+                                                        <div class="compartment-inside">
+                                                            @foreach (var seat in item.Carriage.Seats)
+                                                            {
+                                                                if (seat.Number < 60 && seat.Number >= 50)
+                                                                {
+                                                                    if (counter % 3 == 0)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-window' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    else if (counter % 3 == 2)
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-corridor' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class='seat @(seat.IsFree ? "available" : "reserved disabled") @(direction ? "direction" : "nonDirection") compartment-middle' value="@seat.Number">
+                                                                            <span>@seat.Number</span>
+                                                                        </button>
+                                                                    }
+
+                                                                    counter++;
+                                                                    direction = !direction;
+                                                                }
+                                                                else continue;
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="extras">
+                                                    @if (item.Carriage.EletricalOutlet == true || item.Carriage.BicyclePlace == true)
+                                                    {
+                                                        <h5>W wagonie znajdują się</h5>
+                                                        @if (item.Carriage.EletricalOutlet == true)
+                                                        {
+                                                            <div class="extra">
+                                                                <p> <i class="fas fa-plug"></i> - gniazdka</p>
+                                                            </div>
+
+                                                        }
+                                                        @if (item.Carriage.BicyclePlace == true)
+                                                        {
+                                                            <div class="extra">
+                                                                <p><i class="fas fa-bicycle"></i> - miejsce na rowery</p>
+                                                            </div>
+                                                        }
+
+                                                    }
+                                                    @if (item.Carriage.CateringCar == true)
+                                                    {
+                                                        <div class="extra">
+                                                            <p> <i class="fas fa-utensils"></i>- wagon retauracyjny</p>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    first = false;
+
+                                }
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls_@i" role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls_@i" role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 info">
+                                <div class="square free"></div><p>wolne miejsca</p>
+                            </div>
+                            <div class="col-4 info">
+                                <div class="square disabled"></div><p>zajęte miejsca</p>
+                            </div>
+                            <div class="col-4 info">
+                                <div class="square choose"></div><p>wybrane miejsca</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="modal-button" id="submitModalButton_@i">Zatwierdź</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
     $(document).ready(function () {
         $('.carousel').carousel({
             wrap: false
@@ -551,7 +551,7 @@
                     swal("Uwaga!", "Należy wybrać ilość siedzeń:  " + c , "error");
                     return;
                 }
-                    
+
                 // $("#disountsDiv span").append(discountType1);
                 //  $("#disountsDiv span").append(discountCount1);
 
@@ -623,7 +623,7 @@
                         swal("Nie wybrano siedzeń!", " Wybierz spośród dostępnych siedzeń i spróbuj ponownie  ", "error");
                         return false;
                     }
-                  
+
                 }
                 var allow = $("#allowInformation").prop("checked");
                // alert(allow);
@@ -632,7 +632,7 @@
             //alert(JSON.stringify(dictionary));
             $('#carriagesWithSeats').val(carriageWithSeats);
             });
-    
+
 
     });
-</script>
+    </script>

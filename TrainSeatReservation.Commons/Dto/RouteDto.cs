@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

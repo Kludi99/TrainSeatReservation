@@ -1,4 +1,5 @@
-﻿using DinkToPdf;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

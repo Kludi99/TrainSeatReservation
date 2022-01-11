@@ -1,4 +1,5 @@
-﻿@model TrainSeatReservation.Commons.Dto.StationDto
+﻿<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
+@model TrainSeatReservation.Commons.Dto.StationDto
 
 @{
     ViewData["Title"] = "Details";
@@ -8,28 +9,28 @@
 <h1>Szczegóły</h1>
 <div class="admin-table">
     <div>
-    <h4>Stacja</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> 
-</div>
-<div class="back">
-    <a asp-action="Index">Powrót</a>
-</div>
+        <h4>Stacja</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.City)
+            </dd>
+        </dl>
     </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+    </div>
+    <div class="back">
+        <a asp-action="Index">Powrót</a>
+    </div>
+</div>
 

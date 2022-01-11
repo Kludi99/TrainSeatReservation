@@ -1,5 +1,5 @@
 ﻿@model TrainSeatReservation.Commons.Dto.TicketDto
-
+<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
 @{
     ViewData["Title"] = "Reserve Seats";
     Layout = "/Views/Shared/_Layout.cshtml";
@@ -11,8 +11,6 @@
         @Html.DropDownList("CarriageClass", (List<SelectListItem>)ViewBag.CariageClass,
        "Klasa wagonu", new { @class = "form-control" })
 
-        @*  @Html.ValidationMessage("carriageClassId", new { @class = "text-danger" })*@
-
     </div>
     <div class="choose-seat">
         <label class="control-label">Wybór typu wagonu</label>
@@ -20,7 +18,6 @@
         @Html.DropDownList("CarriageType", (List<SelectListItem>)ViewBag.CariageType,
        "Typ wagonu", new { @class = "form-control" })
 
-        @* @Html.ValidationMessage("carriageTypeId", new { @class = "text-danger" })*@
 
     </div>
     @for (int i = 0; i < ViewBag.SeatsCount; i++)
@@ -31,9 +28,8 @@
             @Html.DropDownList("SeatType", (List<SelectListItem>)ViewBag.SeatType,
            "Rodzaj siedzenia", new { @class = "form-control" })
 
-            @* @Html.ValidationMessage("seatTypeId", new { @class = "text-danger" })*@
 
         </div>
     }
-  
+
 </div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace TrainSeatReservation.Areas.Administration.Controllers
     [Area("Administration")]
     public class CarriageController : Controller
     {
-        //private readonly ApplicationDbContext _context;
         private readonly ICarriageFcd _carriageFcd;
         private readonly IDictionaryFcd _dictionaryFcd;
         private readonly INotificationFcd _notificationFcd;

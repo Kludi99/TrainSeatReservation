@@ -1,4 +1,5 @@
-﻿using PayPal.Api;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using PayPal.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;

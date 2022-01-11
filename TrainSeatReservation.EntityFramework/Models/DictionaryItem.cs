@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,5 @@ namespace TrainSeatReservation.EntityFramework.Models
         public int DictionaryId { get; set; }
 
         public ICollection<Train> Trains { get; set; }
-       // public ICollection<Carriage> Carriages { get; set; }
     }
 }

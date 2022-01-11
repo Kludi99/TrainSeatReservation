@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrainSeatReservation.Data.Migrations
 {

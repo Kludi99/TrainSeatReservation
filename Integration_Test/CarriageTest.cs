@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using NUnit.Framework;
 using System.Linq;
 using TrainSeatReservation.EntityFramework.Models;
 

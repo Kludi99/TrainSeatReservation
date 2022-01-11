@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
 using System.Transactions;

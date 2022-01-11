@@ -1,4 +1,5 @@
-﻿@model TrainSeatReservation.EntityFramework.Models.TrainStation
+﻿<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
+@model TrainSeatReservation.EntityFramework.Models.TrainStation
 
 @{
     ViewData["Title"] = "Create";
@@ -15,19 +16,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TrainId" class="control-label"></label>
-                <select asp-for="TrainId" class ="form-control" asp-items="ViewBag.TrainId"></select>
+                <select asp-for="TrainId" class="form-control" asp-items="ViewBag.TrainId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="StationId" class="control-label"></label>
-                <select asp-for="StationId" class ="form-control" asp-items="ViewBag.StationId"></select>
+                <select asp-for="StationId" class="form-control" asp-items="ViewBag.StationId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="RouteId" class="control-label"></label>
-                <select asp-for="RouteId" class ="form-control" asp-items="ViewBag.RouteId"></select>
+                <select asp-for="RouteId" class="form-control" asp-items="ViewBag.RouteId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="TrainTimeTableId" class="control-label"></label>
-                <select asp-for="TrainTimeTableId" class ="form-control" asp-items="ViewBag.TrainTimeTableId"></select>
+                <select asp-for="TrainTimeTableId" class="form-control" asp-items="ViewBag.TrainTimeTableId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

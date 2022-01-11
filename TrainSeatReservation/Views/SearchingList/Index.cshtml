@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Searching Result";
 }
-
+<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
 <div class="row seatsInformation">
     <div class="col-4">
         <p class="freeSeats"><i class="fas fa-users"></i></p>
@@ -44,6 +44,8 @@
                 @if (item.Transits == 0)
                 {
                     @item.Train.Name @:&nbsp; @item.Train.Number
+
+
 
 
                     <div>
@@ -96,16 +98,16 @@
         </div>
     }
 </div>
-            @if (Model.Trains.Count() == 0)
-            {
-                <div class="row no-connect">
-                    <h2>Niestety nie znaleziono żadnego połączenia</h2>
-                    <div class="previous-button">
-                        <a asp-action="Index" asp-controller="Home">Wyszukiwarka </a>
-                    </div>
-                </div>
-            }
-      
+@if (Model.Trains.Count() == 0)
+{
+    <div class="row no-connect">
+        <h2>Niestety nie znaleziono żadnego połączenia</h2>
+        <div class="previous-button">
+            <a asp-action="Index" asp-controller="Home">Wyszukiwarka </a>
+        </div>
+    </div>
+}
 
 
-    
+
+

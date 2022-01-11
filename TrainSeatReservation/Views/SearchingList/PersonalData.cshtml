@@ -1,125 +1,125 @@
 ﻿@model TrainSeatReservation.Commons.User;
-
-@using Microsoft.AspNetCore.Identity
-@using TrainSeatReservation.Commons
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
-<div class="personal-data">
-    <div class="row">
-        <div class="col-6">
-            <form asp-action="Summary" id="personal-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    var user = await UserManager.GetUserAsync(User);
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="@user.Name" class="form-control" required/>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="@user.Surname" class="form-control" required/>
-                        <span asp-validation-for="Surname" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="@user.Email" class="form-control" required/>
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    @if (ViewBag.PhoneAllow)
+    <!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
+    @using Microsoft.AspNetCore.Identity
+    @using TrainSeatReservation.Commons
+    @inject SignInManager<User> SignInManager
+    @inject UserManager<User> UserManager
+    <div class="personal-data">
+        <div class="row">
+            <div class="col-6">
+                <form asp-action="Summary" id="personal-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        var user = await UserManager.GetUserAsync(User);
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="@user.Name" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Surname" class="control-label"></label>
+                            <input asp-for="@user.Surname" class="form-control" required />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="@user.Email" class="form-control" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        @if (ViewBag.PhoneAllow)
+                        {
+                            <div class="form-group">
+                                <label class="control-label"> Numer telefonu</label>
+                                <input asp-for="@user.PhoneNumber" class="form-control" required />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        }
+                    }
+                    else
                     {
                         <div class="form-group">
-                            <label class="control-label"> Numer telefonu</label>
-                            <input asp-for="@user.PhoneNumber" class="form-control" required />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                    }
-                }
-                else
-                {
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" required/>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="Surname" class="form-control" required />
-                        <span asp-validation-for="Surname" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" required/>
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    @if (ViewBag.PhoneAllow)
-                    {
                         <div class="form-group">
-                            <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="PhoneNumber" class="form-control" required/>
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <label asp-for="Surname" class="control-label"></label>
+                            <input asp-for="Surname" class="form-control" required />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        @if (ViewBag.PhoneAllow)
+                        {
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="control-label"></label>
+                                <input asp-for="PhoneNumber" class="form-control" required />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        }
                     }
+                    <div class="form-group">
+                        <input type="submit" value="Przejdź do podsumowania" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-6">
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <div class="login-col">
+                        <h4>Posiadasz konto?</h4>
+                        <a class="login" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Zaloguj się</a>
+                    </div>
                 }
-                <div class="form-group">
-                    <input type="submit" value="Przejdź do podsumowania" class="btn btn-primary" />
-                </div>
-            </form>
-            </div>
-        <div class="col-6">
-            @if (!SignInManager.IsSignedIn(User))
-            {
-            <div class="login-col">
-                <h4>Posiadasz konto?</h4>
-                <a class="login" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Zaloguj się</a>
-            </div>
-                    }
             </div>
         </div>
     </div>
-<script>
+    <script>
 
 
-    $(document).ready(function () {
-        $("#personal-data").validate({
-            
-            rules: {
-                Name: {
-                    required: true,
+        $(document).ready(function () {
+            $("#personal-data").validate({
+
+                rules: {
+                    Name: {
+                        required: true,
+
+                    },
+                    Surname: {
+                        required: true,
+                    },
+                    Email: {
+                        required: true,
+                    },
+                    PhoneNumber: {
+                        required: true,
+                    },
+
 
                 },
-                Surname: {
-                    required: true,
-                },
-                Email: {
-                    required: true,
-                },
-                PhoneNumber: {
-                    required: true,
-                },
-                
+                messages: {
+                    Name: {
+                        required: "Należy podać imię",
 
-            },
-            messages: {
-                Name: {
-                    required: "Należy podać imię",
+                    },
+                    Surname: {
+                        required: "Należy podać nazwisko",
 
-                },
-                Surname: {
-                    required: "Należy podać nazwisko",
+                    },
+                    Email: {
+                        required: "Należy podać email",
 
-                },
-                Email: {
-                    required: "Należy podać email",
+                    },
+                    PhoneNumber: {
+                        required: "Należy podać numer telefonu",
+                    },
 
-                },
-                PhoneNumber: {
-                    required: "Należy podać numer telefonu",
-                },
-
-            }
+                }
+            });
         });
-    });
 
-</script>
+    </script>

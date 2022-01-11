@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,6 @@ namespace TrainSeatReservation.Commons.Dto
         public StationDto Station { get; set; }
         public int RouteId { get; set; }
         public RouteDto Route { get; set; }
-        // public DateTime ArrivalDate { get; set; }
-        //public DateTime DepartureDate { get; set; }
         public TrainTimeTableDto TrainTimeTable { get; set; }
         public int TrainTimeTableId { get; set; }
     }

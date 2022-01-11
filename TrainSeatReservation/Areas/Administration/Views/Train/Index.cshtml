@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<TrainSeatReservation.EntityFramework.Models.Train>*@
+﻿<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
 @model TrainSeatReservation.Areas.Administration.Models.TrainViewModel
 @{
     ViewData["Title"] = "Index";
@@ -26,9 +26,7 @@
                 <th>
                     @Html.DisplayNameFor(model => train.Type)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => train.IsActive)
-                </th>*@
+
                 <th></th>
             </tr>
         </thead>
@@ -45,13 +43,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Type.Name)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
-                    </td>*@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
-                        @*<a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>*@
+
                     </td>
                 </tr>
             }

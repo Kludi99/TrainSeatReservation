@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Logowanie";
 }
+<!--Program powstał na Wydziale Informatyki Politechniki Białostockiej-->
 <div class="user-login">
     <h1>@ViewData["Title"]</h1>
     <div class="row">
@@ -35,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <p>
-                            <a id="forgot-password" asp-page="./ForgotPassword" >Zapomniałeś hasła?</a>
+                            <a id="forgot-password" asp-page="./ForgotPassword">Zapomniałeś hasła?</a>
                         </p>
                         <p>
                             <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="account-button">Zarejestruj się</a>

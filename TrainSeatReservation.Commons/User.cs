@@ -1,5 +1,4 @@
-﻿
-//using Microsoft.AspNet.Identity.EntityFramework;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

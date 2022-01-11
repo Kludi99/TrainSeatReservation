@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+using Microsoft.AspNetCore.Authorization;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
