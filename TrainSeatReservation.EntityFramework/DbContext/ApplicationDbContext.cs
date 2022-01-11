@@ -30,10 +30,10 @@ namespace TrainSeatReservation.Data
         public DbSet<RouteTicket> RouteTickets { get; set; }
         public DbSet<TicketChange> TicketChanges { get; set; }
 
-      /*  public ApplicationDbContext() : base()
+        public ApplicationDbContext() : base()
         {
 
-        }*/
+        }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

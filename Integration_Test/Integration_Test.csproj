@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="NUnit" Version="3.13.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="coverlet.collector" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrainSeatReservation.Commons\TrainSeatReservation.Commons.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.DI\TrainSeatReservation.DI.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.EntityFramework\TrainSeatReservation.EntityFramework.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Facades\TrainSeatReservation.Facades.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation.Interfaces.Infrastructure\TrainSeatReservation.Interfaces.Infrastructure.csproj" />
+    <ProjectReference Include="..\TrainSeatReservation\TrainSeatReservation.csproj" />
+  </ItemGroup>
+
+</Project>

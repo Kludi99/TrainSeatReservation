@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3C7896B4-1ACF-497A-B036-157250C614FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation", "TrainSeatReservation\TrainSeatReservation.csproj", "{FF6CAD35-3677-4EE5-B14C-E16F11F12CD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation", "TrainSeatReservation\TrainSeatReservation.csproj", "{FF6CAD35-3677-4EE5-B14C-E16F11F12CD5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FBBF144E-F899-4A34-939C-8F77CBACA156} = {FBBF144E-F899-4A34-939C-8F77CBACA156}
 		{139C5CD2-2DEB-4A81-81B7-BE6CC3FC52A0} = {139C5CD2-2DEB-4A81-81B7-BE6CC3FC52A0}
@@ -13,27 +13,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation", "Tra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DED48661-6A03-4094-AD0A-D6FEB8D99F14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.EntityFramework", "TrainSeatReservation.EntityFramework\TrainSeatReservation.EntityFramework.csproj", "{7A494D51-EFF9-4151-9335-B1C9375DE7A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.EntityFramework", "TrainSeatReservation.EntityFramework\TrainSeatReservation.EntityFramework.csproj", "{7A494D51-EFF9-4151-9335-B1C9375DE7A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces.Infrastructure", "Interfaces.Infrastructure", "{FBF1E246-6DBC-4EC7-959D-F30E2FE2C076}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.Interfaces.Infrastructure", "TrainSeatReservation.Interfaces.Infrastructure\TrainSeatReservation.Interfaces.Infrastructure.csproj", "{F31B318D-C9DA-46CD-9F51-F46E7DF79DC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.Interfaces.Infrastructure", "TrainSeatReservation.Interfaces.Infrastructure\TrainSeatReservation.Interfaces.Infrastructure.csproj", "{F31B318D-C9DA-46CD-9F51-F46E7DF79DC9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces.Facades", "Interfaces.Facades", "{A8E56216-C7A8-4B92-B469-415018F20235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.Interfaces.Facades", "TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj", "{139C5CD2-2DEB-4A81-81B7-BE6CC3FC52A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.Interfaces.Facades", "TrainSeatReservation.Interfaces.Facades\TrainSeatReservation.Interfaces.Facades.csproj", "{139C5CD2-2DEB-4A81-81B7-BE6CC3FC52A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Facades", "Facades", "{E302DF1C-F55E-4C53-81FD-AC7BC7BB789B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.Facades", "TrainSeatReservation.Facades\TrainSeatReservation.Facades.csproj", "{BFE560AD-02AB-4CB7-8A43-E539AF3AB309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.Facades", "TrainSeatReservation.Facades\TrainSeatReservation.Facades.csproj", "{BFE560AD-02AB-4CB7-8A43-E539AF3AB309}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{B829F67B-0C5F-4C27-A3F9-67BF434ADE18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.Commons", "TrainSeatReservation.Commons\TrainSeatReservation.Commons.csproj", "{FBBF144E-F899-4A34-939C-8F77CBACA156}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.Commons", "TrainSeatReservation.Commons\TrainSeatReservation.Commons.csproj", "{FBBF144E-F899-4A34-939C-8F77CBACA156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyInjection", "DependencyInjection", "{44D7BEAE-5EB5-41FB-8A57-A290A50A72C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainSeatReservation.DI", "TrainSeatReservation.DI\TrainSeatReservation.DI.csproj", "{4C71488D-761D-4C9E-90B6-51BDD265399F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainSeatReservation.DI", "TrainSeatReservation.DI\TrainSeatReservation.DI.csproj", "{4C71488D-761D-4C9E-90B6-51BDD265399F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{83E1F4AC-0F8A-45D3-B165-F922A848BACD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration_Test", "Integration_Test\Integration_Test.csproj", "{1E7C4EA1-8240-411D-AFC0-751C977C7C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,10 @@ Global
 		{4C71488D-761D-4C9E-90B6-51BDD265399F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C71488D-761D-4C9E-90B6-51BDD265399F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C71488D-761D-4C9E-90B6-51BDD265399F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7C4EA1-8240-411D-AFC0-751C977C7C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7C4EA1-8240-411D-AFC0-751C977C7C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7C4EA1-8240-411D-AFC0-751C977C7C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7C4EA1-8240-411D-AFC0-751C977C7C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +89,7 @@ Global
 		{BFE560AD-02AB-4CB7-8A43-E539AF3AB309} = {E302DF1C-F55E-4C53-81FD-AC7BC7BB789B}
 		{FBBF144E-F899-4A34-939C-8F77CBACA156} = {B829F67B-0C5F-4C27-A3F9-67BF434ADE18}
 		{4C71488D-761D-4C9E-90B6-51BDD265399F} = {44D7BEAE-5EB5-41FB-8A57-A290A50A72C5}
+		{1E7C4EA1-8240-411D-AFC0-751C977C7C83} = {83E1F4AC-0F8A-45D3-B165-F922A848BACD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DB00E0B-A98D-47F4-A051-65A04F5F80E8}
